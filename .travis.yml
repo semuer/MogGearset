@@ -4,7 +4,10 @@ node_js:
 
 cache: npm
 
-script: cd project && npm run build
+before_script:
+  - cd project
+script:
+  - npm run build
 
 deploy:
   provider: pages
