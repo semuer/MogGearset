@@ -9,7 +9,7 @@
     >
       <v-toolbar-title>XI EquipSet Simulator</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn icon  href="https://github.com/semuer/XIUtilsEquipCalculator">
+      <v-btn icon href="https://github.com/semuer/XIUtilsEquipCalculator">
         <v-icon>mdi-github</v-icon>
       </v-btn>
     </v-app-bar>
@@ -65,7 +65,7 @@
 <script lang="ts">
 import {Component, Vue, Watch} from 'vue-property-decorator'
 import EquipmentList from "@/components/EquipmentList.vue";
-import equipData from './json/parseddata.json';
+//import equipData from '../public/json/parseddata.json';
 import JobSelector from "./components/JobSelector.vue";
 import EquipSlotSelector from "./components/EquipSlotSelector.vue";
 import EquipSetPerformanceView from "@/components/EquipSetPerformanceView.vue";
@@ -83,6 +83,7 @@ import loki from 'lokijs'
 })
 export default class App extends Vue {
   // data
+  rawEquipsData: Equipment[] = []
   db = new loki("data.db");
   selectedJob: string = "MNK";
   selectedSlot: string = "Ammo";
@@ -155,8 +156,8 @@ export default class App extends Vue {
 
   created() {
     let ec = this.db.getCollection<Equipment>("equip");
-    if(ec == null){
-      ec =  this.db.addCollection<Equipment>("equip");
+    if (ec == null) {
+      ec = this.db.addCollection<Equipment>("equip");
     }
 
     this.equipCollection = ec;
@@ -164,16 +165,25 @@ export default class App extends Vue {
       console.log("Collection Creating Error.")
       return;
     }
-    let equips = equipData as Equipment[];
-    equips.forEach(function (item) {
-      ec.insert(
-          item
-      );
-    });
 
-    this.equipQueryChain = null;
-    this.selectedJob = "MNK";
-    this.editEquipSet = {};
+    fetch('/json/parseddata.json')
+        .then(response => response.json())
+        .then(data => {
+
+          this.rawEquipsData = data;
+          let equips = this.rawEquipsData;
+          equips.forEach(function (item) {
+            ec.insert(
+                item
+            );
+          });
+
+          this.equipQueryChain = null;
+          this.selectedJob = "MNK";
+          this.editEquipSet = {};
+        })
+
+
   }
 }
 
