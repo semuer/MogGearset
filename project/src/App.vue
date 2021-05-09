@@ -165,8 +165,8 @@ export default class App extends Vue {
       console.log("Collection Creating Error.")
       return;
     }
-
-    fetch('/json/parseddata.json')
+    
+    fetch(process.env.BASE_URL + 'json/parseddata.json')
         .then(response => response.json())
         .then(data => {
 
