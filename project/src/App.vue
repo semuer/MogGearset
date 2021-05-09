@@ -70,7 +70,7 @@ import JobSelector from "./components/JobSelector.vue";
 import EquipSlotSelector from "./components/EquipSlotSelector.vue";
 import EquipSetPerformanceView from "@/components/EquipSetPerformanceView.vue";
 import {Equipment, EquipSet} from './@types/equip-set'
-import {Collection, LokiConstructor, Resultset} from 'lokijs'
+import {Collection} from 'lokijs'
 import loki from 'lokijs'
 
 @Component({
@@ -83,14 +83,14 @@ import loki from 'lokijs'
 })
 export default class App extends Vue {
   // data
-  db: LokiConstructor = new loki("data.db");
+  db = new loki("data.db");
   selectedJob: string = "MNK";
   selectedSlot: string = "Ammo";
   //filteredEquips:Equipment[] = [];
   equipCollection: Collection<Equipment> | null = null;
   editEquipSet: EquipSet = {};
   dirtyFlag: Boolean = false;
-  equipQueryChain: Resultset<Equipment> | null = null;
+  equipQueryChain: Object | null = null;
   navigationWidth: number = 0;
 
   public onJobChanged(): void {
@@ -164,7 +164,8 @@ export default class App extends Vue {
       console.log("Collection Creating Error.")
       return;
     }
-    equipData.forEach(function (item) {
+    let equips = equipData as Equipment[];
+    equips.forEach(function (item) {
       ec.insert(
           item
       );

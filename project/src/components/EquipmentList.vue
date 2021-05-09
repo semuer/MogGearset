@@ -70,8 +70,6 @@ import {Equipment, PropertyInfo} from "@/@types/equip-set";
 import EquipmentPropertyLimitUnit from "@/components/EquipmentPropertyLimitUnit.vue";
 import TextHighlight from "vue-text-highlight"
 
-import {Resultset} from 'lokijs'
-
 @Component({
   components: {
     EquipmentPropertyLimitUnit,
@@ -85,7 +83,7 @@ export default class EquipmentList extends Vue {
   isLevel99: boolean = false;
   isItemLevel119: boolean = false;
 
-  @Prop({default: null}) readonly equipQueryChain: Resultset<Equipment> | null
+  @Prop({default: null}) readonly equipQueryChain!: Object | null
 
   equipData: Equipment[] = [];
 
@@ -179,7 +177,7 @@ export default class EquipmentList extends Vue {
   @Watch('limiters')
   queryChanged() {
     if (this.equipQueryChain != null) {
-      let chain: Resultset<Equipment> = this.equipQueryChain.copy();
+      let chain = this.equipQueryChain.copy();
       let query: Record<string, any> = {};
 
       if (this.isLevel99) {
