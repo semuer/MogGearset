@@ -83,7 +83,7 @@ export default class EquipmentList extends Vue {
   isLevel99: boolean = false;
   isItemLevel119: boolean = false;
 
-  @Prop({default: null}) readonly equipQueryChain!: Object | null
+  @Prop({default: null}) readonly equipQueryChain! : any
 
   equipData: Equipment[] = [];
 
