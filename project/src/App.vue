@@ -63,15 +63,15 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue, Watch} from 'vue-property-decorator'
-import EquipmentList from "@/components/EquipmentList.vue";
-//import equipData from '../public/json/parseddata.json';
-import JobSelector from "./components/JobSelector.vue";
-import EquipSlotSelector from "./components/EquipSlotSelector.vue";
-import EquipSetPerformanceView from "@/components/EquipSetPerformanceView.vue";
-import {Equipment, EquipSet} from './@types/equip-set'
-import {Collection} from 'lokijs'
-import loki from 'lokijs'
+ import {Component, Vue, Watch} from 'vue-property-decorator'
+ import EquipmentList from "@/components/EquipmentList.vue";
+ //import equipData from '../public/json/parseddata.json';
+ import JobSelector from "./components/JobSelector.vue";
+ import EquipSlotSelector from "./components/EquipSlotSelector.vue";
+ import EquipSetPerformanceView from "@/components/EquipSetPerformanceView.vue";
+ import {Equipment, EquipSet} from './@types/equip-set'
+ import {Collection} from 'lokijs'
+ import loki from 'lokijs'
 
 @Component({
   components: {
@@ -165,7 +165,7 @@ export default class App extends Vue {
       console.log("Collection Creating Error.")
       return;
     }
-    
+
     fetch(process.env.BASE_URL + 'json/parseddata.json')
         .then(response => response.json())
         .then(data => {
