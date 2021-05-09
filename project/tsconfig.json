@@ -21,7 +21,6 @@
       "webpack-env",
       "vuetify"
     ],
-    "baseUrl": ".",
     "paths": {
       "@/*": [
         "src/*"
