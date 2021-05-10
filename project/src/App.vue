@@ -83,7 +83,6 @@
 })
 export default class App extends Vue {
   // data
-  rawEquipsData: Equipment[] = []
   db = new loki("data.db");
   selectedJob: string = "MNK";
   selectedSlot: string = "Ammo";
@@ -169,9 +168,7 @@ export default class App extends Vue {
     fetch(process.env.BASE_URL + 'json/parseddata.json')
         .then(response => response.json())
         .then(data => {
-
-          this.rawEquipsData = Object.freeze(data);
-          let equips = this.rawEquipsData;
+          let equips = data;
           equips.forEach(function (item) {
             ec.insert(
                 item
