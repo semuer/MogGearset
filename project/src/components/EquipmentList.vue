@@ -220,7 +220,7 @@ export default class EquipmentList extends Vue {
         }
       }
 
-      this.equipData = chain.data();
+      this.equipData = Object.freeze(chain.data());
     }
   }
 
