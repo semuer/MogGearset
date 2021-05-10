@@ -205,7 +205,7 @@ export default class EquipmentList extends Vue {
 
             // match test
             for(let prop of props){
-              if (prop.name.toLowerCase() == testPropName) {
+              if (prop.name.toLowerCase() == testPropName.toLowerCase()) {
                 if (prop.hasValue && prop.value != undefined) {
                   if (Math.abs(prop.value) >= min) {
                     testPassed = true;
