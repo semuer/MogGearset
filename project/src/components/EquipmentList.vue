@@ -138,9 +138,9 @@ export default class EquipmentList extends Vue {
             prefix = matches[0];
           }
 
-          let propNameMatches = resultName.match(/(?<=[:：]).+/);
-          if(propNameMatches != null && propNameMatches.length !== 0){
-            resultName = propNameMatches[0];
+          let propNameMatches = resultName.match(/[:：](.+)/);
+          if(propNameMatches != null && propNameMatches.length > 1){
+            resultName = propNameMatches[1];
           }
 
 
