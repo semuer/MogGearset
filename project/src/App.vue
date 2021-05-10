@@ -169,11 +169,7 @@ export default class App extends Vue {
         .then(response => response.json())
         .then(data => {
           let equips = data as Equipment[];
-          equips.forEach(function (item:Equipment) {
-            ec.insert(
-                item
-            );
-          });
+          ec.insert(equips);
 
           this.equipQueryChain = null;
           this.selectedJob = "MNK";
