@@ -96,7 +96,7 @@ export default class EquipmentList extends Vue {
         if(propNameMatches != null && propNameMatches.length > 1){
           propName = propNameMatches[1];
         }
-        result.push(new RegExp("(?<=^|[ \n\b:：])" + propName + "(?=[\n +\\-\b0-9])"));
+        result.push(new RegExp("(^|[ \n\b:：])" + propName + "(?=[\n +\\-\b0-9])"));
       }
     }
 
