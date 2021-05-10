@@ -160,7 +160,7 @@ export default class App extends Vue {
       ec = this.db.addCollection<Equipment>("equip");
     }
 
-    this.equipCollection = ec;
+    this.equipCollection = Object.freeze(ec);
     if (this.equipCollection == null) {
       console.log("Collection Creating Error.")
       return;
@@ -170,7 +170,7 @@ export default class App extends Vue {
         .then(response => response.json())
         .then(data => {
 
-          this.rawEquipsData = data;
+          this.rawEquipsData = Object.freeze(data);
           let equips = this.rawEquipsData;
           equips.forEach(function (item) {
             ec.insert(
