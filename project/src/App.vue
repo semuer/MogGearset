@@ -168,8 +168,8 @@ export default class App extends Vue {
     fetch(process.env.BASE_URL + 'json/parseddata.json')
         .then(response => response.json())
         .then(data => {
-          let equips = data;
-          equips.forEach(function (item) {
+          let equips = data as Equipment[];
+          equips.forEach(function (item:Equipment) {
             ec.insert(
                 item
             );
