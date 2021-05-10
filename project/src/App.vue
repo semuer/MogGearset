@@ -156,7 +156,7 @@ export default class App extends Vue {
   created() {
     let ec = this.db.getCollection<Equipment>("equip");
     if (ec == null) {
-      ec = this.db.addCollection<Equipment>("equip");
+      ec = this.db.addCollection<Equipment>("equip",{disableMeta:true});
     }
 
     this.equipCollection = Object.freeze(ec);
