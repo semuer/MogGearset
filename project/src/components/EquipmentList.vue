@@ -96,7 +96,7 @@ export default class EquipmentList extends Vue {
         if(propNameMatches != null && propNameMatches.length > 1){
           propName = propNameMatches[1];
         }
-        result.push(new RegExp("(^|[ \n\b:：])" + propName + "(?=[\n +\\-\b0-9])"));
+        result.push(new RegExp("(^|[ \n\b:：])" + propName + "(?=[\n +\\-\b0-9])", "i"));
       }
     }
 
@@ -112,7 +112,7 @@ export default class EquipmentList extends Vue {
     }
 
     let props = item.JpDescription.split(/[ \n]/).filter(i => i);
-    let propRegex = /(?<name>[^\d%+-]+)(?<value>[\d%+-]+)?(?<suffix>[^ /n]+)?$/;
+    let propRegex = /(?<name>[^\d%+-]+)(?<value>[\d%+-]+)?(?<suffix>[^ /n]+)?$/i;
 
     let prefix:string = "";
     for(let prop of props) {
@@ -205,7 +205,7 @@ export default class EquipmentList extends Vue {
 
             // match test
             for(let prop of props){
-              if (prop.name == testPropName) {
+              if (prop.name.toLowerCase() == testPropName) {
                 if (prop.hasValue && prop.value != undefined) {
                   if (Math.abs(prop.value) >= min) {
                     testPassed = true;
