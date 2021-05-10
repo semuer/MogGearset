@@ -92,9 +92,9 @@ export default class EquipmentList extends Vue {
     for(let limiter of this.limiters){
       if(limiter.property !== ""){
         let propName = limiter.property;
-        let propNameMatches = propName.match(/(?<=[:：]).+/);
-        if(propNameMatches != null && propNameMatches.length !== 0){
-          propName = propNameMatches[0];
+        let propNameMatches = propName.match(/[:：](.+)/);
+        if(propNameMatches != null && propNameMatches.length > 1){
+          propName = propNameMatches[1];
         }
         result.push(new RegExp("(?<=^|[ \n\b:：])" + propName + "(?=[\n +\\-\b0-9])"));
       }
