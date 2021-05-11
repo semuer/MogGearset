@@ -13,6 +13,7 @@
             label="IL119"
             hide-details
         ></v-checkbox>
+        <v-text-field class="pt-2 pl-2" clearable label="名前" v-model="nameFilter" outlined hide-details dense></v-text-field>
       </v-row>
 
       <v-row class="pl-4 ml-0 pb-1">
@@ -82,6 +83,7 @@ export default class EquipmentList extends Vue {
   limiters: Array<Limiter> = [];
   isLevel99: boolean = false;
   isItemLevel119: boolean = false;
+  nameFilter: string = "";
 
   @Prop({default: null}) readonly equipQueryChain! : any
 
@@ -175,7 +177,9 @@ export default class EquipmentList extends Vue {
   @Watch('isLevel99')
   @Watch('isItemLevel119')
   @Watch('limiters')
+  @Watch('nameFilter')
   queryChanged() {
+    console.log("changed");
     if (this.equipQueryChain != null) {
       let chain = this.equipQueryChain.copy();
       let query: Record<string, any> = {};
@@ -190,6 +194,26 @@ export default class EquipmentList extends Vue {
         chain = chain.find(query);
       }
 
+      let nameFilter = this.nameFilter;
+      if(nameFilter !== "")
+      {
+        console.log(nameFilter);
+        chain = chain.where(function (obj: Equipment) {
+          let isPassed = false;
+          if (obj.Jp.toLowerCase().includes(nameFilter)) {
+            isPassed = true;
+          } else if (obj.JpFull.toLowerCase().includes(nameFilter)) {
+            isPassed = true;
+          } else if (obj.En.toLowerCase().includes(nameFilter)) {
+            isPassed = true;
+          } else if (obj.EnFull.toLowerCase().includes(nameFilter)) {
+            isPassed = true;
+          }
+
+          return isPassed;
+        });
+      }
+
       if (this.limiters.length !== 0) {
         for (let i = 0; i < this.limiters.length; i++) {
           let testPropName = this.limiters[i].property;
@@ -198,9 +222,10 @@ export default class EquipmentList extends Vue {
             continue;
           }
           let min = this.limiters[i].minValue;
-          let thisptr = this;
+          let funcGetProps = this.getPropertiesArray;
+
           chain = chain.where(function (obj: Equipment) {
-            let props = thisptr.getPropertiesArray(obj);
+            let props = funcGetProps(obj);
             let testPassed = false;
 
             // match test
