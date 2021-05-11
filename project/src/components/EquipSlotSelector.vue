@@ -9,6 +9,7 @@
         </v-btn>
       </v-col>
       <v-col class="ma-0 pa-1 pr-2">
+        <v-row no-gutters>
         <v-text-field
             :value="itemName"
             :label="labelName"
@@ -18,6 +19,7 @@
             dense
             flat
         ></v-text-field>
+        <v-btn @click="$emit('clearSlot', labelName)">X</v-btn></v-row>
       </v-col>
     </v-row>
   </v-list-item>

@@ -25,32 +25,32 @@
           <job-selector v-model="selectedJob"/>
         </v-row>
         <v-row class="ml-0">
-          <v-col cols="4" class="pl-0">
+          <v-col cols="6" class="pl-0">
             <v-card>
               <v-list-item-group
                   v-model="selectedSlot"
               >
-                <equip-slot-selector label-name="Main" :item="editEquipSet.Main" :dirty="dirtyFlag"/>
-                <equip-slot-selector label-name="Sub" :item="editEquipSet.Sub" :dirty="dirtyFlag"/>
-                <equip-slot-selector label-name="Range" :item="editEquipSet.Range" :dirty="dirtyFlag"/>
-                <equip-slot-selector label-name="Ammo" :item="editEquipSet.Ammo" :dirty="dirtyFlag"/>
-                <equip-slot-selector label-name="Head" :item="editEquipSet.Head" :dirty="dirtyFlag"/>
-                <equip-slot-selector label-name="Neck" :item="editEquipSet.Neck" :dirty="dirtyFlag"/>
-                <equip-slot-selector label-name="L.Earring" :item="editEquipSet['L.Earring']" :dirty="dirtyFlag"/>
-                <equip-slot-selector label-name="R.Earring" :item="editEquipSet['R.Earring']" :dirty="dirtyFlag"/>
-                <equip-slot-selector label-name="Body" :item="editEquipSet['Body']" :dirty="dirtyFlag"/>
-                <equip-slot-selector label-name="Hands" :item="editEquipSet['Hands']" :dirty="dirtyFlag"/>
-                <equip-slot-selector label-name="L.Ring" :item="editEquipSet['L.Ring']" :dirty="dirtyFlag"/>
-                <equip-slot-selector label-name="R.Ring" :item="editEquipSet['R.Ring']" :dirty="dirtyFlag"/>
-                <equip-slot-selector label-name="Cape" :item="editEquipSet['Cape']" :dirty="dirtyFlag"/>
-                <equip-slot-selector label-name="Waist" :item="editEquipSet['Waist']" :dirty="dirtyFlag"/>
-                <equip-slot-selector label-name="Legs" :item="editEquipSet['Legs']" :dirty="dirtyFlag"/>
-                <equip-slot-selector label-name="Feet" :item="editEquipSet['Feet']" :dirty="dirtyFlag"/>
+                <equip-slot-selector label-name="Main" @clearSlot="clearSlot" :item="editEquipSet.Main" :dirty="dirtyFlag"/>
+                <equip-slot-selector label-name="Sub" @clearSlot="clearSlot" :item="editEquipSet.Sub" :dirty="dirtyFlag"/>
+                <equip-slot-selector label-name="Range" @clearSlot="clearSlot" :item="editEquipSet.Range" :dirty="dirtyFlag"/>
+                <equip-slot-selector label-name="Ammo" @clearSlot="clearSlot" :item="editEquipSet.Ammo" :dirty="dirtyFlag"/>
+                <equip-slot-selector label-name="Head" @clearSlot="clearSlot" :item="editEquipSet.Head" :dirty="dirtyFlag"/>
+                <equip-slot-selector label-name="Neck" @clearSlot="clearSlot" :item="editEquipSet.Neck" :dirty="dirtyFlag"/>
+                <equip-slot-selector label-name="L.Earring" @clearSlot="clearSlot" :item="editEquipSet['L.Earring']" :dirty="dirtyFlag"/>
+                <equip-slot-selector label-name="R.Earring" @clearSlot="clearSlot" :item="editEquipSet['R.Earring']" :dirty="dirtyFlag"/>
+                <equip-slot-selector label-name="Body" @clearSlot="clearSlot" :item="editEquipSet['Body']" :dirty="dirtyFlag"/>
+                <equip-slot-selector label-name="Hands" @clearSlot="clearSlot" :item="editEquipSet['Hands']" :dirty="dirtyFlag"/>
+                <equip-slot-selector label-name="L.Ring" @clearSlot="clearSlot" :item="editEquipSet['L.Ring']" :dirty="dirtyFlag"/>
+                <equip-slot-selector label-name="R.Ring" @clearSlot="clearSlot" :item="editEquipSet['R.Ring']" :dirty="dirtyFlag"/>
+                <equip-slot-selector label-name="Cape" @clearSlot="clearSlot" :item="editEquipSet['Cape']" :dirty="dirtyFlag"/>
+                <equip-slot-selector label-name="Waist" @clearSlot="clearSlot" :item="editEquipSet['Waist']" :dirty="dirtyFlag"/>
+                <equip-slot-selector label-name="Legs" @clearSlot="clearSlot" :item="editEquipSet['Legs']" :dirty="dirtyFlag"/>
+                <equip-slot-selector label-name="Feet" @clearSlot="clearSlot" :item="editEquipSet['Feet']" :dirty="dirtyFlag"/>
               </v-list-item-group>
             </v-card>
           </v-col>
           <v-col
-              cols="8"
+              cols="6"
               class="pr-4"
           >
             <equip-set-performance-view :equip-set-info="editEquipSet" :dirty="dirtyFlag"/>
@@ -65,7 +65,6 @@
 <script lang="ts">
  import {Component, Vue, Watch} from 'vue-property-decorator'
  import EquipmentList from "@/components/EquipmentList.vue";
- //import equipData from '../public/json/parseddata.json';
  import JobSelector from "./components/JobSelector.vue";
  import EquipSlotSelector from "./components/EquipSlotSelector.vue";
  import EquipSetPerformanceView from "@/components/EquipSetPerformanceView.vue";
@@ -104,6 +103,10 @@ export default class App extends Vue {
     }
   }
 
+  public clearSlot(label: string):void{
+    delete this.editEquipSet[label];
+  }
+
   @Watch('selectedJob')
   selectedJobChanged() {
 
@@ -115,7 +118,7 @@ export default class App extends Vue {
     query["Is" + this.selectedJob] = true;
     //query["ItemLevel"] = 119;
     //console.log(query);
-    if (newSlot == "" || newSlot == null || newSlot == undefined) {
+    if (newSlot == "" || newSlot == null) {
       this.equipQueryChain = null;
       this.navigationWidth = 0;
       return;
