@@ -197,12 +197,14 @@ export default class EquipmentList extends Vue {
       let nameFilter = this.nameFilter;
       if(nameFilter !== "")
       {
-        console.log(nameFilter);
+        nameFilter = this.kataToHira(this.fullWidthStrToHalfWidthStr(nameFilter));
+        let funcKataHira = this.kataToHira;
+        let funcFullTohalf = this.fullWidthStrToHalfWidthStr;
         chain = chain.where(function (obj: Equipment) {
           let isPassed = false;
-          if (obj.Jp.toLowerCase().includes(nameFilter)) {
+          if (funcKataHira(funcFullTohalf(obj.Jp.toLowerCase())).includes(nameFilter)) {
             isPassed = true;
-          } else if (obj.JpFull.toLowerCase().includes(nameFilter)) {
+          } else if (funcKataHira(funcFullTohalf(obj.JpFull.toLowerCase())).includes(nameFilter)) {
             isPassed = true;
           } else if (obj.En.toLowerCase().includes(nameFilter)) {
             isPassed = true;
@@ -249,6 +251,25 @@ export default class EquipmentList extends Vue {
     }
   }
 
+  public kataToHira(text:string):string {
+    return text.replace(/[\u30a1-\u30f6]/g, function(match) {
+      let chr = match.charCodeAt(0) - 0x60;
+      return String.fromCharCode(chr);
+    });
+  }
+
+  public hiraToKata(text:string):string {
+    return text.replace(/[\u3041-\u3096]/g, function(match) {
+      let chr = match.charCodeAt(0) + 0x60;
+      return String.fromCharCode(chr);
+    });
+  }
+
+  public fullWidthStrToHalfWidthStr(text:string):string {
+    return text.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function(match) {
+      return String.fromCharCode(match.charCodeAt(0) - 0xFEE0);
+    });
+  }
 
   public addLimiter(): void {
     this.limiters.push({
