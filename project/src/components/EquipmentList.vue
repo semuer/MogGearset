@@ -13,7 +13,7 @@
             label="IL119"
             hide-details
         ></v-checkbox>
-        <v-text-field class="pt-2 pl-2" clearable label="名前" v-model="nameFilter" outlined hide-details dense></v-text-field>
+        <v-text-field class="pt-2 pl-2" clearable label="名前" v-model="nameFilter" @click:clear="nameFilterCleared" outlined hide-details dense></v-text-field>
       </v-row>
 
       <v-row class="pl-4 ml-0 pb-1">
@@ -103,6 +103,10 @@ export default class EquipmentList extends Vue {
     }
 
     return result;
+  }
+
+  public nameFilterCleared(){
+    this.nameFilter = "";
   }
 
   public getPropertiesArray(item: Equipment): PropertyInfo[] {
