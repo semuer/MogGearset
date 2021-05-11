@@ -107,6 +107,7 @@ export default class App extends Vue {
 
   public clearSlot(label: string):void{
     delete this.editEquipSet[label];
+    this.dirtyFlag = !this.dirtyFlag;
   }
 
   @Watch('selectedJob')
