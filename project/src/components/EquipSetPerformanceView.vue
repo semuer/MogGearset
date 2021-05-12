@@ -53,7 +53,10 @@ export default class EquipSetPerformanceView extends Vue {
     {
       if (Object.prototype.hasOwnProperty.call(this.equipSetInfo, slotName))
       {
-        let slot:Equipment = this.equipSetInfo[slotName];
+        let slot:Equipment|null = this.equipSetInfo[slotName];
+        if(slot == null){
+          continue;
+        }
         let props = this.getPropertiesArray(slot);
         for(let prop of props)
         {

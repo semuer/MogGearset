@@ -17,9 +17,10 @@
             readonly
             solo
             dense
+            clearable
             flat
-        ></v-text-field>
-        <v-btn @click="$emit('clearSlot', labelName)">X</v-btn></v-row>
+            @click:clear="$emit('clearSlot')"
+        ></v-text-field></v-row>
       </v-col>
     </v-row>
   </v-list-item>
@@ -36,10 +37,11 @@ export default {
   },
   computed: {
     itemName: function () {
-      if (this.item != null) {
+      console.log("computed" + this.item)
+      if (this.item != null && Object.keys(this.item).length !== 0) {
         return this.item["Jp"];
       } else {
-        return "装備なし"
+        return null;
       }
     }
   }
