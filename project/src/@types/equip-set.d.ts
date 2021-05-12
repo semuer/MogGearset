@@ -63,3 +63,11 @@ export interface PropertyInfo {
     valueUnit?: string,
     value?: number,
 }
+
+export interface Limiter {
+    index: number,
+    property: string,
+    minValue: number,
+    isActive: boolean,
+    isSort: boolean,
+}

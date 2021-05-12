@@ -4,6 +4,9 @@
         v-for="limiter in limiters"
         v-bind:key="limiter.index"
     class="pl-4 pr-4 pb-2">
+      <v-checkbox
+          :input-value="true"
+          @change="$emit('activeChanged', {index:limiter.index, isActive:$event})" />
       <v-text-field
           dense
           label="性能"
@@ -35,12 +38,13 @@
   </v-container>
 </template>
 
-<script>
-export default {
-  name: "EquipmentPropertyLimitUnit",
-  props: {
-    limiters: Array,
-  },
+<script lang="ts">
+import {Component, Prop, Vue} from "vue-property-decorator";
+import {Limiter} from "@/@types/equip-set";
+
+@Component
+export default class EquipmentPropertyLimitUnit extends Vue {
+  @Prop() readonly limiters!: Limiter[];
 }
 </script>
 

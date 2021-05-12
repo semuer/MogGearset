@@ -23,8 +23,9 @@
       <equipment-property-limit-unit
           class="pl-1 pr-1 pt-1 pb-1 ma-2"
           :limiters="limiters"
-          v-on:delete="deleteLimiter"
-          v-on:valueChanged="limiterChanged"
+          @delete="deleteLimiter"
+          @valueChanged="limiterChanged"
+          @activeChanged="limiterActiveChanged"
       />
     </v-sheet>
     <v-list-item-group
@@ -70,7 +71,7 @@
 
 <script lang="ts">
 import {Component, Prop, Vue, Watch} from 'vue-property-decorator'
-import {Equipment, PropertyInfo} from "@/@types/equip-set";
+import {Equipment, PropertyInfo, Limiter} from "@/@types/equip-set";
 import EquipmentPropertyLimitUnit from "@/components/EquipmentPropertyLimitUnit.vue";
 import TextHighlight from "vue-text-highlight"
 
@@ -105,7 +106,7 @@ export default class EquipmentList extends Vue {
   get highlightArray(): RegExp[]{
     let result:RegExp[] = [];
     for(let limiter of this.limiters){
-      if(limiter.property !== ""){
+      if(limiter.property !== "" && limiter.isActive){
         let propName = limiter.property;
         let propNameMatches = propName.match(/[:：](.+)/);
         if(propNameMatches != null && propNameMatches.length > 1){
@@ -232,10 +233,15 @@ export default class EquipmentList extends Vue {
         });
       }
 
-      if (this.limiters.length !== 0) {
-        for (let i = 0; i < this.limiters.length; i++) {
+      if (this.limiters.length !== 0)
+      {
+        for (let i = 0; i < this.limiters.length; i++)
+        {
+          if(this.limiters[i].isActive === false){
+            continue;
+          }
+
           let testPropName = this.limiters[i].property;
-          console.log(testPropName)
           if(testPropName === ""){
             continue;
           }
@@ -292,6 +298,8 @@ export default class EquipmentList extends Vue {
       index: Date.now(),
       property: "",
       minValue: 0,
+      isActive: true,
+      isSort: false,
     });
   }
 
@@ -320,13 +328,21 @@ export default class EquipmentList extends Vue {
       }
     }
   }
+
+  public limiterActiveChanged(obj:Record<string,any>):void{
+    if(obj["index"] != undefined){
+      for(let limiter of this.limiters){
+        if(limiter.index == obj["index"])
+        {
+          limiter.isActive = obj["isActive"];
+          this.queryChanged();
+        }
+      }
+    }
+  }
 }
 
-interface Limiter {
-  index: number,
-  property: string,
-  minValue: number,
-}
+
 
 </script>
 
