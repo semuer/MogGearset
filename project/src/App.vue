@@ -20,7 +20,7 @@
 
       <v-navigation-drawer left permanent app clipped :width="navigationWidth" class="fill-height">
         <equipment-list :equip-query-chain="equipQueryChain" v-on:select="equipItem" class="fill-height pa-0 ma-0"
-                        style="width:100%;"/>
+                        style="width:100%;" :equipSlot="selectedSlot"/>
       </v-navigation-drawer>
       <v-container fluid class="grey lighten-5 pa-4">
         <v-row class="ma-0 pa-0 pr-1">

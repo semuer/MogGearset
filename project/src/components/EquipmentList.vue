@@ -9,6 +9,7 @@
             class="pl-2 pr-2"
         ></v-checkbox>
         <v-checkbox
+            v-show="slotHasItemLevel"
             v-model="isItemLevel119"
             label="IL119"
             hide-details
@@ -51,10 +52,12 @@
                 <v-btn v-on:click="$emit('select',item)">選択</v-btn>
               </v-list-item-icon>
               <v-list-item-content>
-                <v-list-item-title v-text="item['JpFull']"></v-list-item-title>
-
-                  <v-list-item-subtitle class="text-wrap"> <text-highlight :queries="highlightArray" :wholeWordMatch=true>{{item['JpDescription']}}</text-highlight></v-list-item-subtitle>
-
+                <v-list-item-title>{{item['JpFull']}}
+                  <v-chip small label color="pink" text-color="white">{{"Lv."+item['Level']}}</v-chip>
+                  <v-chip v-if="item['ItemLevel'] != undefined" small label color="purple" text-color="white">{{"IL."+item['ItemLevel']}}</v-chip>
+                  <v-chip v-if="item['SuLevel'] != undefined" small label color="blue" text-color="white">{{"Su"+item['SuLevel']}}</v-chip>
+                </v-list-item-title>
+                <v-list-item-subtitle class="text-wrap"> <text-highlight :queries="highlightArray" :wholeWordMatch=true>{{item['JpDescription']}}</text-highlight></v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
           </DynamicScrollerItem>
@@ -84,10 +87,20 @@ export default class EquipmentList extends Vue {
   isLevel99: boolean = false;
   isItemLevel119: boolean = false;
   nameFilter: string = "";
+  @Prop({default: ""}) readonly equipSlot: string | undefined;
 
   @Prop({default: null}) readonly equipQueryChain! : any
 
   equipData: Equipment[] = [];
+
+  nonILSlots : string[] = ["Cape", "Neck", "Waist", "L.Earring", "R.Earring", "L.Ring", "R.Ring"];
+
+  get slotHasItemLevel(): boolean{
+    if(this.equipSlot != undefined && this.nonILSlots.includes(this.equipSlot)){
+      return false;
+    }
+    return true;
+  }
 
   get highlightArray(): RegExp[]{
     let result:RegExp[] = [];
@@ -183,7 +196,6 @@ export default class EquipmentList extends Vue {
   @Watch('limiters')
   @Watch('nameFilter')
   queryChanged() {
-    console.log("changed");
     if (this.equipQueryChain != null) {
       let chain = this.equipQueryChain.copy();
       let query: Record<string, any> = {};
@@ -191,7 +203,7 @@ export default class EquipmentList extends Vue {
       if (this.isLevel99) {
         query["Level"] = 99;
       }
-      if (this.isItemLevel119) {
+      if (this.isItemLevel119 && this.slotHasItemLevel === true) {
         query["ItemLevel"] = 119;
       }
       if (Object.keys(query).length !== 0) {
