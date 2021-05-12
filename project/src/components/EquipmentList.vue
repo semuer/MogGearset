@@ -23,6 +23,7 @@
       <equipment-property-limit-unit
           class="pl-1 pr-1 pt-1 pb-1 ma-2"
           :limiters="limiters"
+          :props-array="propsArray"
           @delete="deleteLimiter"
           @valueChanged="limiterChanged"
           @activeChanged="limiterActiveChanged"
@@ -70,8 +71,9 @@
 </template>
 
 <script lang="ts">
-import {Component, Prop, Vue, Watch} from 'vue-property-decorator'
-import {Equipment, PropertyInfo, Limiter} from "@/@types/equip-set";
+import {Component, Mixins, Prop, Watch} from 'vue-property-decorator'
+import {Equipment, Limiter} from "@/@types/equip-set";
+import xiUtils from "@/mixins/xiutils";
 import EquipmentPropertyLimitUnit from "@/components/EquipmentPropertyLimitUnit.vue";
 import TextHighlight from "vue-text-highlight"
 
@@ -81,41 +83,36 @@ import TextHighlight from "vue-text-highlight"
     TextHighlight
   }
 })
-export default class EquipmentList extends Vue {
-
+export default class EquipmentList extends Mixins(xiUtils) {
   selectedItem: number = 1;
   limiters: Array<Limiter> = [];
   isLevel99: boolean = false;
   isItemLevel119: boolean = false;
   nameFilter: string = "";
+
   @Prop({default: ""}) readonly equipSlot: string | undefined;
 
-  @Prop({default: null}) readonly equipQueryChain! : any
+  @Prop({default: null}) readonly equipQueryChain!: any;
+  @Prop() readonly propsArray!: string[];
 
   equipData: Equipment[] = [];
 
-  nonILSlots : string[] = ["Cape", "Neck", "Waist", "L.Earring", "R.Earring", "L.Ring", "R.Ring"];
+  nonILSlots: string[] = ["Cape", "Neck", "Waist", "L.Earring", "R.Earring", "L.Ring", "R.Ring"];
 
-  get slotHasItemLevel(): boolean
-  {
-    if(this.equipSlot != undefined && this.nonILSlots.includes(this.equipSlot))
-    {
+  get slotHasItemLevel(): boolean {
+    if (this.equipSlot != undefined && this.nonILSlots.includes(this.equipSlot)) {
       return false;
     }
     return true;
   }
 
-  get highlightArray(): RegExp[]
-  {
-    let result:RegExp[] = [];
-    for(let limiter of this.limiters)
-    {
-      if(limiter.property !== "" && limiter.isActive)
-      {
+  get highlightArray(): RegExp[] {
+    let result: RegExp[] = [];
+    for (let limiter of this.limiters) {
+      if (limiter.property !== "" && limiter.isActive) {
         let propName = limiter.property;
         let propNameMatches = propName.match(/[:：](.+)/);
-        if(propNameMatches != null && propNameMatches.length > 1)
-        {
+        if (propNameMatches != null && propNameMatches.length > 1) {
           propName = propNameMatches[1];
         }
         result.push(new RegExp("(^|[ \n\b:：])" + propName + "(?=[\n +\\-\b0-9])", "i"));
@@ -125,75 +122,8 @@ export default class EquipmentList extends Vue {
     return result;
   }
 
-  public nameFilterCleared(){
+  public nameFilterCleared() {
     this.nameFilter = "";
-  }
-
-  public getPropertiesArray(item: Equipment): PropertyInfo[] {
-    let resultInfo: PropertyInfo[] = [];
-
-
-    if (item.JpDescription == null || item.JpDescription.trim() === "") {
-      return resultInfo;
-    }
-
-    let props = item.JpDescription.split(/[ \n]/).filter(i => i);
-    let propRegex = /(?<name>[^\d%+-]+)(?<value>[\d%+-]+)?(?<suffix>[^ /n]+)?$/i;
-
-    let prefix:string = "";
-    for(let prop of props) {
-
-      let result = prop.match(propRegex);
-      if (result == null) {
-        console.log("Cannot parse prop:" + prop);
-        continue;
-      }
-      if (result.groups == undefined) {
-        console.log("Cannot parse prop:" + prop);
-        continue;
-      }
-
-      let resultName = result.groups["suffix"] == undefined ? result.groups["name"]:result.groups["name"]+result.groups["suffix"];
-      if(resultName == null){
-        continue;
-      }
-      if(resultName.includes(":") || resultName.includes("："))
-      {
-          let matches = resultName.match(/.+(?=[:：])/);
-          if(matches != null && matches.length !== 0){
-            prefix = matches[0];
-          }
-
-          let propNameMatches = resultName.match(/[:：](.+)/);
-          if(propNameMatches != null && propNameMatches.length > 1){
-            resultName = propNameMatches[1];
-          }
-
-
-      }
-
-      let value = parseInt(result.groups["value"]);
-      let hasValue = true;
-      if (isNaN(value)) {
-        hasValue = false;
-      }
-      let resultValue: number | undefined = undefined;
-      let valueUnit: string | undefined = undefined;
-      if (hasValue) {
-        resultValue = value;
-        valueUnit = result.groups["value"].replace(/[-+0-9]/g, '');
-      }
-
-
-      resultInfo.push({
-        name: (prefix === "") ? resultName : prefix + ":" + resultName,
-        hasValue: hasValue,
-        valueUnit: valueUnit,
-        value: resultValue
-      });
-    }
-
-    return resultInfo;
   }
 
 
@@ -218,8 +148,7 @@ export default class EquipmentList extends Vue {
       }
 
       let nameFilter = this.nameFilter;
-      if(nameFilter !== "")
-      {
+      if (nameFilter !== "") {
         nameFilter = this.kataToHira(this.fullWidthStrToHalfWidthStr(nameFilter));
         let funcKataHira = this.kataToHira;
         let funcFullTohalf = this.fullWidthStrToHalfWidthStr;
@@ -239,16 +168,14 @@ export default class EquipmentList extends Vue {
         });
       }
 
-      if (this.limiters.length !== 0)
-      {
-        for (let i = 0; i < this.limiters.length; i++)
-        {
-          if(this.limiters[i].isActive === false){
+      if (this.limiters.length !== 0) {
+        for (let i = 0; i < this.limiters.length; i++) {
+          if (this.limiters[i].isActive === false) {
             continue;
           }
 
           let testPropName = this.limiters[i].property;
-          if(testPropName === ""){
+          if (testPropName === "") {
             continue;
           }
           let min = this.limiters[i].minValue;
@@ -259,12 +186,9 @@ export default class EquipmentList extends Vue {
             let testPassed = false;
 
             // match test
-            for(let prop of props)
-            {
-              if (funcFull2Half(prop.name.toLowerCase()) == funcFull2Half(testPropName.toLowerCase()))
-              {
-                if (prop.hasValue && prop.value != undefined)
-                {
+            for (let prop of props) {
+              if (funcFull2Half(prop.name.toLowerCase()) == funcFull2Half(testPropName.toLowerCase())) {
+                if (prop.hasValue && prop.value != undefined) {
                   if (Math.abs(prop.value) >= min) {
                     testPassed = true;
                   }
@@ -282,25 +206,6 @@ export default class EquipmentList extends Vue {
     }
   }
 
-  public kataToHira(text:string):string {
-    return text.replace(/[\u30a1-\u30f6]/g, function(match) {
-      let chr = match.charCodeAt(0) - 0x60;
-      return String.fromCharCode(chr);
-    });
-  }
-
-  public hiraToKata(text:string):string {
-    return text.replace(/[\u3041-\u3096]/g, function(match) {
-      let chr = match.charCodeAt(0) + 0x60;
-      return String.fromCharCode(chr);
-    });
-  }
-
-  public fullWidthStrToHalfWidthStr(text:string):string {
-    return text.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function(match) {
-      return String.fromCharCode(match.charCodeAt(0) - 0xFEE0);
-    });
-  }
 
   public addLimiter(): void {
     this.limiters.push({
@@ -321,15 +226,14 @@ export default class EquipmentList extends Vue {
 
   }
 
-  public limiterChanged(obj:Record<string,any>):void{
-    if(obj["index"] != undefined){
-      for(let limiter of this.limiters){
-        if(limiter.index == obj["index"])
-        {
-          if(obj["property"] != undefined){
-            limiter.property = obj["property"].replace("：",":");
+  public limiterChanged(obj: Record<string, any>): void {
+    if (obj["index"] != undefined) {
+      for (let limiter of this.limiters) {
+        if (limiter.index == obj["index"]) {
+          if (obj["property"] != undefined) {
+            limiter.property = obj["property"].replace("：", ":");
           }
-          if(obj["minValue"] != undefined){
+          if (obj["minValue"] != undefined) {
             limiter.minValue = obj["minValue"];
           }
           this.queryChanged();
@@ -338,11 +242,10 @@ export default class EquipmentList extends Vue {
     }
   }
 
-  public limiterActiveChanged(obj:Record<string,any>):void{
-    if(obj["index"] != undefined){
-      for(let limiter of this.limiters){
-        if(limiter.index == obj["index"])
-        {
+  public limiterActiveChanged(obj: Record<string, any>): void {
+    if (obj["index"] != undefined) {
+      for (let limiter of this.limiters) {
+        if (limiter.index == obj["index"]) {
           limiter.isActive = obj["isActive"];
           this.queryChanged();
         }

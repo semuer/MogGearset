@@ -16,11 +16,12 @@
 
 <script lang="ts">
 
-import {Component, Prop, Vue, Watch} from "vue-property-decorator";
-import {Equipment, EquipSet, PropertyInfo} from "@/@types/equip-set";
+import {Component, Mixins, Prop, Watch} from "vue-property-decorator";
+import {Equipment, EquipSet} from "@/@types/equip-set";
+import xiUtils from "@/mixins/xiutils";
 
 @Component
-export default class EquipSetPerformanceView extends Vue {
+export default class EquipSetPerformanceView extends Mixins(xiUtils) {
 
   headers = [
     {
@@ -112,73 +113,6 @@ export default class EquipSetPerformanceView extends Vue {
 
       }
     }
-  }
-
-  public getPropertiesArray(item: Equipment): PropertyInfo[] {
-    let resultInfo: PropertyInfo[] = [];
-
-
-    if (item.JpDescription == null || item.JpDescription.trim() === "") {
-      return resultInfo;
-    }
-
-    let props = item.JpDescription.split(/[ \n]/).filter(i => i);
-    let propRegex = /(?<name>[^\d%+-]+)(?<value>[\d%+-]+)?(?<suffix>[^ /n]+)?$/;
-
-    let prefix:string = "";
-    for(let prop of props) {
-
-      let result = prop.match(propRegex);
-      if (result == null) {
-        console.log("Cannot parse prop:" + prop);
-        continue;
-      }
-      if (result.groups == undefined) {
-        console.log("Cannot parse prop:" + prop);
-        continue;
-      }
-
-      let resultName = result.groups["suffix"] == undefined ? result.groups["name"]:result.groups["name"]+result.groups["suffix"];
-      if(resultName == null){
-        continue;
-      }
-      if(resultName.includes(":") || resultName.includes("："))
-      {
-        let matches = resultName.match(/.+(?=[:：])/);
-        if(matches != null && matches.length !== 0){
-          prefix = matches[0];
-        }
-
-        let propNameMatches = resultName.match(/[:：](.+)/);
-        if(propNameMatches != null && propNameMatches.length > 1){
-          resultName = propNameMatches[1];
-        }
-
-
-      }
-
-      let value = parseInt(result.groups["value"]);
-      let hasValue = true;
-      if (isNaN(value)) {
-        hasValue = false;
-      }
-      let resultValue: number | undefined = undefined;
-      let valueUnit: string | undefined = undefined;
-      if (hasValue) {
-        resultValue = value;
-        valueUnit = result.groups["value"].replace(/[-+0-9]/g, '');
-      }
-
-
-      resultInfo.push({
-        name: (prefix === "") ? resultName : prefix + ":" + resultName,
-        hasValue: hasValue,
-        valueUnit: valueUnit,
-        value: resultValue
-      });
-    }
-
-    return resultInfo;
   }
 
 }

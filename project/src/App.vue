@@ -20,7 +20,7 @@
 
       <v-navigation-drawer left permanent app clipped :width="navigationWidth" class="fill-height">
         <equipment-list :equip-query-chain="equipQueryChain" v-on:select="equipItem" class="fill-height pa-0 ma-0"
-                        style="width:100%;" :equipSlot="selectedSlot"/>
+                        style="width:100%;" :equipSlot="selectedSlot" :propsArray="propsArray"/>
       </v-navigation-drawer>
       <v-container fluid class="grey lighten-5 pa-4">
         <v-row class="ma-0 pa-0 pr-1">
@@ -93,6 +93,7 @@ export default class App extends Vue {
   dirtyFlag: Boolean = false;
   equipQueryChain: Object | null = null;
   navigationWidth: number = 0;
+  propsArray: string[] = [];
 
   public onJobChanged(): void {
     return;
@@ -181,7 +182,11 @@ export default class App extends Vue {
           this.editEquipSet = {};
         })
 
-
+    fetch(process.env.BASE_URL + 'json/parsedprops.json')
+        .then(response => response.json())
+        .then(data => {
+          this.propsArray = data as string[];
+        })
   }
 }
 
