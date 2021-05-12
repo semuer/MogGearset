@@ -1,6 +1,6 @@
 <template>
   <v-container style="min-height:300px;width:100%;display: table">
-    <v-sheet tile outlined style="width:100%;display:table-row;" class="pa-0 ma-0">
+    <v-sheet tile outlined style="width:100%;display:table-row;" class="pa-0 ma-0 pb-1" elevation="1" rounded>
       <v-row class="pl-1 pr-1 ma-2 align-center justify-center">
         <v-checkbox
             v-model="isLevel99"
@@ -21,7 +21,7 @@
         <v-btn v-on:click="addLimiter" dense small elevation="1" color="blue lighten-3">フィルター追加</v-btn>
       </v-row>
       <equipment-property-limit-unit
-          class="pl-1 pr-1 pt-1 pb-1 ma-2"
+          class="pl-0 pr-3 pt-1 pb-1 ma-2"
           :limiters="limiters"
           :props-array="propsArray"
           @delete="deleteLimiter"
@@ -33,7 +33,7 @@
         class="fill-height" style="width:100%;min-height:100px;display:table-row;">
       <DynamicScroller
           :items="equipData"
-          :min-item-size="55"
+          :min-item-size="70"
           class="pa-0 ma-0 fill-height"
           style="width:100%;"
           key-field="Id"
@@ -51,7 +51,7 @@
                 :value="item"
                 class="align-center"
             >
-              <v-list-item-icon>
+              <v-list-item-icon class="pr-0 mr-3">
                 <v-btn v-on:click="$emit('select',item)"
                        elevation="1"
                        x-small fab dark color="blue lighten-2"

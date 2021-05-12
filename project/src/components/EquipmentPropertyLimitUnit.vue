@@ -1,9 +1,9 @@
 <template>
-  <v-container class="pt-6 ma-0">
+  <v-container class="pt-3 ma-0">
     <v-row
         v-for="limiter in limiters"
         v-bind:key="limiter.index"
-        class="pl-2 pr-2 pb-2 align-center"
+        class="pl-2 pr-2 pb-1 mb-0 align-center"
         no-gutters>
       <v-col cols="1">
       <v-checkbox
@@ -16,7 +16,7 @@
                       :filter="autoCompleteFilter"
                       label="性能"
                       type="text"
-                      class="pr-2"
+                      class="mr-2"
                       @click:clear="$emit('valueChanged', {index:limiter.index, property:''})"
                       @change="$emit('valueChanged', {index:limiter.index, property:$event})"
                       outlined
@@ -30,16 +30,16 @@
           label="最小値"
           outlined
           dense
-          value=0
+          value="0"
           type="number"
           hide-details
-          class="pr-0 mr-1"
+          class="pr-0 mr-2"
           v-on:input="$emit('valueChanged', {index:limiter.index, minValue:$event})"
-          v-on:clear="$emit('valueChanged', {index:limiter.index, minValue:0})"
+          v-on:clear="$emit('valueChanged', {index:limiter.index, minValue:0});"
           clearable
       ></v-text-field>
       </v-col>
-      <v-col cols="1" class="pr-1 pl-0">
+      <v-col cols="1" class="pr-1 pl-1">
       <v-btn v-on:click="$emit('delete',limiter.index)" elevation="1"
              x-small fab dark color="red lighten-2">✖</v-btn>
       </v-col>
