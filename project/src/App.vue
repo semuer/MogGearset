@@ -126,7 +126,7 @@ export default class App extends Vue {
       this.navigationWidth = 0;
       return;
     }
-    this.navigationWidth = 450;
+    this.navigationWidth = 700;
     let slotToIdDict: Record<string, number> = {
       Main: 0,
       Sub: 1,
