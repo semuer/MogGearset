@@ -62,13 +62,36 @@ export default class EquipSetPerformanceView extends Vue {
         {
           let added = false;
           let nameWithUnit = prop.valueUnit?prop.name + "(" + prop.valueUnit + ")" : prop.name;
+          if(prop.name == "DMG" || prop.name == "隔" || prop.name == "Ｄ" || prop.name == "Delay")
+          {
+            switch(slotName)
+            {
+              case "Main":
+                nameWithUnit += "(主)";
+                break;
+              case "Sub":
+                nameWithUnit += "(副)";
+                break;
+              case "Range":
+                nameWithUnit += "(遠)";
+                break;
+              case "Ammo":
+                nameWithUnit += "(弾)";
+                break;
+            }
+          }
           for(let info of this.calculatedInfo)
           {
-
-            if(info.NameWithUnit == nameWithUnit && info.HasValue == prop.hasValue) {
-              if (prop.hasValue && prop.value !== undefined) {
-                if(info.WithoutSubValue !== undefined  && slotName !== "Sub") info.WithoutSubValue += prop.value;
-                if (info.TotalValue !== undefined) {
+            if(info.NameWithUnit == nameWithUnit && info.HasValue == prop.hasValue)
+            {
+              if (prop.hasValue && prop.value !== undefined)
+              {
+                if(info.WithoutSubValue !== undefined  && slotName !== "Sub")
+                {
+                  info.WithoutSubValue += prop.value;
+                }
+                if (info.TotalValue !== undefined)
+                {
                   info.TotalValue += prop.value;
                 }
               }

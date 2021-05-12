@@ -96,20 +96,26 @@ export default class EquipmentList extends Vue {
 
   nonILSlots : string[] = ["Cape", "Neck", "Waist", "L.Earring", "R.Earring", "L.Ring", "R.Ring"];
 
-  get slotHasItemLevel(): boolean{
-    if(this.equipSlot != undefined && this.nonILSlots.includes(this.equipSlot)){
+  get slotHasItemLevel(): boolean
+  {
+    if(this.equipSlot != undefined && this.nonILSlots.includes(this.equipSlot))
+    {
       return false;
     }
     return true;
   }
 
-  get highlightArray(): RegExp[]{
+  get highlightArray(): RegExp[]
+  {
     let result:RegExp[] = [];
-    for(let limiter of this.limiters){
-      if(limiter.property !== "" && limiter.isActive){
+    for(let limiter of this.limiters)
+    {
+      if(limiter.property !== "" && limiter.isActive)
+      {
         let propName = limiter.property;
         let propNameMatches = propName.match(/[:：](.+)/);
-        if(propNameMatches != null && propNameMatches.length > 1){
+        if(propNameMatches != null && propNameMatches.length > 1)
+        {
           propName = propNameMatches[1];
         }
         result.push(new RegExp("(^|[ \n\b:：])" + propName + "(?=[\n +\\-\b0-9])", "i"));
@@ -247,15 +253,18 @@ export default class EquipmentList extends Vue {
           }
           let min = this.limiters[i].minValue;
           let funcGetProps = this.getPropertiesArray;
-
+          let funcFull2Half = this.fullWidthStrToHalfWidthStr;
           chain = chain.where(function (obj: Equipment) {
             let props = funcGetProps(obj);
             let testPassed = false;
 
             // match test
-            for(let prop of props){
-              if (prop.name.toLowerCase() == testPropName.toLowerCase()) {
-                if (prop.hasValue && prop.value != undefined) {
+            for(let prop of props)
+            {
+              if (funcFull2Half(prop.name.toLowerCase()) == funcFull2Half(testPropName.toLowerCase()))
+              {
+                if (prop.hasValue && prop.value != undefined)
+                {
                   if (Math.abs(prop.value) >= min) {
                     testPassed = true;
                   }
