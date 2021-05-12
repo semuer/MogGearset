@@ -1,7 +1,7 @@
 <template>
   <v-container style="min-height:300px;width:100%;display: table">
     <v-sheet tile outlined style="width:100%;display:table-row;" class="pa-0 ma-0">
-      <v-row class="pl-1 pr-1 pt-0 pb-0 ma-2">
+      <v-row class="pl-1 pr-1 ma-2 align-center justify-center">
         <v-checkbox
             v-model="isLevel99"
             label="Lv99"
@@ -14,7 +14,7 @@
             label="IL119"
             hide-details
         ></v-checkbox>
-        <v-text-field class="pt-2 pl-2" clearable label="名前" v-model="nameFilter" @click:clear="nameFilterCleared" outlined hide-details dense></v-text-field>
+        <v-text-field class="pl-2 pt-2" clearable label="名前" v-model="nameFilter" @click:clear="nameFilterCleared" outlined hide-details dense></v-text-field>
       </v-row>
 
       <v-row class="pl-4 ml-0 pb-1">
@@ -49,20 +49,27 @@
                 :key="item['Id']"
                 two-line
                 :value="item"
+                class="align-center"
             >
               <v-list-item-icon>
-                <v-btn v-on:click="$emit('select',item)">選択</v-btn>
+                <v-btn v-on:click="$emit('select',item)"
+                       elevation="1"
+                       x-small fab dark color="blue lighten-2"
+                       class="mt-2"
+                >✓</v-btn>
               </v-list-item-icon>
               <v-list-item-content>
-                <v-list-item-title>{{item['JpFull']}}
-                  <v-chip small label color="pink" text-color="white">{{"Lv."+item['Level']}}</v-chip>
-                  <v-chip v-if="item['ItemLevel'] != undefined" small label color="purple" text-color="white">{{"IL."+item['ItemLevel']}}</v-chip>
-                  <v-chip v-if="item['SuLevel'] != undefined" small label color="blue" text-color="white">{{"Su"+item['SuLevel']}}</v-chip>
+                <v-list-item-title class="align-center">{{item['JpFull']}}
+                  <v-chip x-small label color="pink" text-color="white" class="mr-1">{{"Lv."+item['Level']}}</v-chip>
+                  <v-chip v-if="item['ItemLevel'] != undefined" x-small label color="purple" text-color="white" class="mr-1">{{"IL."+item['ItemLevel']}}</v-chip>
+                  <v-chip v-if="item['SuLevel'] != undefined" x-small label color="blue" text-color="white" class="mr-1">{{"Su"+item['SuLevel']}}</v-chip>
                 </v-list-item-title>
                 <v-list-item-subtitle class="text-wrap"> <text-highlight :queries="highlightArray" :wholeWordMatch=true>{{item['JpDescription']}}</text-highlight></v-list-item-subtitle>
+
               </v-list-item-content>
             </v-list-item>
           </DynamicScrollerItem>
+          <v-divider/>
         </template>
 
       </DynamicScroller>

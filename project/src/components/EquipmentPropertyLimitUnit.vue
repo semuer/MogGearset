@@ -3,15 +3,15 @@
     <v-row
         v-for="limiter in limiters"
         v-bind:key="limiter.index"
-        class="pl-2 pr-2 pb-2"
+        class="pl-2 pr-2 pb-2 align-center"
         no-gutters>
       <v-col cols="1">
       <v-checkbox
           :input-value="true"
-          class="pt-0 mt-2"
+          class="pt-0"
           @change="$emit('activeChanged', {index:limiter.index, isActive:$event})" />
       </v-col>
-      <v-col cols="6">
+      <v-col cols="7">
       <v-autocomplete :items="propsArray"
                       :filter="autoCompleteFilter"
                       label="性能"
@@ -25,7 +25,7 @@
                       dense
                       style="min-width:50px"/>
       </v-col>
-      <v-col cols="4">
+      <v-col cols="3">
       <v-text-field
           label="最小値"
           outlined
@@ -33,10 +33,9 @@
           value=0
           type="number"
           hide-details
-          class="pr-0"
+          class="pr-0 mr-1"
           v-on:input="$emit('valueChanged', {index:limiter.index, minValue:$event})"
           v-on:clear="$emit('valueChanged', {index:limiter.index, minValue:0})"
-          style="min-width:120px;max-width:120px"
           clearable
       ></v-text-field>
       </v-col>
