@@ -16,7 +16,7 @@
 
     </v-list-item-content>
     <v-list-item-icon class="pr-0 mr-3">
-      <v-btn v-on:click="$emit('select',source)"
+      <v-btn v-on:click="onSelectItem"
              elevation="1"
              x-small fab dark color="blue lighten-2"
              class="mt-2"
@@ -27,25 +27,20 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "EquipmentListItem",
-  props: {
-    index: { // index of current item
-      type: Number
-    },
-    source: { // here is: {uid: 'unique_1', text: 'abc'}
-      type: Object,
-      default () {
-        return {}
-      }
-    },
-    limiters:{
-      type: Array
-    }
-  },
-  computed:{
-    highlightArray: function()  {
+<script lang="ts">
+
+import {Component, Mixins, Prop} from "vue-property-decorator";
+import scrollerUtils from "@/mixins/scrollerUtils";
+import {Equipment, Limiter} from "@/@types/equip-set";
+
+@Component
+export default class EquipmentListItem extends Mixins(scrollerUtils) {
+  @Prop() readonly index!: number;
+  @Prop() readonly source!: Equipment;
+  @Prop() readonly limiters!: Limiter[];
+
+  get highlightArray()
+  {
       let result = [];
       for (let limiter of this.limiters) {
         if (limiter.property !== "" && limiter.isActive) {
@@ -57,9 +52,11 @@ export default {
           result.push(new RegExp("(^|[ \n\b:：])" + propName + "(?=[\n +\\-\b0-9])", "i"));
         }
       }
-
       return result;
-    }
+  }
+
+  public onSelectItem(){
+    this.dispatch('EquipmentList','select', this.source);
   }
 }
 </script>

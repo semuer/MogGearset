@@ -100,7 +100,6 @@ export default class App extends Vue {
   }
 
   public equipItem(item: Equipment): void {
-    console.log("set" + item.En);
     Vue.set(this.editEquipSet,this.selectedSlot, item);
     this.dirtyFlag = !this.dirtyFlag;
   }
@@ -126,7 +125,7 @@ export default class App extends Vue {
       this.navigationWidth = 0;
       return;
     }
-    this.navigationWidth = 700;
+    this.navigationWidth = 450;
     let slotToIdDict: Record<string, number> = {
       Main: 0,
       Sub: 1,

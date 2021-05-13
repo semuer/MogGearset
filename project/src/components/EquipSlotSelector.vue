@@ -37,7 +37,6 @@ export default {
   },
   computed: {
     itemName: function () {
-      console.log("computed" + this.item)
       if (this.item != null && Object.keys(this.item).length !== 0) {
         return this.item["Jp"];
       } else {
