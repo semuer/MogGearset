@@ -110,4 +110,11 @@ export default class xiUtils extends Vue {
             return String.fromCharCode(match.charCodeAt(0) - 0xFEE0);
         });
     }
+
+    public IsRare(flag:number){
+        return (flag & (1 << 15)) !== 0;
+    }
+    public IsEx(flag:number){
+        return (flag & (1 << 14)) !== 0;
+    }
 }

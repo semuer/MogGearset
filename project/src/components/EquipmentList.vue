@@ -109,7 +109,7 @@ export default class EquipmentList extends Mixins(xiUtils) {
       if (this.isLevel99) {
         query["Level"] = 99;
       }
-      if (this.isItemLevel119 && this.slotHasItemLevel === true) {
+      if (this.isItemLevel119 && this.slotHasItemLevel) {
         query["ItemLevel"] = 119;
       }
       if (Object.keys(query).length !== 0) {
@@ -139,7 +139,7 @@ export default class EquipmentList extends Mixins(xiUtils) {
 
       if (this.limiters.length !== 0) {
         for (let i = 0; i < this.limiters.length; i++) {
-          if (this.limiters[i].isActive === false) {
+          if (!this.limiters[i].isActive) {
             continue;
           }
 
@@ -172,9 +172,9 @@ export default class EquipmentList extends Mixins(xiUtils) {
       }
 
       this.equipData = Object.freeze(chain.data());
-      let list = this.$refs["v-scroller"]  as InstanceType<typeof VirtualList>;
-      list.scrollToIndex(0);
     }
+    let list = this.$refs["v-scroller"]  as InstanceType<typeof VirtualList>;
+    list.scrollToOffset(0);
   }
 
 
