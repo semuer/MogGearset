@@ -100,6 +100,7 @@ export default class App extends Vue {
   }
 
   public equipItem(item: Equipment): void {
+    console.log("equipped");
     Vue.set(this.editEquipSet,this.selectedSlot, item);
     this.dirtyFlag = !this.dirtyFlag;
   }

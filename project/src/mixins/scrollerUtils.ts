@@ -11,6 +11,7 @@ export default class scrollerUtils extends Vue {
                 if (parent) {
                     name = parent.$options.name
                 }
+                console.log("comp name" + name);
             }
             if (parent) {
                 parent.$emit.apply(parent, [eventName ,...rest])
