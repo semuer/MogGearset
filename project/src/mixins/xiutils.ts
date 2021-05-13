@@ -3,6 +3,7 @@ import {Equipment, PropertyInfo} from "@/@types/equip-set";
 
 @Component
 export default class xiUtils extends Vue {
+
     public getPropertiesArray(item: Equipment): PropertyInfo[] {
         const resultInfo: PropertyInfo[] = [];
 
@@ -12,7 +13,7 @@ export default class xiUtils extends Vue {
         }
 
         const props = item.JpDescription.split(/[ \n]/).filter(i => i);
-        const propRegex = /(?<name>[^\d%～~+-]+)(?<value>[\d%～~+-]+)?(?<suffix>[^ /n]+)?$/i;
+        const propRegex = /(?<name>[^\d%～~+-]+)(?<value>[\d%～~+-]+)?(?<suffix>[^ \n]+)?$/i;
 
         let prefix:string = "";
         for(const prop of props) {
