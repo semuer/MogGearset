@@ -43,7 +43,6 @@ export default class EquipSetPerformanceView extends Mixins(xiUtils) {
   @Watch('equipSetInfo',{ immediate:true,deep:true})
   equipSetInfoChanged()
   {
-    console.log("changed");
     this.calculatedInfo = [];
       if(this.equipSetInfo == null)
       {

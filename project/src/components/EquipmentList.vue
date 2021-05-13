@@ -1,7 +1,7 @@
 <template>
-  <v-container style="min-height:300px;width:100%;display: table">
-    <v-sheet tile outlined style="width:100%;display:table-row;" class="pa-0 ma-0 pb-1" elevation="1" rounded>
-      <v-row class="pl-1 pr-1 ma-2 align-center justify-center">
+  <v-container style="height: 100%;display:flex;flex-flow:column;width:100%">
+    <v-sheet tile outlined style="width: 100%;flex: 1 1 auto;" class="pa-0 ma-0 pb-1" elevation="1" rounded>
+      <v-row class="pl-1 pr-1 ma-2" style="width: 100%;">
         <v-checkbox
             v-model="isLevel99"
             label="Lv99"
@@ -14,7 +14,10 @@
             label="IL119"
             hide-details
         ></v-checkbox>
-        <v-text-field class="pl-2 pt-2" clearable label="名前" v-model="nameFilter" @click:clear="nameFilterCleared" outlined hide-details dense></v-text-field>
+      </v-row>
+      <v-row class="pl-1 pr-1 ma-2 align-center justify-center">
+        <v-text-field class="pl-2 pt-2" clearable label="名前" v-model="nameFilter" @click:clear="nameFilterCleared"
+                      outlined hide-details dense></v-text-field>
       </v-row>
 
       <v-row class="pl-4 ml-0 pb-1">
@@ -29,51 +32,18 @@
           @activeChanged="limiterActiveChanged"
       />
     </v-sheet>
-    <v-list-item-group
-        class="fill-height" style="width:100%;min-height:100px;display:table-row;">
-      <DynamicScroller
-          :items="equipData"
-          :min-item-size="70"
-          class="pa-0 ma-0 fill-height"
-          style="width:100%;"
-          key-field="Id"
-      >
-        <template v-slot="{ item, index, active }">
-          <DynamicScrollerItem
-              :item="item"
-              :active="active"
-              :size-dependencies="[]"
-              :data-index="index"
-          >
-            <v-list-item
-                :key="item['Id']"
-                two-line
-                :value="item"
-                class="align-center"
-            >
-              <v-list-item-icon class="pr-0 mr-3">
-                <v-btn v-on:click="$emit('select',item)"
-                       elevation="1"
-                       x-small fab dark color="blue lighten-2"
-                       class="mt-2"
-                >✓</v-btn>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title class="align-center">{{item['JpFull']}}
-                  <v-chip x-small label color="pink" text-color="white" class="mr-1">{{"Lv."+item['Level']}}</v-chip>
-                  <v-chip v-if="item['ItemLevel'] != undefined" x-small label color="purple" text-color="white" class="mr-1">{{"IL."+item['ItemLevel']}}</v-chip>
-                  <v-chip v-if="item['SuLevel'] != undefined" x-small label color="blue" text-color="white" class="mr-1">{{"Su"+item['SuLevel']}}</v-chip>
-                </v-list-item-title>
-                <v-list-item-subtitle class="text-wrap"> <text-highlight :queries="highlightArray" :wholeWordMatch=true>{{item['JpDescription']}}</text-highlight></v-list-item-subtitle>
+     <v-list-item-group
+            class="fill-height" style="width:100%;min-height:100px;flex: 0 1 auto;">
+          <virtual-list style="overflow-y: auto;"
+                        class="fill-height"
+                        ref="v-scroller"
+                        :data-key="'Id'"
+                        :data-sources="equipData"
+                        :data-component="itemComponent"
+                        :extra-props="{limiters:limiters}"
+                        :estimate-size=35></virtual-list>
+        </v-list-item-group>
 
-              </v-list-item-content>
-            </v-list-item>
-          </DynamicScrollerItem>
-          <v-divider/>
-        </template>
-
-      </DynamicScroller>
-    </v-list-item-group>
   </v-container>
 </template>
 
@@ -83,11 +53,15 @@ import {Equipment, Limiter} from "@/@types/equip-set";
 import xiUtils from "@/mixins/xiutils";
 import EquipmentPropertyLimitUnit from "@/components/EquipmentPropertyLimitUnit.vue";
 import TextHighlight from "vue-text-highlight"
+import VirtualList from 'vue-virtual-scroll-list'
+import EquipmentListItem from '@/components/EquipmentListItem'
 
 @Component({
   components: {
     EquipmentPropertyLimitUnit,
-    TextHighlight
+    TextHighlight,
+    VirtualList,
+    EquipmentListItem
   }
 })
 export default class EquipmentList extends Mixins(xiUtils) {
@@ -96,6 +70,8 @@ export default class EquipmentList extends Mixins(xiUtils) {
   isLevel99: boolean = false;
   isItemLevel119: boolean = false;
   nameFilter: string = "";
+
+  itemComponent = EquipmentListItem;
 
   @Prop({default: ""}) readonly equipSlot: string | undefined;
 
@@ -113,21 +89,6 @@ export default class EquipmentList extends Mixins(xiUtils) {
     return true;
   }
 
-  get highlightArray(): RegExp[] {
-    let result: RegExp[] = [];
-    for (let limiter of this.limiters) {
-      if (limiter.property !== "" && limiter.isActive) {
-        let propName = limiter.property;
-        let propNameMatches = propName.match(/[:：](.+)/);
-        if (propNameMatches != null && propNameMatches.length > 1) {
-          propName = propNameMatches[1];
-        }
-        result.push(new RegExp("(^|[ \n\b:：])" + propName + "(?=[\n +\\-\b0-9])", "i"));
-      }
-    }
-
-    return result;
-  }
 
   public nameFilterCleared() {
     this.nameFilter = "";
@@ -210,6 +171,8 @@ export default class EquipmentList extends Mixins(xiUtils) {
       }
 
       this.equipData = Object.freeze(chain.data());
+      let list = this.$refs["v-scroller"]  as InstanceType<typeof VirtualList>;
+      list.scrollToIndex(0);
     }
   }
 
@@ -259,8 +222,14 @@ export default class EquipmentList extends Mixins(xiUtils) {
       }
     }
   }
-}
 
+  created(){
+    // this.$on('select', (item:Equipment) => {
+    //   console.log("emit1")
+    //   this.$emit('select',item);
+    // })
+  }
+}
 
 
 </script>
