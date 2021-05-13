@@ -35,6 +35,8 @@ export interface Equipment{
     EnDescription:string;
     JpDescription:string;
     Damage?:number;
+    ShieldSize?:number;
+    Flags?:number;
 }
 
 export interface EquipSet extends Record<string,Equipment>{
