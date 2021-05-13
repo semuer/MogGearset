@@ -62,7 +62,8 @@ import EquipmentListItem from '@/components/EquipmentListItem.vue'
     TextHighlight,
     VirtualList,
     EquipmentListItem
-  }
+  },
+  name: "EquipmentList"
 })
 export default class EquipmentList extends Mixins(xiUtils) {
   selectedItem: number = 1;

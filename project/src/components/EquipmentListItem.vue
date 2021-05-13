@@ -57,7 +57,6 @@ export default class EquipmentListItem extends Mixins(scrollerUtils) {
 
   public onSelectItem(){
     this.dispatch('EquipmentList','select', this.source);
-    console.log("dispatched");
   }
 }
 </script>
