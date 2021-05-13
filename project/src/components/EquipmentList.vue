@@ -54,7 +54,7 @@ import xiUtils from "@/mixins/xiutils";
 import EquipmentPropertyLimitUnit from "@/components/EquipmentPropertyLimitUnit.vue";
 import TextHighlight from "vue-text-highlight"
 import VirtualList from 'vue-virtual-scroll-list'
-import EquipmentListItem from '@/components/EquipmentListItem'
+import EquipmentListItem from '@/components/EquipmentListItem.vue'
 
 @Component({
   components: {
