@@ -74,4 +74,5 @@ export interface Limiter {
     isSort: boolean,
     isText: boolean,
     isProp: boolean,
+    isAsc: boolean,
 }

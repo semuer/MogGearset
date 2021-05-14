@@ -73,6 +73,39 @@
                  x-small fab dark color="red lighten-2">✖</v-btn>
         </v-col>
       </v-row>
+      <!-- Sorting -->
+      <v-row v-if="limiter.isSort && !limiter.isText"
+             no-gutters class="align-center pt-0">
+        <v-col cols="1">
+          <v-checkbox
+              :input-value="true"
+              class=""
+              @change="$emit('activeChanged', {index:limiter.index, isActive:$event})" />
+        </v-col>
+        <v-col cols="7">
+          <v-autocomplete :items="propsArray"
+                          :filter="autoCompleteFilter"
+                          label="性能"
+                          type="text"
+                          class="mr-2"
+                          @click:clear="$emit('valueChanged', {index:limiter.index, property:''})"
+                          @change="$emit('valueChanged', {index:limiter.index, property:$event})"
+                          outlined
+                          clearable
+                          hide-details
+                          dense
+                          style="min-width:50px"/>
+        </v-col>
+        <v-col cols="3">
+          <v-checkbox :input-value="false"
+                      class=""
+                      @change="$emit('sortOrderChanged', {index:limiter.index, isAsc:$event})">昇順</v-checkbox>
+        </v-col>
+        <v-col cols="1">
+          <v-btn v-on:click="$emit('delete',limiter.index)" elevation="1"
+                 x-small fab dark color="red lighten-2">✖</v-btn>
+        </v-col>
+      </v-row>
     </v-list-item>
   </v-container>
 </template>

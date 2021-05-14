@@ -21,7 +21,7 @@
       <v-row class="pb-1 pt-2 justify-space-around align-center" no-gutters>
         <v-btn v-on:click="addLimiter" class="pr-2" dense small elevation="1" color="blue lighten-3">+性能一致</v-btn>
         <v-btn v-on:click="addTextLimiter" class="pr-2" dense small elevation="1" color="purple lighten-3">+文書検索</v-btn>
-        <v-btn v-on:click="addLimiter" class="" dense small elevation="1" color="orange lighten-3">+並べ替え</v-btn>
+        <v-btn v-on:click="addSorter" class="" dense small elevation="1" color="orange lighten-3">+並べ替え</v-btn>
       </v-row>
       <equipment-property-limit-unit
           class="pl-0 pr-3 pt-1 pb-1 ma-2"
@@ -30,6 +30,7 @@
           @delete="deleteLimiter"
           @valueChanged="limiterChanged"
           @activeChanged="limiterActiveChanged"
+          @sortOrderChanged=""
       />
     </v-sheet>
      <v-list-item-group
@@ -200,6 +201,7 @@ export default class EquipmentList extends Mixins(xiUtils) {
       isSort: false,
       isText: false,
       isProp: true,
+      isAsc: false,
     });
   }
 
@@ -211,7 +213,21 @@ export default class EquipmentList extends Mixins(xiUtils) {
       isActive: true,
       isSort: false,
       isText: true,
-      isProp: false
+      isProp: false,
+      isAsc: false,
+    });
+  }
+
+  public addSorter():void{
+    this.limiters.push({
+      index: Date.now(),
+      property: "",
+      minValue: 0,
+      isActive: true,
+      isSort: true,
+      isText: false,
+      isProp: false,
+      isAsc: false
     });
   }
 
@@ -245,6 +261,17 @@ export default class EquipmentList extends Mixins(xiUtils) {
       for (let limiter of this.limiters) {
         if (limiter.index == obj["index"]) {
           limiter.isActive = obj["isActive"];
+          this.queryChanged();
+        }
+      }
+    }
+  }
+
+  public sortOrderChanged(obj: Record<string, any>): void {
+    if (obj["index"] != undefined) {
+      for (let limiter of this.limiters) {
+        if (limiter.index == obj["index"]) {
+          limiter.isAsc = obj["isAsc"];
           this.queryChanged();
         }
       }
