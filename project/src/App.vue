@@ -33,22 +33,22 @@
                   v-model="selectedSlot"
                   active-class="highlight-border"
               >
-                <equip-slot-selector label-name="Main" @clearSlot="clearSlot" :item="editEquipSet.Main" :dirty="dirtyFlag"/>
-                <equip-slot-selector label-name="Sub" @clearSlot="clearSlot" :item="editEquipSet.Sub" :dirty="dirtyFlag"/>
-                <equip-slot-selector label-name="Range" @clearSlot="clearSlot" :item="editEquipSet.Range" :dirty="dirtyFlag"/>
-                <equip-slot-selector label-name="Ammo" @clearSlot="clearSlot" :item="editEquipSet.Ammo" :dirty="dirtyFlag"/>
-                <equip-slot-selector label-name="Head" @clearSlot="clearSlot" :item="editEquipSet.Head" :dirty="dirtyFlag"/>
-                <equip-slot-selector label-name="Neck" @clearSlot="clearSlot" :item="editEquipSet.Neck" :dirty="dirtyFlag"/>
-                <equip-slot-selector label-name="L.Earring" @clearSlot="clearSlot" :item="editEquipSet['L.Earring']" :dirty="dirtyFlag"/>
-                <equip-slot-selector label-name="R.Earring" @clearSlot="clearSlot" :item="editEquipSet['R.Earring']" :dirty="dirtyFlag"/>
-                <equip-slot-selector label-name="Body" @clearSlot="clearSlot" :item="editEquipSet['Body']" :dirty="dirtyFlag"/>
-                <equip-slot-selector label-name="Hands" @clearSlot="clearSlot" :item="editEquipSet['Hands']" :dirty="dirtyFlag"/>
-                <equip-slot-selector label-name="L.Ring" @clearSlot="clearSlot" :item="editEquipSet['L.Ring']" :dirty="dirtyFlag"/>
-                <equip-slot-selector label-name="R.Ring" @clearSlot="clearSlot" :item="editEquipSet['R.Ring']" :dirty="dirtyFlag"/>
-                <equip-slot-selector label-name="Cape" @clearSlot="clearSlot" :item="editEquipSet['Cape']" :dirty="dirtyFlag"/>
-                <equip-slot-selector label-name="Waist" @clearSlot="clearSlot" :item="editEquipSet['Waist']" :dirty="dirtyFlag"/>
-                <equip-slot-selector label-name="Legs" @clearSlot="clearSlot" :item="editEquipSet['Legs']" :dirty="dirtyFlag"/>
-                <equip-slot-selector label-name="Feet" @clearSlot="clearSlot" :item="editEquipSet['Feet']" :dirty="dirtyFlag"/>
+                <equip-slot-selector label-name="Main" index-name="Main" @clearSlot="clearSlot" :items="editEquipSet" :dirty="dirtyFlag"/>
+                <equip-slot-selector label-name="Sub" index-name="Sub" @clearSlot="clearSlot" :items="editEquipSet" :dirty="dirtyFlag"/>
+                <equip-slot-selector label-name="Range" index-name="Range" @clearSlot="clearSlot" :items="editEquipSet" :dirty="dirtyFlag"/>
+                <equip-slot-selector label-name="Ammo" index-name="Ammo" @clearSlot="clearSlot" :items="editEquipSet" :dirty="dirtyFlag"/>
+                <equip-slot-selector label-name="Head" index-name="Head" @clearSlot="clearSlot" :items="editEquipSet" :dirty="dirtyFlag"/>
+                <equip-slot-selector label-name="Neck" index-name="Neck" @clearSlot="clearSlot" :items="editEquipSet" :dirty="dirtyFlag"/>
+                <equip-slot-selector label-name="L.Ear" index-name="L.Earring" @clearSlot="clearSlot" :items="editEquipSet" :dirty="dirtyFlag"/>
+                <equip-slot-selector label-name="R.Ear" index-name="R.Earring" @clearSlot="clearSlot" :items="editEquipSet" :dirty="dirtyFlag"/>
+                <equip-slot-selector label-name="Body" index-name="Body" @clearSlot="clearSlot" :items="editEquipSet" :dirty="dirtyFlag"/>
+                <equip-slot-selector label-name="Hands" index-name="Hands" @clearSlot="clearSlot" :items="editEquipSet" :dirty="dirtyFlag"/>
+                <equip-slot-selector label-name="L.Ring" index-name="L.Ring" @clearSlot="clearSlot" :items="editEquipSet" :dirty="dirtyFlag"/>
+                <equip-slot-selector label-name="R.Ring" index-name="R.Ring" @clearSlot="clearSlot" :items="editEquipSet" :dirty="dirtyFlag"/>
+                <equip-slot-selector label-name="Cape" index-name="Cape" @clearSlot="clearSlot" :items="editEquipSet" :dirty="dirtyFlag"/>
+                <equip-slot-selector label-name="Waist" index-name="Waist" @clearSlot="clearSlot" :items="editEquipSet" :dirty="dirtyFlag"/>
+                <equip-slot-selector label-name="Legs" index-name="Legs" @clearSlot="clearSlot" :items="editEquipSet" :dirty="dirtyFlag"/>
+                <equip-slot-selector label-name="Feet" index-name="Feet" @clearSlot="clearSlot" :items="editEquipSet" :dirty="dirtyFlag"/>
               </v-list-item-group>
             </v-card>
           </v-col>

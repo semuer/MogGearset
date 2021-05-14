@@ -1,5 +1,5 @@
 <template>
-  <v-list-item class="pa-0" :value="labelName">
+  <v-list-item class="pa-0" :value="indexName">
     <v-row class="ma-0 pa-0">
       <v-col class="ma-0 pa-2" cols="4">
         <v-btn color="secondary"
@@ -12,7 +12,7 @@
         <v-row no-gutters>
         <v-text-field
             :value="itemName"
-            :label="labelName"
+            :label="indexName"
             :hide-details="true"
             readonly
             solo
@@ -32,13 +32,15 @@ export default {
   data: () => ({}),
   props: {
     labelName: String,
-    item: Object,
+    items: Array,
+    indexName: String,
     dirty: Boolean
   },
   computed: {
     itemName: function () {
-      if (this.item != null && Object.keys(this.item).length !== 0) {
-        return this.item["Jp"];
+      const item = this.items[this.indexName];
+      if (item != null && Object.keys(item).length !== 0) {
+        return item["Jp"];
       } else {
         return null;
       }
