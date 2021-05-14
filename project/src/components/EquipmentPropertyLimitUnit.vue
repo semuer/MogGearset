@@ -3,16 +3,16 @@
     <v-list-item
         v-for="limiter in limiters"
         v-bind:key="limiter.index"
-        class=""
-        no-gutters>
-      <v-row>
+        class="ma-0 pa-0">
+      <v-row
+          no-gutters class="align-center pt-0">
       <v-col cols="1">
       <v-checkbox
           :input-value="true"
-          class="pt-0"
+          class=""
           @change="$emit('activeChanged', {index:limiter.index, isActive:$event})" />
       </v-col>
-      <v-col cols="11">
+      <v-col cols="6">
       <v-autocomplete :items="propsArray"
                       :filter="autoCompleteFilter"
                       label="性能"
@@ -26,9 +26,7 @@
                       dense
                       style="min-width:50px"/>
       </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="10">
+      <v-col cols="4">
       <v-text-field
           label="最小値"
           outlined
@@ -42,7 +40,7 @@
           clearable
       ></v-text-field>
       </v-col>
-      <v-col cols="2">
+      <v-col cols="1">
       <v-btn v-on:click="$emit('delete',limiter.index)" elevation="1"
              x-small fab dark color="red lighten-2">✖</v-btn>
       </v-col>

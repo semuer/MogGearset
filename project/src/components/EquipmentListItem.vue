@@ -7,12 +7,13 @@
   >
 
     <v-list-item-content>
-      <v-list-item-title class="align-center">{{source.JpFull}}
-        <v-chip v-if="isRare" x-small label color="yellow" text-color="white" class="mr-1">Rare</v-chip>
+      <v-list-item-title class="align-center"><v-row no-gutters>{{source.JpFull}}</v-row><v-row no-gutters>
+        <v-chip v-if="isRare" x-small label color="yellow darken-2" text-color="white" class="mr-1">Rare</v-chip>
         <v-chip v-if="isEx" x-small label color="green" text-color="white" class="mr-1">Ex</v-chip>
         <v-chip x-small label color="pink" text-color="white" class="mr-1">{{"Lv."+source.Level}}</v-chip>
         <v-chip v-if="source.ItemLevel !== undefined" x-small label color="purple" text-color="white" class="mr-1">{{"IL."+source.ItemLevel}}</v-chip>
         <v-chip v-if="source.SuLevel !== undefined" x-small label color="blue" text-color="white" class="mr-1">{{"Su"+source.SuLevel}}</v-chip>
+      </v-row>
       </v-list-item-title>
       <v-list-item-subtitle class="text-wrap"> <text-highlight :queries="highlightArray" :wholeWordMatch=true>{{source.JpDescription}}</text-highlight></v-list-item-subtitle>
 
