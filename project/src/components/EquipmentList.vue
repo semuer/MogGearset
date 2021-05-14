@@ -18,8 +18,10 @@
                       outlined hide-details dense></v-text-field>
       </v-row>
 
-      <v-row class="pl-4 ml-0 pb-1">
-        <v-btn v-on:click="addLimiter" dense small elevation="1" color="blue lighten-3">フィルター追加</v-btn>
+      <v-row class="pb-1 pt-2 justify-space-around align-center" no-gutters>
+        <v-btn v-on:click="addLimiter" class="pr-2" dense small elevation="1" color="blue lighten-3">+性能一致</v-btn>
+        <v-btn v-on:click="addTextLimiter" class="pr-2" dense small elevation="1" color="purple lighten-3">+文書検索</v-btn>
+        <v-btn v-on:click="addLimiter" class="" dense small elevation="1" color="orange lighten-3">+並べ替え</v-btn>
       </v-row>
       <equipment-property-limit-unit
           class="pl-0 pr-3 pt-1 pb-1 ma-2"
@@ -141,31 +143,44 @@ export default class EquipmentList extends Mixins(xiUtils) {
             continue;
           }
 
-          let testPropName = this.limiters[i].property;
-          if (testPropName === "") {
-            continue;
-          }
-          let min = this.limiters[i].minValue;
-          let funcGetProps = this.getPropertiesArray;
-          let funcFull2Half = this.fullWidthStrToHalfWidthStr;
-          chain = chain.where(function (obj: Equipment) {
-            let props = funcGetProps(obj);
-            let testPassed = false;
+          if(this.limiters[i].isProp){
+            let testPropName = this.limiters[i].property;
+            if (testPropName === null || testPropName === "") {
+              continue;
+            }
+            let min = this.limiters[i].minValue;
+            let funcGetProps = this.getPropertiesArray;
+            let funcFull2Half = this.fullWidthStrToHalfWidthStr;
+            chain = chain.where(function (obj: Equipment) {
+              let props = funcGetProps(obj);
+              let testPassed = false;
 
-            // match test
-            for (let prop of props) {
-              if (funcFull2Half(prop.name.toLowerCase()) == funcFull2Half(testPropName.toLowerCase())) {
-                if (prop.hasValue && prop.value != undefined) {
-                  if (Math.abs(prop.value) >= min) {
+              // match test
+              for (let prop of props) {
+                if (funcFull2Half(prop.name.toLowerCase()) == funcFull2Half((testPropName as string).toLowerCase())) {
+                  if (prop.hasValue && prop.value != undefined) {
+                    if (Math.abs(prop.value) >= min) {
+                      testPassed = true;
+                    }
+                  } else {
                     testPassed = true;
                   }
-                } else {
-                  testPassed = true;
                 }
               }
+              return testPassed;
+            });
+          }
+          else if(this.limiters[i].isText)
+          {
+            let testPropName = this.limiters[i].property;
+            if (testPropName === null || testPropName === "") {
+              continue;
             }
-            return testPassed;
-          });
+            chain = chain.where(function (obj: Equipment){
+
+              return (obj.JpDescription !== undefined && obj.JpDescription !== null) ? obj.JpDescription.includes(testPropName as string) : false;
+            });
+          }
         }
       }
 
@@ -183,6 +198,20 @@ export default class EquipmentList extends Mixins(xiUtils) {
       minValue: 0,
       isActive: true,
       isSort: false,
+      isText: false,
+      isProp: true,
+    });
+  }
+
+  public addTextLimiter(): void {
+    this.limiters.push({
+      index: Date.now(),
+      property: "",
+      minValue: 0,
+      isActive: true,
+      isSort: false,
+      isText: true,
+      isProp: false
     });
   }
 

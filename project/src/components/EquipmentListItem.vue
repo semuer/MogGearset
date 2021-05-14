@@ -64,12 +64,22 @@ export default class EquipmentListItem extends Mixins(scrollerUtils,xiUtils) {
       let result = [];
       for (let limiter of this.limiters) {
         if (limiter.property !== "" && limiter.isActive) {
-          let propName = limiter.property;
-          let propNameMatches = propName.match(/[:：](.+)/);
-          if (propNameMatches != null && propNameMatches.length > 1) {
-            propName = propNameMatches[1];
+          if(limiter.isProp){
+            let propName = limiter.property;
+            if(propName === null)
+            {
+              continue;
+            }
+            let propNameMatches = propName.match(/[:：](.+)/);
+            if (propNameMatches != null && propNameMatches.length > 1) {
+              propName = propNameMatches[1];
+            }
+            result.push(new RegExp("(^|[ \n\b:：])" + propName + "(?=[\n +\\-\b0-9])", "i"));
           }
-          result.push(new RegExp("(^|[ \n\b:：])" + propName + "(?=[\n +\\-\b0-9])", "i"));
+          if(limiter.isText){
+            let propName = limiter.property;
+            result.push(propName);
+          }
         }
       }
       return result;

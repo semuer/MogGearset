@@ -32,7 +32,7 @@ export default {
   data: () => ({}),
   props: {
     labelName: String,
-    items: Array,
+    items: Object,
     indexName: String,
     dirty: Boolean
   },

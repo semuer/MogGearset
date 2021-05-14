@@ -28,12 +28,12 @@ export interface Equipment{
     IsRUN:boolean;
     Level:number;
     Slots?:number;
-    ItemLevel:number;
-    SuLevel:number;
+    ItemLevel?:number;
+    SuLevel?:number;
     Skill?:number;
     // Properties
-    EnDescription:string;
-    JpDescription:string;
+    EnDescription?:string|null;
+    JpDescription?:string|null;
     Damage?:number;
     ShieldSize?:number;
     Flags?:number;
@@ -68,8 +68,10 @@ export interface PropertyInfo {
 
 export interface Limiter {
     index: number,
-    property: string,
+    property: string | null,
     minValue: number,
     isActive: boolean,
     isSort: boolean,
+    isText: boolean,
+    isProp: boolean,
 }
