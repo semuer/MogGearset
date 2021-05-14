@@ -1,12 +1,12 @@
 <template>
   <v-container style="height: 100%;display:flex;flex-flow:column;width:100%">
     <v-sheet tile outlined style="width: 100%;flex: 1 1 auto;" class="pa-0 ma-0 pb-1" elevation="1" rounded>
-      <v-row class="pl-1 pr-1 ma-2" style="width: 100%;">
+      <v-row class="align-center" no-gutters style="width: 100%;">
         <v-checkbox
             v-model="isLevel99"
             label="Lv99"
             hide-details
-            class="pl-2 pr-2"
+            class="ml-2 mr-2"
         ></v-checkbox>
         <v-checkbox
             v-show="slotHasItemLevel"
@@ -14,9 +14,7 @@
             label="IL119"
             hide-details
         ></v-checkbox>
-      </v-row>
-      <v-row class="pl-1 pr-1 ma-2 align-center justify-center">
-        <v-text-field class="pl-2 pt-2" clearable label="名前" v-model="nameFilter" @click:clear="nameFilterCleared"
+        <v-text-field class="pt-3 pl-2 pr-3" clearable label="名前" v-model="nameFilter" @click:clear="nameFilterCleared"
                       outlined hide-details dense></v-text-field>
       </v-row>
 

@@ -118,51 +118,109 @@ export default class xiUtils extends Vue {
         return (flag & (1 << 14)) !== 0;
     }
 
-    public getWeaponTypeName(item : Equipment):string | null
+    public getItemTypeName(item : Equipment):string | null
     {
-        switch(item.Skill){
-            case 0:
-                return "グリップ";
-            case 1:
-                return "格闘";
-            case 2:
-                return "短剣";
-            case 3:
-                return "片手剣";
-            case 4:
-                return "両手剣";
-            case 5:
-                return "片手斧";
-            case 6:
-                return "両手斧";
-            case 7:
-                return "両手鎌";
-            case 8:
-                return "両手槍";
-            case 9:
-                return "片手刀";
-            case 10:
-                return "両手刀";
-            case 11:
-                return "片手棍";
-            case 12:
-                return "両手棍";
-            case 25:
-                if(item.Slots === 8){
-                    return "矢・弾"
-                }
-
-                return "弓術";
-            case 26:
-                return "射撃";
-            case 27:
-                return "投てき";
-            case 41:
-                return "弦楽器";
-            case 42:
-                return "管楽器";
-            default:
-                return null;
+        if(item.ShieldSize != undefined){
+            return "盾";
         }
+        if(item.Skill !== undefined){
+            switch(item.Skill){
+                case 0:
+                    if(item.Slots === 2){
+                        return "グリップ";
+                    }
+                    if(item.Slots === 8){
+                        return "投てき";
+                    }
+                    return null;
+                case 1:
+                    return "格闘";
+                case 2:
+                    return "短剣";
+                case 3:
+                    return "片手剣";
+                case 4:
+                    return "両手剣";
+                case 5:
+                    return "片手斧";
+                case 6:
+                    return "両手斧";
+                case 7:
+                    return "両手鎌";
+                case 8:
+                    return "両手槍";
+                case 9:
+                    return "片手刀";
+                case 10:
+                    return "両手刀";
+                case 11:
+                    return "片手棍";
+                case 12:
+                    return "両手棍";
+                case 25:
+                    if(item.Slots === 8){
+                        return "矢・弾"
+                    }
+                    return "弓術";
+                case 26:
+                    return "射撃";
+                case 27:
+                    return "投てき";
+                case 41:
+                    return "弦楽器";
+                case 42:
+                    return "管楽器";
+                default:
+                    return null;
+            }
+        }
+        else
+        {
+            if(item.Slots  !== undefined)
+            {
+                const slot = item.Slots;
+                if((slot & (1 << 4)) !== 0)
+                {
+                    return "頭"
+                }
+                if((slot & (1 << 5)) !== 0)
+                {
+                    return "胴"
+                }
+                if((slot & (1 << 6)) !== 0)
+                {
+                    return "両手"
+                }
+                if((slot & (1 << 7)) !== 0)
+                {
+                    return "両脚"
+                }
+                if((slot & (1 << 8)) !== 0)
+                {
+                    return "両足"
+                }
+                if((slot & (1 << 9)) !== 0)
+                {
+                    return "首"
+                }
+                if((slot & (1 << 10)) !== 0)
+                {
+                    return "腰"
+                }
+                if((slot & (1 << 11)) !== 0)
+                {
+                    return "耳"
+                }
+                if((slot & (1 << 13)) !== 0)
+                {
+                    return "指"
+                }
+                if((slot & (1 << 15)) !== 0)
+                {
+                    return "背"
+                }
+            }
+        }
+        return null;
     }
 }
