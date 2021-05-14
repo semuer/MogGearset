@@ -31,6 +31,7 @@
             <v-card>
               <v-list-item-group
                   v-model="selectedSlot"
+                  active-class="highlight-border"
               >
                 <equip-slot-selector label-name="Main" @clearSlot="clearSlot" :item="editEquipSet.Main" :dirty="dirtyFlag"/>
                 <equip-slot-selector label-name="Sub" @clearSlot="clearSlot" :item="editEquipSet.Sub" :dirty="dirtyFlag"/>
@@ -190,3 +191,9 @@ export default class App extends Vue {
 }
 
 </script>
+<style scoped>
+.highlight-border {
+  outline: 2px dashed #1976d2;
+  outline-offset: -2px;
+}
+</style>
