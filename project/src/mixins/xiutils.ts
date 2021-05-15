@@ -4,6 +4,23 @@ import {Equipment, PropertyInfo} from "@/@types/equip-set";
 @Component
 export default class xiUtils extends Vue {
 
+    public getPropertyValue(item:Equipment, property:String): number|undefined
+    {
+        const props = this.getPropertiesArray(item);
+        for(const prop of props){
+            if(prop.name === property){
+                if(prop.value === undefined){
+                    return 0;
+                }
+                else
+                {
+                    return prop.value;
+                }
+            }
+        }
+        return undefined;
+    }
+
     public getPropertiesArray(item: Equipment): PropertyInfo[] {
         const resultInfo: PropertyInfo[] = [];
 

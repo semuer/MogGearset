@@ -85,7 +85,7 @@
         <v-col cols="7">
           <v-autocomplete :items="propsArray"
                           :filter="autoCompleteFilter"
-                          label="性能"
+                          label="並べ替え基準性能"
                           type="text"
                           class="mr-2"
                           @click:clear="$emit('valueChanged', {index:limiter.index, property:''})"
@@ -99,7 +99,8 @@
         <v-col cols="3">
           <v-checkbox :input-value="false"
                       class=""
-                      @change="$emit('sortOrderChanged', {index:limiter.index, isAsc:$event})">昇順</v-checkbox>
+                      @change="$emit('sortOrderChanged', {index:limiter.index, isAsc:$event})"
+                      label="昇順"></v-checkbox>
         </v-col>
         <v-col cols="1">
           <v-btn v-on:click="$emit('delete',limiter.index)" elevation="1"

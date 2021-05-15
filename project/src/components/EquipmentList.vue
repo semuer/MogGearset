@@ -30,7 +30,7 @@
           @delete="deleteLimiter"
           @valueChanged="limiterChanged"
           @activeChanged="limiterActiveChanged"
-          @sortOrderChanged=""
+          @sortOrderChanged="sortOrderChanged"
       />
     </v-sheet>
      <v-list-item-group
@@ -179,7 +179,55 @@ export default class EquipmentList extends Mixins(xiUtils) {
             }
             chain = chain.where(function (obj: Equipment){
 
-              return (obj.JpDescription !== undefined && obj.JpDescription !== null) ? obj.JpDescription.includes(testPropName as string) : false;
+              return (obj.JpDescription !== undefined && obj.JpDescription !== null) ? obj.JpDescription.toLowerCase().includes(testPropName?.toLowerCase() as string) : false;
+            });
+          }
+
+          // Sorting Chains
+          if(this.limiters[i].isSort)
+          {
+            let funcGetValue = this.getPropertyValue;
+            let isAsc = this.limiters[i].isAsc;
+            const filterPropName = this.limiters[i].property;
+            if(filterPropName === null || filterPropName === ""){
+              continue;
+            }
+
+            chain = chain.sort(
+                function (obj1: Equipment, obj2: Equipment)
+            {
+              const value1 = funcGetValue(obj1, filterPropName);
+              const value2 = funcGetValue(obj2, filterPropName);
+              let result = 0;
+              if(value1 === undefined && value2 === undefined){
+                result =0;
+              }
+
+              if(value1 === undefined && value2 !== undefined){
+                result =-1;
+              }
+
+              if(value1 !== undefined && value2 === undefined){
+                result = 1;
+              }
+
+              if((value1 as number) > (value2 as number))
+              {
+                result = 1;
+              }
+              if((value1 as number) < (value2 as number))
+              {
+                result =-1;
+              }
+              if((value1 as number) === (value2 as number))
+              {
+                result = 0;
+              }
+
+              if(!isAsc){
+                result = -1 * result;
+              }
+              return result;
             });
           }
         }
@@ -219,6 +267,11 @@ export default class EquipmentList extends Mixins(xiUtils) {
   }
 
   public addSorter():void{
+    for(const lim of this.limiters){
+      if(lim.isSort){
+        return;
+      }
+    }
     this.limiters.push({
       index: Date.now(),
       property: "",
@@ -237,7 +290,6 @@ export default class EquipmentList extends Mixins(xiUtils) {
         this.limiters.splice(i, 1);
       }
     }
-
   }
 
   public limiterChanged(obj: Record<string, any>): void {
@@ -278,12 +330,6 @@ export default class EquipmentList extends Mixins(xiUtils) {
     }
   }
 
-  created(){
-    // this.$on('select', (item:Equipment) => {
-    //   console.log("emit1")
-    //   this.$emit('select',item);
-    // })
-  }
 }
 
 
