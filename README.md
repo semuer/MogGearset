@@ -9,7 +9,7 @@ MMORPG「ファイナルファンタジーXI」用装備セットシミュレー
 * Issue / PR 歓迎
 * サイトURL: https://semuer.github.io/XIUtilsEquipCalculator/ (CIによりmainブランチ即時反映)
 
-A Equipment Parameters Calculator for FINAL FANTASY XI.
+An Equipment Parameters Calculator for FINAL FANTASY XI.
 
 * DevEnv: NodeJs / VueJs
 * JP/EN support is planned (Currently in active development for JP UI)
