@@ -21,7 +21,18 @@
         </v-row>
       </v-list-item-title>
       <v-list-item-subtitle class="text-wrap"> <text-highlight :queries="highlightArray" :wholeWordMatch=true>{{source.JpDescription}}</text-highlight></v-list-item-subtitle>
-
+      <v-list-item-subtitle>
+        <v-chip x-small label outlined color="orange lighten-1"  class="mr-1"  target="_blank" :href="'http://wiki.ffo.jp/search.cgi?CCC=%E6%84%9B&Command=Search&qf='+ encodeURI(source.Jp.replace('+','&2b')) +'&order=match&ffotype=title&type=title'">
+          <v-icon left x-small>
+          mdi-link-variant
+        </v-icon>FFO</v-chip>
+        <v-chip x-small label outlined color="brown lighten-1"  class="mr-1" target="_blank" :href="'https://www.bg-wiki.com/ffxi/' + source.En.replace('\'','.').replace(' ','_')"><v-icon left x-small>
+          mdi-link-variant
+        </v-icon>BG</v-chip>
+        <v-chip x-small label outlined color="blue lighten-1" class="mr-1" target="_blank" :href="'https://www.ffxiah.com/item/' + source.Id"><v-icon left x-small>
+          mdi-link-variant
+        </v-icon>AH</v-chip>
+      </v-list-item-subtitle>
     </v-list-item-content>
     <v-list-item-icon class="pr-0 mr-3">
       <v-btn v-on:click="onSelectItem"
