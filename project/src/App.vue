@@ -165,7 +165,31 @@ export default class App extends Vue {
       ec = this.db.addCollection<Equipment>("equip",
           {
             unique:['Id'],
-            disableMeta:true
+            indices:['Level','ItemLevel',
+              'IsMNK',
+              'IsWHM',
+              'IsBLM',
+              'IsRDM',
+              'IsTHF',
+              'IsPLD',
+              'IsDRK',
+              'IsBST',
+              'IsBRD',
+              'IsRNG',
+              'IsSAM',
+              'IsNIN',
+              'IsDRG',
+              'IsSMN',
+              'IsBLU',
+              'IsCOR',
+              'IsPUP',
+              'IsDNC',
+              'IsSCH',
+              'IsGEO',
+              'IsRUN',
+            ],
+            disableMeta:true,
+            adaptiveBinaryIndices:false,
           });
     }
 
