@@ -209,7 +209,7 @@ export default class App extends Vue {
   equipCollection: Collection<Equipment> | null = null;
   editEquipSet: EquipSet = {};
   dirtyFlag = false;
-  equipQueryChain: Record<string, unknown> | null = null;
+  equipQueryChain: any | null = null;
   navigationWidth = 0;
   propsArray: string[] = [];
 

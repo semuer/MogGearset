@@ -121,7 +121,7 @@ export default class EquipmentList extends Mixins(xiUtils) {
 
   @Prop({ default: "" }) readonly equipSlot: string | undefined;
 
-  @Prop({ default: null }) readonly equipQueryChain!: Record<string, unknown>;
+  @Prop({ default: null }) readonly equipQueryChain!: any;
   @Prop() readonly propsArray!: string[];
 
   equipData: Equipment[] = [];
