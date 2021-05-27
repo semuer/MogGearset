@@ -106,7 +106,7 @@ export default class App extends Vue {
   equipCollection: Collection<Equipment> | null = null;
   editEquipSet: EquipSet = {};
   dirtyFlag = false;
-  equipQueryChain: any | null = null;
+  equipQueryChain: ResultSet | null = null;
   navigationWidth = 0;
   propsArray: string[] = [];
 
@@ -258,8 +258,10 @@ interface SlotStringPair {
   index: string;
   label: string;
 }
+
+type ResultSet = ReturnType<Collection["chain"]>;
 </script>
-<style scoped>
+<style lang="css" scoped>
 .highlight-border {
   outline: 2px dashed #1976d2;
   outline-offset: -2px;
