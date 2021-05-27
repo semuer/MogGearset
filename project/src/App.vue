@@ -57,116 +57,13 @@
                 active-class="highlight-border"
               >
                 <equip-slot-selector
+                  v-for="item in slotItemsArray"
+                  v-bind:key="item.index"
                   :dirty="dirtyFlag"
                   :items="editEquipSet"
-                  index-name="Main"
-                  label-name="Main"
-                  @clearSlot="clearSlot"
-                />
-                <equip-slot-selector
-                  :dirty="dirtyFlag"
-                  :items="editEquipSet"
-                  index-name="Sub"
-                  label-name="Sub"
-                  @clearSlot="clearSlot"
-                />
-                <equip-slot-selector
-                  :dirty="dirtyFlag"
-                  :items="editEquipSet"
-                  index-name="Range"
-                  label-name="Range"
-                  @clearSlot="clearSlot"
-                />
-                <equip-slot-selector
-                  :dirty="dirtyFlag"
-                  :items="editEquipSet"
-                  index-name="Ammo"
-                  label-name="Ammo"
-                  @clearSlot="clearSlot"
-                />
-                <equip-slot-selector
-                  :dirty="dirtyFlag"
-                  :items="editEquipSet"
-                  index-name="Head"
-                  label-name="Head"
-                  @clearSlot="clearSlot"
-                />
-                <equip-slot-selector
-                  :dirty="dirtyFlag"
-                  :items="editEquipSet"
-                  index-name="Neck"
-                  label-name="Neck"
-                  @clearSlot="clearSlot"
-                />
-                <equip-slot-selector
-                  :dirty="dirtyFlag"
-                  :items="editEquipSet"
-                  index-name="L.Earring"
-                  label-name="L.Ear"
-                  @clearSlot="clearSlot"
-                />
-                <equip-slot-selector
-                  :dirty="dirtyFlag"
-                  :items="editEquipSet"
-                  index-name="R.Earring"
-                  label-name="R.Ear"
-                  @clearSlot="clearSlot"
-                />
-                <equip-slot-selector
-                  :dirty="dirtyFlag"
-                  :items="editEquipSet"
-                  index-name="Body"
-                  label-name="Body"
-                  @clearSlot="clearSlot"
-                />
-                <equip-slot-selector
-                  :dirty="dirtyFlag"
-                  :items="editEquipSet"
-                  index-name="Hands"
-                  label-name="Hands"
-                  @clearSlot="clearSlot"
-                />
-                <equip-slot-selector
-                  :dirty="dirtyFlag"
-                  :items="editEquipSet"
-                  index-name="L.Ring"
-                  label-name="L.Ring"
-                  @clearSlot="clearSlot"
-                />
-                <equip-slot-selector
-                  :dirty="dirtyFlag"
-                  :items="editEquipSet"
-                  index-name="R.Ring"
-                  label-name="R.Ring"
-                  @clearSlot="clearSlot"
-                />
-                <equip-slot-selector
-                  :dirty="dirtyFlag"
-                  :items="editEquipSet"
-                  index-name="Cape"
-                  label-name="Cape"
-                  @clearSlot="clearSlot"
-                />
-                <equip-slot-selector
-                  :dirty="dirtyFlag"
-                  :items="editEquipSet"
-                  index-name="Waist"
-                  label-name="Waist"
-                  @clearSlot="clearSlot"
-                />
-                <equip-slot-selector
-                  :dirty="dirtyFlag"
-                  :items="editEquipSet"
-                  index-name="Legs"
-                  label-name="Legs"
-                  @clearSlot="clearSlot"
-                />
-                <equip-slot-selector
-                  :dirty="dirtyFlag"
-                  :items="editEquipSet"
-                  index-name="Feet"
-                  label-name="Feet"
-                  @clearSlot="clearSlot"
+                  :index-name="item.index"
+                  :label-name="item.label"
+                  @clearSlot="clearSlot(item.index)"
                 />
               </v-list-item-group>
             </v-card>
@@ -213,13 +110,34 @@ export default class App extends Vue {
   navigationWidth = 0;
   propsArray: string[] = [];
 
+  get slotItemsArray(): Array<SlotStringPair> {
+    return [
+      { index: "Main", label: "メイン" },
+      { index: "Sub", label: "サブ" },
+      { index: "Range", label: "遠隔" },
+      { index: "Ammo", label: "弾" },
+      { index: "Head", label: "頭" },
+      { index: "Body", label: "胴" },
+      { index: "Hands", label: "手" },
+      { index: "Legs", label: "脚" },
+      { index: "Feet", label: "足" },
+      { index: "Neck", label: "首" },
+      { index: "Waist", label: "腰" },
+      { index: "L.Earring", label: "左耳" },
+      { index: "R.Earring", label: "右耳" },
+      { index: "L.Ring", label: "左指" },
+      { index: "R.Ring", label: "右指" },
+      { index: "Cape", label: "背" },
+    ];
+  }
+
   public equipItem(item: Equipment): void {
     Vue.set(this.editEquipSet, this.selectedSlot, item);
     this.dirtyFlag = !this.dirtyFlag;
   }
 
-  public clearSlot(): void {
-    Vue.set(this.editEquipSet, this.selectedSlot, null);
+  public clearSlot(selectedSlot: string): void {
+    Vue.set(this.editEquipSet, selectedSlot, null);
     this.dirtyFlag = !this.dirtyFlag;
   }
 
@@ -334,6 +252,11 @@ export default class App extends Vue {
         this.propsArray = data as string[];
       });
   }
+}
+
+interface SlotStringPair {
+  index: string;
+  label: string;
 }
 </script>
 <style scoped>
