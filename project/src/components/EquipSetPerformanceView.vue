@@ -107,6 +107,16 @@ export default class EquipSetPerformanceView extends Mixins(xiUtils) {
         }
       }
     }
+
+    this.calculatedInfo.sort(function (a: CalculatedInfo, b: CalculatedInfo) {
+      let oA =
+        PropsStringOrder[a.NameWithUnit as keyof typeof PropsStringOrder] ??
+        999;
+      let oB =
+        PropsStringOrder[b.NameWithUnit as keyof typeof PropsStringOrder] ??
+        999;
+      return oA - oB;
+    });
   }
 }
 
@@ -115,6 +125,16 @@ interface CalculatedInfo {
   HasValue: boolean;
   TotalValue?: number;
   WithoutSubValue?: number;
+}
+
+enum PropsStringOrder {
+  "D" = 0,
+  "STR",
+  "DEX",
+  "INT",
+  "AGI",
+  "MND",
+  "VIT",
 }
 </script>
 
