@@ -104,21 +104,30 @@ export default class xiUtils extends Vue {
     return resultInfo;
   }
 
-  public kataToHira(text: string): string {
+  public kataToHira(text: string | null): string {
+    if (text === null) {
+      return "";
+    }
     return text.replace(/[\u30a1-\u30f6]/g, function (match) {
       const chr = match.charCodeAt(0) - 0x60;
       return String.fromCharCode(chr);
     });
   }
 
-  public hiraToKata(text: string): string {
+  public hiraToKata(text: string | null): string {
+    if (text === null) {
+      return "";
+    }
     return text.replace(/[\u3041-\u3096]/g, function (match) {
       const chr = match.charCodeAt(0) + 0x60;
       return String.fromCharCode(chr);
     });
   }
 
-  public fullWidthStrToHalfWidthStr(text: string): string {
+  public fullWidthStrToHalfWidthStr(text: string | null): string {
+    if (text === null) {
+      return "";
+    }
     return text.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function (match) {
       return String.fromCharCode(match.charCodeAt(0) - 0xfee0);
     });
