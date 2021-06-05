@@ -115,7 +115,7 @@ export default class EquipmentList extends Mixins(xiUtils) {
   limiters: Array<Limiter> = [];
   isLevel99 = false;
   isItemLevel119 = false;
-  nameFilter = "";
+  nameFilter : string|null = "";
 
   itemComponent = EquipmentListItem;
 
@@ -137,16 +137,12 @@ export default class EquipmentList extends Mixins(xiUtils) {
   ];
 
   get slotHasItemLevel(): boolean {
-    if (
-      this.equipSlot != undefined &&
-      this.nonILSlots.includes(this.equipSlot)
-    ) {
-      return false;
-    }
-    return true;
+    return !(this.equipSlot != undefined &&
+        this.nonILSlots.includes(this.equipSlot));
+
   }
 
-  public nameFilterCleared() {
+  public nameFilterCleared():void {
     this.nameFilter = "";
   }
 
@@ -171,7 +167,7 @@ export default class EquipmentList extends Mixins(xiUtils) {
       }
 
       let nameFilter = this.nameFilter;
-      if (nameFilter !== "") {
+      if (nameFilter !== "" && nameFilter !== null) {
         nameFilter = this.kataToHira(
           this.fullWidthStrToHalfWidthStr(nameFilter)
         );
