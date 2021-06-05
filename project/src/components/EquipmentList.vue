@@ -169,7 +169,7 @@ export default class EquipmentList extends Mixins(xiUtils) {
       let nameFilter = this.nameFilter;
       if (nameFilter !== "" && nameFilter !== null) {
         nameFilter = this.kataToHira(
-          this.fullWidthStrToHalfWidthStr(nameFilter)
+          this.fullWidthStrToHalfWidthStr(nameFilter as string)
         );
         let funcKataHira = this.kataToHira;
         let funcFullTohalf = this.fullWidthStrToHalfWidthStr;
@@ -177,19 +177,19 @@ export default class EquipmentList extends Mixins(xiUtils) {
           let isPassed = false;
           if (
             funcKataHira(funcFullTohalf(obj.Jp.toLowerCase())).includes(
-              nameFilter
+              nameFilter as string
             )
           ) {
             isPassed = true;
           } else if (
             funcKataHira(funcFullTohalf(obj.JpFull.toLowerCase())).includes(
-              nameFilter
+              nameFilter as string
             )
           ) {
             isPassed = true;
-          } else if (obj.En.toLowerCase().includes(nameFilter)) {
+          } else if (obj.En.toLowerCase().includes(nameFilter as string)) {
             isPassed = true;
-          } else if (obj.EnFull.toLowerCase().includes(nameFilter)) {
+          } else if (obj.EnFull.toLowerCase().includes(nameFilter as string)) {
             isPassed = true;
           }
 
