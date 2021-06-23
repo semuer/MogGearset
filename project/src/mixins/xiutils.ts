@@ -232,4 +232,8 @@ export default class xiUtils extends Vue {
     }
     return null;
   }
+
+  public getItemIconUrl(id: number): string {
+    return process.env.BASE_URL + "img/items/icon/" + id + ".png";
+  }
 }
