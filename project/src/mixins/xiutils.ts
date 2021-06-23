@@ -234,6 +234,6 @@ export default class xiUtils extends Vue {
   }
 
   public getItemIconUrl(id: number): string {
-    return process.env.BASE_URL + "img/items/icon/" + id + ".png";
+    return "https://semuer.github.io/XIUtilsItemIcons/icon/" + id + ".png";
   }
 }
