@@ -28,3 +28,11 @@ There's no simple way to parse item(equipment)'s properties to semantic or struc
 But the Japanese version of the game dat texts is far more structured, so this project will parse
 items properties with JP dats and semi-automatically (or nearly manually) make a dictionary that translate JP properties to EN.
 We could also keep the consistency of functions in both JP and EN side easier by this way.
+
+----
+
+### About Database Storage
+
+Currently, the site is using im-memory database (LokiJs). All the data query process is running on the client side.
+Data sources are multiple json files, which have about ~30MBytes in total without g-zip compression.
+If data becomes more complicated in the future, the site may use a remote database service.
