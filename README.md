@@ -22,6 +22,9 @@ MMORPG「ファイナルファンタジーXI」用装備セットシミュレー
 
 ----
 
+Currently under heavy development. Source code is ugly for now.
+I'm not a professional web developer, please understand :)
+
 ### About Item Properties Parsing
 
 There's no simple way to parse item(equipment)'s properties to semantic or structure data with English version to my knowledge.
@@ -36,3 +39,8 @@ We could also keep the consistency of functions in both JP and EN side easier by
 Currently, the site is using im-memory database (LokiJs). All the data query process is running on the client side.
 Data sources are multiple json files, which have about ~30MBytes in total without g-zip compression.
 If data becomes more complicated in the future, the site may use a remote database service.
+
+----
+
+FINAL FANTASY is a registered trademark of Square Enix Holdings Co., Ltd.
+FINAL FANTASY XI © 2002 - 2020 SQUARE ENIX CO., LTD. All Rights Reserved.
