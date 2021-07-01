@@ -30,7 +30,7 @@ I'm not a professional web developer, please understand :)
 There's no simple way to parse item(equipment)'s properties to semantic or structure data with English version to my knowledge.
 But the Japanese version of the game dat texts is far more structured, so this project will parse
 items properties with JP dats and semi-automatically (or nearly manually) make a dictionary that translate JP properties to EN.
-We could also keep the consistency of functions in both JP and EN side easier by this way.
+We could also keep the consistency of functions on both JP and EN sides easier by this way.
 
 ----
 
