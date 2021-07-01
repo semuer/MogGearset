@@ -20,3 +20,11 @@ MMORPG「ファイナルファンタジーXI」用装備セットシミュレー
 * Issue / PR 歓迎
 * サイトURL: https://semuer.github.io/XIUtilsEquipCalculator/ (CIによりmainブランチ即時反映)
 
+----
+
+### About Item Properties Parsing
+
+There's no simple way to parse item(equipment)'s properties to semantic or structure data with English version to my knowledge.
+But the Japanese version of the game dat texts is far more structured, so this project will parse
+items properties with JP dats and semi-automatically (or nearly manually) make a dictionary that translate JP properties to EN.
+We could also keep the consistency of functions in both JP and EN side easier by this way.
