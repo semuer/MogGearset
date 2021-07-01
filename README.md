@@ -36,7 +36,7 @@ We could also keep the functional consistency on both JP and EN sides easier by 
 
 ### About Database Storage
 
-Currently, the site is using im-memory database (LokiJs). All the data query process is running on the client side.
+Currently, the site is using im-memory database (LokiJs). All the data query processings are running on the client side.
 Data sources are multiple json files, which have about ~30MBytes in total without g-zip compression.
 If data becomes more complicated in the future, the site may use a remote database service.
 
