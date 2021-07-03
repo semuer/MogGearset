@@ -45,6 +45,15 @@ export interface Equipment {
   CombGroupID?: number;
 }
 
+export type Property =
+    {
+      PropID:number;
+      CatID:number;
+      MinValue?:number;
+      Value?:number;
+      Unit?:string;
+    }
+
 export interface EquipSet extends Record<string, Equipment> {
   Main?: Equipment;
   Sub?: Equipment;

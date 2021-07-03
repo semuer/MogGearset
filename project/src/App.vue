@@ -257,6 +257,8 @@ export default class App extends Vue {
   equipQueryChain: ResultSet | null = null;
   navigationWidth = 0;
   propsArray: string[] = [];
+  propDict: Map<number,string[]> = new Map();
+  categoryDict: Map<number,string[]> = new Map();
   baseUrl: string = process.env.BASE_URL;
 
   get slotItemsArray(): Array<SlotStringPair> {
@@ -384,15 +386,13 @@ export default class App extends Vue {
       return;
     }
 
-    fetch(process.env.BASE_URL + "json/parseddata.json")
+    const promiseParseData = fetch(process.env.BASE_URL + "json/parseddata.json")
         .then((response) => response.json())
         .then((data) => {
           let equips = data as Equipment[];
           ec.insert(equips);
 
-          this.equipQueryChain = null;
-          this.selectedJob = "MNK";
-          this.editEquipSet = {};
+
         });
 
     fetch(process.env.BASE_URL + "json/parsedprops.json")
@@ -400,6 +400,25 @@ export default class App extends Vue {
         .then((data) => {
           this.propsArray = data as string[];
         });
+
+    const promisePropData = fetch(process.env.BASE_URL + "json/properties_dict.json")
+        .then((response) => response.json())
+        .then((data) => {
+          this.propDict = Object.entries(data) as unknown as Map<number,string[]>;
+        });
+    const promiseCateData = fetch(process.env.BASE_URL + "json/categories_dict.json")
+        .then((response) => response.json())
+        .then((data) => {
+          this.categoryDict = Object.entries(data) as unknown as Map<number,string[]>;
+        });
+
+    Promise
+        .all([promiseParseData, promisePropData, promiseCateData])
+        .then(()=> {
+          this.equipQueryChain = null;
+          this.selectedJob = "MNK";
+          this.editEquipSet = {};
+    });
   }
 }
 
