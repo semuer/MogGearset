@@ -226,6 +226,24 @@
             />
           </v-col>
         </v-row>
+        <v-footer
+            padless=true
+        >
+          <v-card
+              flat
+              tile
+              width="100%"
+              class="text-center"
+          >
+            <v-card-text>
+              FINAL FANTASY is a registered trademark of Square Enix Holdings Co., Ltd. FINAL FANTASY XI © 2002 - {{ new Date().getFullYear() }} SQUARE ENIX CO., LTD. All Rights Reserved.
+            </v-card-text>
+            <v-divider></v-divider>
+            <v-card-text class="grey--text">
+              {{ new Date().getFullYear() }} © <strong>Mog Gearset</strong>
+            </v-card-text>
+          </v-card>
+        </v-footer>
       </v-container>
     </v-main>
   </v-app>
