@@ -10,7 +10,7 @@
 <!--    solo-->
 <!--    v-on:change="$emit('input', $event)"-->
 <!--  ></v-select>-->
-  <v-col>
+  <v-col class="pa-0">
   <v-row no-gutters>
     <v-chip-group
         v-model="inputVal"
@@ -22,6 +22,7 @@
           v-bind:key="job.abb"
           :value="job.abb"
           outlined
+          small
           :color="isActiveJob(job.abb) ? 'primary' : 'default'"
           label
       >

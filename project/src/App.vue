@@ -39,7 +39,7 @@
         />
       </v-navigation-drawer>
       <v-container class="grey lighten-5 pa-4" fluid>
-        <v-row class="ma-0 pa-0 pr-1">
+        <v-row class="ma-0 pa-0 pr-0">
           <job-selector v-model="selectedJob"/>
         </v-row>
         <v-row class="ml-0">
