@@ -1,54 +1,92 @@
 <template>
-  <v-select
-    :hide-details="true"
-    :items="jobList"
-    :value="value"
-    dense
-    item-text="name"
-    item-value="abb"
-    label="Job"
-    solo
-    v-on:change="$emit('input', $event)"
-  ></v-select>
+<!--  <v-select-->
+<!--    :hide-details="true"-->
+<!--    :items="jobList"-->
+<!--    :value="value"-->
+<!--    dense-->
+<!--    item-text="name"-->
+<!--    item-value="abb"-->
+<!--    label="Job"-->
+<!--    solo-->
+<!--    v-on:change="$emit('input', $event)"-->
+<!--  ></v-select>-->
+  <v-col>
+  <v-row no-gutters>
+    <v-chip-group
+        v-model="inputVal"
+        column
+        multiple
+    >
+      <v-chip
+          v-for="job in jobList"
+          v-bind:key="job.abb"
+          :value="job.abb"
+          outlined
+          :color="isActiveJob(job.abb) ? 'primary' : 'default'"
+          label
+      >
+       {{job.name}}
+      </v-chip>
+    </v-chip-group>
+  </v-row>
+  <v-row no-gutters>
+    <v-btn small v-on:click="clearJobs">{{$t('ui.job.clearAll')}}</v-btn>
+  </v-row>
+  </v-col>
 </template>
 
-<script>
-export default {
-  name: "JobSelector",
-  data: () => ({
-    jobList: [
-      { abb: "WAR", name: "戦士 / WAR" },
-      { abb: "MNK", name: "モンク / MNK" },
-      { abb: "WHM", name: "白魔道士 / WHM" },
-      { abb: "BLM", name: "黒魔道士 / BLM" },
-      { abb: "RDM", name: "赤魔道士 / RDM" },
-      { abb: "THF", name: "シーフ / THF" },
-      { abb: "PLD", name: "ナイト / PLD" },
-      { abb: "DRK", name: "暗黒騎士 / DRK" },
-      { abb: "BST", name: "獣使い / BST" },
-      { abb: "BRD", name: "吟遊詩人 / BRD" },
-      { abb: "RNG", name: "狩人 / RNG" },
-      { abb: "SAM", name: "侍 / SAM" },
-      { abb: "NIN", name: "忍者 / NIN" },
-      { abb: "DRG", name: "竜騎士 / DRG" },
-      { abb: "SMN", name: "召喚士 / SMN" },
-      { abb: "BLU", name: "青魔道士 / BLU" },
-      { abb: "COR", name: "コルセア / COR" },
-      { abb: "PUP", name: "からくり士 / PUP" },
-      { abb: "DNC", name: "踊り子 / DNC" },
-      { abb: "SCH", name: "学者 / SCH" },
-      { abb: "GEO", name: "風水士 / GEO" },
-      { abb: "RUN", name: "魔導剣士 / RUN" },
-    ],
-  }),
-  props: {
-    type: {
-      default() {
-        return "text";
-      },
-    },
-    value: {},
-  },
+<script lang="ts">
+import {Component, Prop, Vue} from "vue-property-decorator";
+
+@Component
+export default class JobSelector extends Vue {
+  @Prop() readonly type!: string ;
+  @Prop() readonly value!: string[];
+
+  name = "JobSelector";
+
+  jobList = [
+      { abb: "WAR", name: this.$t('ui.job.WAR') },
+      { abb: "MNK", name: this.$t('ui.job.MNK') },
+      { abb: "WHM", name: this.$t('ui.job.WHM') },
+      { abb: "BLM", name: this.$t('ui.job.BLM') },
+      { abb: "RDM", name: this.$t('ui.job.RDM') },
+      { abb: "THF", name: this.$t('ui.job.THF') },
+      { abb: "PLD", name: this.$t('ui.job.PLD') },
+      { abb: "DRK", name: this.$t('ui.job.DRK') },
+      { abb: "BST", name: this.$t('ui.job.BST') },
+      { abb: "BRD", name: this.$t('ui.job.BRD') },
+      { abb: "RNG", name: this.$t('ui.job.RNG') },
+      { abb: "SAM", name: this.$t('ui.job.SAM') },
+      { abb: "NIN", name: this.$t('ui.job.NIN') },
+      { abb: "DRG", name: this.$t('ui.job.DRG') },
+      { abb: "SMN", name: this.$t('ui.job.SMN') },
+      { abb: "BLU", name: this.$t('ui.job.BLU') },
+      { abb: "COR", name: this.$t('ui.job.COR') },
+      { abb: "PUP", name: this.$t('ui.job.PUP') },
+      { abb: "DNC", name: this.$t('ui.job.DNC') },
+      { abb: "SCH", name: this.$t('ui.job.SCH') },
+      { abb: "GEO", name: this.$t('ui.job.GEO') },
+      { abb: "RUN", name: this.$t('ui.job.RUN') },
+    ];
+
+
+     public isActiveJob (abb:string) : boolean
+     {
+        return this.value.includes(abb);
+     }
+
+     public clearJobs():void{
+       this.$emit('input', []);
+     }
+
+     get inputVal():string[]{
+       return this.value;
+     }
+     set inputVal(val:string[]){
+       this.$emit('input', val);
+     }
+  
 };
 </script>
 

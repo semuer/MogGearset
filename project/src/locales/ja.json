@@ -9,8 +9,34 @@
       "minValue": "最小値",
       "sortProp": "ソート基準",
       "asc": "昇順"
+    },
+    "job": {
+      "WAR": "戦",
+      "MNK": "モ",
+      "WHM": "白",
+      "BLM": "黒",
+      "RDM": "赤",
+      "THF": "シ",
+      "PLD": "ナ",
+      "DRK": "暗",
+      "BST": "獣",
+      "BRD": "吟",
+      "RNG": "狩",
+      "SAM": "侍",
+      "NIN": "忍",
+      "DRG": "竜",
+      "SMN": "召",
+      "BLU": "青",
+      "COR": "コ",
+      "PUP": "か",
+      "DNC": "踊",
+      "SCH": "学",
+      "GEO": "風",
+      "RUN": "剣",
+      "clearAll": "クリア"
     }
   },
+
   "item" : {
     "itemType": {
       "shield": "盾",

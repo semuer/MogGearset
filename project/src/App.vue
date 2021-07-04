@@ -227,7 +227,7 @@
           </v-col>
         </v-row>
         <v-footer
-            padless=true
+            :padless="true"
         >
           <v-card
               flat
@@ -271,7 +271,7 @@ import loki, {Collection} from "lokijs";
 export default class App extends Vue {
   // data
   db = new loki("data.db");
-  selectedJob = "MNK";
+  selectedJob:string[] = [];
   selectedSlot = "";
   //filteredEquips:Equipment[] = [];
   equipCollection: Collection<Equipment> | null = null;
@@ -328,15 +328,17 @@ export default class App extends Vue {
 
   @Watch("selectedJob")
   selectedJobChanged(): void {
-    this.editEquipSet = {};
-    this.selectedSlot = "";
-    this.selectedSlotChanged("");
+    this.selectedSlotChanged(this.selectedSlot);
   }
 
   @Watch("selectedSlot")
   selectedSlotChanged(newSlot: string): void {
     let query: Record<string, unknown> = {};
-    query["Is" + this.selectedJob] = true;
+    for(const job of this.selectedJob)
+    {
+      query["Is" + job] = true;
+    }
+
     //query["ItemLevel"] = 119;
     //console.log(query);
     if (newSlot == "" || newSlot == null) {
@@ -450,7 +452,7 @@ export default class App extends Vue {
         .all([promiseParseData, promisePropData, promiseCateData])
         .then(()=> {
           this.equipQueryChain = null;
-          this.selectedJob = "MNK";
+          this.selectedJob = [];
           this.editEquipSet = {};
     });
   }

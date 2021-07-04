@@ -9,6 +9,31 @@
       "minValue": "Min",
       "sortProp": "Sort Prop.",
       "asc": "Asc."
+    },
+    "job": {
+      "WAR": "WAR",
+      "MNK": "MNK",
+      "WHM": "WHM",
+      "BLM": "BLM",
+      "RDM": "RDM",
+      "THF": "THF",
+      "PLD": "PLD",
+      "DRK": "DRK",
+      "BST": "BST",
+      "BRD": "BRD",
+      "RNG": "RNG",
+      "SAM": "SAM",
+      "NIN": "NIN",
+      "DRG": "DRG",
+      "SMN": "SMN",
+      "BLU": "BLU",
+      "COR": "COR",
+      "PUP": "PUP",
+      "DNC": "DNC",
+      "SCH": "SCH",
+      "GEO": "GEO",
+      "RUN": "RUN",
+      "clearAll": "Clear"
     }
   },
   "item" : {
