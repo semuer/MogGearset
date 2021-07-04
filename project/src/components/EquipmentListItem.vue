@@ -5,11 +5,11 @@
         <v-list-item-title class="align-center">
           <v-row>
           <v-col cols="2">
-            <v-img aspect-ratio="1" contain :alt="source.JpFull" :src="iconUrl" max-height="32px"></v-img>
+            <v-img aspect-ratio="1" contain :alt="itemName" :src="iconUrl" max-height="32px"></v-img>
           </v-col>
           <v-col cols="10" class="pl-0">
             <v-row class="align-center pb-1" no-gutters
-            >{{ source.JpFull }}
+            >{{ itemName }}
               <v-chip
                   v-show="itemTypeName"
                   class="ml-2 mr-1"
@@ -25,7 +25,7 @@
               <v-chip
                   v-if="isRare"
                   class="mr-1"
-                  color="yellow darken-2"
+                  color="yellow darken-3"
                   label
                   text-color="white"
                   x-small
@@ -67,7 +67,7 @@
         </v-list-item-title>
         <v-list-item-subtitle class="text-wrap">
           <text-highlight :queries="highlightArray" :wholeWordMatch="true"
-          >{{ source.JpDescription }}
+          >{{ itemDescription }}
           </text-highlight>
         </v-list-item-subtitle>
         <v-list-item-subtitle>
@@ -117,16 +117,18 @@
         </v-list-item-subtitle>
       </v-list-item-content>
       <v-list-item-icon class="pr-0 mr-3">
+        <v-row no-gutters style="width: 100%;height:100%">
         <v-btn
             class="mt-2"
             color="blue lighten-2"
             dark
             elevation="1"
             fab
-            x-small
+            small
             v-on:click="onSelectItem"
-        >✓
+        >⇒
         </v-btn>
+        </v-row>
       </v-list-item-icon>
     </v-list-item>
     <v-divider/>
@@ -144,6 +146,8 @@ export default class EquipmentListItem extends Mixins(scrollerUtils, xiUtils) {
   @Prop() readonly index!: number;
   @Prop() readonly source!: Equipment;
   @Prop() readonly limiters!: Limiter[];
+  @Prop() readonly propDict!: Map<string,string[]>;
+  @Prop() readonly cateDict!: Map<string,string[]>;
 
   get isRare(): boolean {
     return this.source.Flags == undefined
@@ -160,16 +164,47 @@ export default class EquipmentListItem extends Mixins(scrollerUtils, xiUtils) {
   }
 
   get itemTypeName(): string | null {
-    return this.getItemTypeName(this.source);
+    const locale = this.getItemTypeName(this.source, this.$root.$i18n.locale);
+    return locale == null ? null : this.$t(locale) as string;
+  }
+
+  get itemName(): string{
+    if(this.$root.$i18n.locale == "ja")
+    {
+      return this.source.JpFull;
+    }
+    else
+    {
+      return this.source.En;
+    }
+  }
+
+  get itemDescription(): string | null {
+    if(this.$root.$i18n.locale == "ja")
+    {
+      return this.source.JpDescription ?? null;
+    }
+    else
+    {
+      return this.source.EnDescription ?? null;
+    }
   }
 
   get highlightArray() {
     let result = [];
+    const lang = this.$i18n.locale;
     for (let limiter of this.limiters) {
-      if (limiter.property !== "" && limiter.isActive) {
+      if (limiter.propertyID != null && limiter.isActive) {
         if (limiter.isProp) {
-          let propName = limiter.property;
-          if (propName === null) {
+          //console.log(this.propDict);
+          const propData = this.propDict.get(limiter.propertyID.toString());
+          if(propData == undefined)
+          {
+            continue;
+          }
+          let propName = propData[lang == "ja" ? 0 : 1];
+          if (propName == undefined)
+          {
             continue;
           }
           let propNameMatches = propName.match(/[:：](.+)/);
@@ -181,7 +216,7 @@ export default class EquipmentListItem extends Mixins(scrollerUtils, xiUtils) {
           );
         }
         if (limiter.isText) {
-          let propName = limiter.property;
+          let propName = limiter.text;
           result.push(propName);
         }
       }

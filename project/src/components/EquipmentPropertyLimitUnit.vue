@@ -20,11 +20,13 @@
           <v-autocomplete
             :filter="autoCompleteFilter"
             :items="propsArray"
+            :item-text="$i18n.locale =='ja' ? 'textJa' : 'textEn'"
+            item-value="value"
             class="mr-2"
             clearable
             dense
             hide-details
-            label="性能"
+            :label="$t('ui.filter.property')"
             outlined
             style="min-width: 50px"
             type="text"
@@ -42,7 +44,7 @@
             clearable
             dense
             hide-details
-            label="最小値"
+            :label="$t('ui.filter.minValue')"
             outlined
             type="number"
             value="0"
@@ -67,46 +69,46 @@
         </v-col>
       </v-row>
       <!-- Text Filter -->
-      <v-row v-if="limiter.isText" class="align-center pt-0" no-gutters>
-        <v-col cols="1">
-          <v-checkbox
-            :input-value="true"
-            class=""
-            @change="
-              $emit('activeChanged', { index: limiter.index, isActive: $event })
-            "
-          />
-        </v-col>
-        <v-col cols="10">
-          <v-text-field
-            class="mr-2"
-            clearable
-            dense
-            hide-details
-            label="テキスト"
-            outlined
-            style="min-width: 50px"
-            type="text"
-            @input="
-              $emit('valueChanged', { index: limiter.index, property: $event })
-            "
-            @click:clear="
-              $emit('valueChanged', { index: limiter.index, property: '' })
-            "
-          />
-        </v-col>
-        <v-col cols="1">
-          <v-btn
-            color="red lighten-2"
-            dark
-            elevation="1"
-            fab
-            x-small
-            v-on:click="$emit('delete', limiter.index)"
-            >✖
-          </v-btn>
-        </v-col>
-      </v-row>
+<!--      <v-row v-if="limiter.isText" class="align-center pt-0" no-gutters>-->
+<!--        <v-col cols="1">-->
+<!--          <v-checkbox-->
+<!--            :input-value="true"-->
+<!--            class=""-->
+<!--            @change="-->
+<!--              $emit('activeChanged', { index: limiter.index, isActive: $event })-->
+<!--            "-->
+<!--          />-->
+<!--        </v-col>-->
+<!--        <v-col cols="10">-->
+<!--          <v-text-field-->
+<!--            class="mr-2"-->
+<!--            clearable-->
+<!--            dense-->
+<!--            hide-details-->
+<!--            label="テキスト"-->
+<!--            outlined-->
+<!--            style="min-width: 50px"-->
+<!--            type="text"-->
+<!--            @input="-->
+<!--              $emit('valueChanged', { index: limiter.index, property: $event })-->
+<!--            "-->
+<!--            @click:clear="-->
+<!--              $emit('valueChanged', { index: limiter.index, property: '' })-->
+<!--            "-->
+<!--          />-->
+<!--        </v-col>-->
+<!--        <v-col cols="1">-->
+<!--          <v-btn-->
+<!--            color="red lighten-2"-->
+<!--            dark-->
+<!--            elevation="1"-->
+<!--            fab-->
+<!--            x-small-->
+<!--            v-on:click="$emit('delete', limiter.index)"-->
+<!--            >✖-->
+<!--          </v-btn>-->
+<!--        </v-col>-->
+<!--      </v-row>-->
       <!-- Sorting -->
       <v-row
         v-if="limiter.isSort && !limiter.isText"
@@ -126,11 +128,13 @@
           <v-autocomplete
             :filter="autoCompleteFilter"
             :items="propsArray"
+            :item-text="$i18n.locale =='ja' ? 'textJa' : 'textEn'"
+            item-value="value"
             class="mr-2"
             clearable
             dense
             hide-details
-            label="並べ替え基準性能"
+            :label="$t('ui.filter.sortProp')"
             outlined
             style="min-width: 50px"
             type="text"
@@ -138,7 +142,7 @@
               $emit('valueChanged', { index: limiter.index, property: $event })
             "
             @click:clear="
-              $emit('valueChanged', { index: limiter.index, property: '' })
+              $emit('valueChanged', { index: limiter.index, property: undefined })
             "
           />
         </v-col>
@@ -146,7 +150,7 @@
           <v-checkbox
             :input-value="false"
             class=""
-            label="昇順"
+            :label="$t('ui.filter.asc')"
             @change="
               $emit('sortOrderChanged', { index: limiter.index, isAsc: $event })
             "
@@ -178,7 +182,7 @@ export default class EquipmentPropertyLimitUnit extends Mixins(xiUtils) {
   @Prop() readonly limiters!: Limiter[];
   @Prop() readonly propsArray!: string[];
 
-  public autoCompleteFilter(item: string, queryText: string, itemText: string) {
+  public autoCompleteFilter(item: Record<string,unknown>, queryText: string, itemText: string) : boolean{
     const normalizedItemText = this.kataToHira(
       this.fullWidthStrToHalfWidthStr(itemText.toLowerCase())
     );

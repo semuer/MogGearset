@@ -1,0 +1,49 @@
+{
+  "test": "english",
+  "ui" : {
+    "filter" : {
+      "searchBoxLabel" : "Search",
+      "addPropFilter": "+Filter",
+      "addSort": "+Sort",
+      "property": "Filter",
+      "minValue": "Min",
+      "sortProp": "Sort Prop.",
+      "asc": "Asc."
+    }
+  },
+  "item" : {
+    "itemType": {
+      "shield": "Shield",
+      "grip": "Grip",
+      "throw": "Throw",
+      "h2h": "H2H",
+      "dagger": "Dagger",
+      "sword": "Sword",
+      "greatsword": "GSword",
+      "axe": "Axe",
+      "greataxe": "GAxe",
+      "scythe": "Scythe",
+      "polearm": "Polearm",
+      "katana":"Katana" ,
+      "greatkatana": "GKatana",
+      "club": "Club",
+      "staff": "Staff",
+      "ammo": "Ammo",
+      "archery": "Archery",
+      "marksmanship": "Marksmanship",
+      "stringinst": "String Inst.",
+      "windinst": "Wind Inst.",
+      "head": "Head",
+      "body": "Body",
+      "hands": "Hands",
+      "legs": "Legs",
+      "feet": "Feet",
+      "neck": "Neck",
+      "waist": "Waist",
+      "earring": "Ear",
+      "ring": "Ring",
+      "back": "Back"
+
+    }
+  }
+}

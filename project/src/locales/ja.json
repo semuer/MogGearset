@@ -1,0 +1,49 @@
+{
+  "test": "日本語",
+  "ui" : {
+    "filter" : {
+      "searchBoxLabel" : "検索",
+      "addPropFilter": "+フィルタ",
+      "addSort": "+ソート",
+      "property": "フィルタ",
+      "minValue": "最小値",
+      "sortProp": "ソート基準",
+      "asc": "昇順"
+    }
+  },
+  "item" : {
+    "itemType": {
+      "shield": "盾",
+      "grip": "グリップ",
+      "throw": "投てき",
+      "h2h": "格闘",
+      "dagger": "短剣",
+      "sword": "片手剣",
+      "greatsword": "両手剣",
+      "axe": "片手斧",
+      "greataxe": "両手斧",
+      "scythe": "両手鎌",
+      "polearm": "両手槍",
+      "katana":"片手刀" ,
+      "greatkatana": "両手刀",
+      "club": "片手棍",
+      "staff": "両手棍",
+      "ammo": "矢・弾",
+      "archery": "弓術",
+      "marksmanship": "射撃",
+      "stringinst": "弦楽器",
+      "windinst": "管楽器",
+      "head": "頭",
+      "body": "胴",
+      "hands": "両手",
+      "legs": "両脚",
+      "feet": "両足",
+      "neck": "首",
+      "waist": "腰",
+      "earring": "耳",
+      "ring": "指",
+      "back": "背"
+
+    }
+  }
+}

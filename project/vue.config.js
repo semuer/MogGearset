@@ -2,9 +2,11 @@ module.exports = {
   transpileDependencies: [
     'vuetify',
   ],
+
   publicPath: process.env.NODE_ENV === 'production'
       ? '/XIUtilsEquipCalculator/'
       : '/',
+
   pwa: {
     name: 'XI EquipSet Simulator',
     themeColor: '#4DBA87',
@@ -19,6 +21,15 @@ module.exports = {
     workboxPluginMode: 'GenerateSW',
     workboxOptions: {
       cleanupOutdatedCaches: true // cleans up cache that is outdated because of a previous version of Workbox.
+    }
+  },
+
+  pluginOptions: {
+    i18n: {
+      locale: 'ja',
+      fallbackLocale: 'en',
+      localeDir: 'locales',
+      enableInSFC: false
     }
   }
 }

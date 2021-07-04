@@ -37,6 +37,8 @@ export interface Equipment {
   Damage?: number;
   ShieldSize?: number;
   Flags?: number;
+
+  Properties?: Property[];
   // Augments
   AugMultiRand?: string;
   AugRange?: string;
@@ -45,14 +47,13 @@ export interface Equipment {
   CombGroupID?: number;
 }
 
-export type Property =
-    {
-      PropID:number;
-      CatID:number;
-      MinValue?:number;
-      Value?:number;
-      Unit?:string;
-    }
+export type Property = {
+  PropID: number;
+  CatID?: number | null;
+  MinValue?: number;
+  Value?: number;
+  Unit?: string;
+};
 
 export interface EquipSet extends Record<string, Equipment> {
   Main?: Equipment;
@@ -82,7 +83,9 @@ export interface PropertyInfo {
 
 export interface Limiter {
   index: number;
-  property: string | null;
+  propertyID: number | null;
+  categoryID: number | null;
+  text: string | null;
   minValue: number;
   isActive: boolean;
   isSort: boolean;

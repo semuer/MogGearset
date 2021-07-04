@@ -5,15 +5,23 @@ import { Equipment, PropertyInfo } from "@/@types/equip-set";
 export default class xiUtils extends Vue {
   public getPropertyValue(
     item: Equipment,
-    property: string
+    property: number | undefined,
+    category: number | undefined | null
   ): number | undefined {
-    const props = this.getPropertiesArray(item);
+    const props = item.Properties;
+    if (props == undefined) {
+      return undefined;
+    }
     for (const prop of props) {
-      if (prop.name === property) {
-        if (prop.value === undefined) {
+      if (
+        property === prop.PropID &&
+        ((category == undefined && prop.CatID == undefined) ||
+          category === prop.CatID)
+      ) {
+        if (prop.Value == undefined) {
           return 0;
         } else {
-          return prop.value;
+          return prop.Value;
         }
       }
     }
@@ -141,57 +149,57 @@ export default class xiUtils extends Vue {
     return (flag & (1 << 14)) !== 0;
   }
 
-  public getItemTypeName(item: Equipment): string | null {
+  public getItemTypeName(item: Equipment, lang: string): string | null {
     if (item.ShieldSize != undefined) {
-      return "盾";
+      return "item.itemType.shield";
     }
     if (item.Skill !== undefined) {
       switch (item.Skill) {
         case 0:
           if (item.Slots === 2) {
-            return "グリップ";
+            return "item.itemType.grip";
           }
           if (item.Slots === 8) {
-            return "投てき";
+            return "item.itemType.throw";
           }
           return null;
         case 1:
-          return "格闘";
+          return "item.itemType.h2h";
         case 2:
-          return "短剣";
+          return "item.itemType.dagger";
         case 3:
-          return "片手剣";
+          return "item.itemType.sword";
         case 4:
-          return "両手剣";
+          return "item.itemType.greatsword";
         case 5:
-          return "片手斧";
+          return "item.itemType.axe";
         case 6:
-          return "両手斧";
+          return "item.itemType.greataxe";
         case 7:
-          return "両手鎌";
+          return "item.itemType.scythe";
         case 8:
-          return "両手槍";
+          return "item.itemType.polearm";
         case 9:
-          return "片手刀";
+          return "item.itemType.katana";
         case 10:
-          return "両手刀";
+          return "item.itemType.greatkatana";
         case 11:
-          return "片手棍";
+          return "item.itemType.club";
         case 12:
-          return "両手棍";
+          return "item.itemType.staff";
         case 25:
           if (item.Slots === 8) {
-            return "矢・弾";
+            return "item.itemType.ammo";
           }
-          return "弓術";
+          return "item.itemType.archery";
         case 26:
-          return "射撃";
+          return "item.itemType.marksmanship";
         case 27:
-          return "投てき";
+          return "item.itemType.throw";
         case 41:
-          return "弦楽器";
+          return "item.itemType.stringinst";
         case 42:
-          return "管楽器";
+          return "item.itemType.windinst";
         default:
           return null;
       }
@@ -199,34 +207,34 @@ export default class xiUtils extends Vue {
       if (item.Slots !== undefined) {
         const slot = item.Slots;
         if ((slot & (1 << 4)) !== 0) {
-          return "頭";
+          return "item.itemType.head";
         }
         if ((slot & (1 << 5)) !== 0) {
-          return "胴";
+          return "item.itemType.body";
         }
         if ((slot & (1 << 6)) !== 0) {
-          return "両手";
+          return "item.itemType.hands";
         }
         if ((slot & (1 << 7)) !== 0) {
-          return "両脚";
+          return "item.itemType.legs";
         }
         if ((slot & (1 << 8)) !== 0) {
-          return "両足";
+          return "item.itemType.feet";
         }
         if ((slot & (1 << 9)) !== 0) {
-          return "首";
+          return "item.itemType.neck";
         }
         if ((slot & (1 << 10)) !== 0) {
-          return "腰";
+          return "item.itemType.waist";
         }
         if ((slot & (1 << 11)) !== 0) {
-          return "耳";
+          return "item.itemType.earring";
         }
         if ((slot & (1 << 13)) !== 0) {
-          return "指";
+          return "item.itemType.ring";
         }
         if ((slot & (1 << 15)) !== 0) {
-          return "背";
+          return "item.itemType.back";
         }
       }
     }

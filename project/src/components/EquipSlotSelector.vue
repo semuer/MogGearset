@@ -47,7 +47,14 @@ export default {
     itemName: function () {
       const item = this.items[this.indexName];
       if (item != null && Object.keys(item).length !== 0) {
-        return item["Jp"];
+        if(this.$i18n.locale == "ja")
+        {
+          return item["Jp"];
+        }
+        else
+        {
+          return item["En"];
+        }
       } else {
         return null;
       }

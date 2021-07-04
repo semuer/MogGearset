@@ -26,7 +26,7 @@
         <v-text-field
           class="pt-3 pl-2 pr-3"
           clearable
-          label="名前"
+          :label="$t('ui.filter.searchBoxLabel')"
           v-model="nameFilter"
           @click:clear="nameFilterCleared"
           outlined
@@ -43,17 +43,17 @@
           small
           elevation="1"
           color="blue lighten-3"
-          >+性能一致</v-btn
+          >{{$t('ui.filter.addPropFilter')}}</v-btn
         >
-        <v-btn
-          v-on:click="addTextLimiter"
-          class="pr-2"
-          dense
-          small
-          elevation="1"
-          color="purple lighten-3"
-          >+文書検索</v-btn
-        >
+<!--        <v-btn-->
+<!--          v-on:click="addTextLimiter"-->
+<!--          class="pr-2"-->
+<!--          dense-->
+<!--          small-->
+<!--          elevation="1"-->
+<!--          color="purple lighten-3"-->
+<!--          >+文書検索</v-btn-->
+<!--        >-->
         <v-btn
           v-on:click="addSorter"
           class=""
@@ -61,7 +61,7 @@
           small
           elevation="1"
           color="orange lighten-3"
-          >+並べ替え</v-btn
+          >{{$t('ui.filter.addSort')}}</v-btn
         >
       </v-row>
       <equipment-property-limit-unit
@@ -85,7 +85,7 @@
         :data-key="'Id'"
         :data-sources="equipData"
         :data-component="itemComponent"
-        :extra-props="{ limiters: limiters }"
+        :extra-props="{ limiters: limiters, propDict: propDict, cateDict:cateDict }"
         :estimate-size="35"
       ></virtual-list>
     </v-list-item-group>
@@ -122,7 +122,9 @@ export default class EquipmentList extends Mixins(xiUtils) {
   @Prop({ default: "" }) readonly equipSlot: string | undefined;
 
   @Prop({ default: null }) readonly equipQueryChain!: any;
-  @Prop() readonly propsArray!: string[];
+  @Prop() readonly propsArray!: Record<string,unknown>[];
+  @Prop() readonly propDict!: Map<string,string[]>;
+  @Prop() readonly cateDict!: Map<string,string[]>;
 
   equipData: Equipment[] = [];
 
@@ -169,7 +171,7 @@ export default class EquipmentList extends Mixins(xiUtils) {
       let nameFilter = this.nameFilter;
       if (nameFilter !== "" && nameFilter !== null) {
         nameFilter = this.kataToHira(
-          this.fullWidthStrToHalfWidthStr(nameFilter as string)
+          this.fullWidthStrToHalfWidthStr(nameFilter as string).toLowerCase()
         );
         let funcKataHira = this.kataToHira;
         let funcFullTohalf = this.fullWidthStrToHalfWidthStr;
@@ -191,6 +193,14 @@ export default class EquipmentList extends Mixins(xiUtils) {
             isPassed = true;
           } else if (obj.EnFull.toLowerCase().includes(nameFilter as string)) {
             isPassed = true;
+          } else if (obj.JpDescription != null &&
+              funcKataHira(funcFullTohalf(obj.JpDescription)).toLowerCase().includes(nameFilter as string))
+          {
+             isPassed = true;
+          } else if (obj.EnDescription != null &&
+              funcFullTohalf(obj.EnDescription).toLowerCase().includes(nameFilter as string))
+          {
+            isPassed = true;
           }
 
           return isPassed;
@@ -204,61 +214,69 @@ export default class EquipmentList extends Mixins(xiUtils) {
           }
 
           if (this.limiters[i].isProp) {
-            let testPropName = this.limiters[i].property;
-            if (testPropName === null || testPropName === "") {
+            let testPropID = this.limiters[i].propertyID;
+            let testCatID = this.limiters[i].categoryID;
+            if (testPropID == undefined) {
               continue;
             }
             let min = this.limiters[i].minValue;
-            let funcGetProps = this.getPropertiesArray;
-            let funcFull2Half = this.fullWidthStrToHalfWidthStr;
             chain = chain.where(function (obj: Equipment) {
-              let props = funcGetProps(obj);
+              let props = obj["Properties"];
               let testPassed = false;
-
+              if(props == undefined)
+              {
+                return false;
+              }
               // match test
               for (let prop of props) {
-                if (
-                  funcFull2Half(prop.name.toLowerCase()) ==
-                  funcFull2Half((testPropName as string).toLowerCase())
-                ) {
-                  if (prop.hasValue && prop.value != undefined) {
-                    if (Math.abs(prop.value) >= min) {
-                      testPassed = true;
+                if(testPropID == null)
+                {
+                  return testPassed;
+                }
+                if (testPropID === prop.PropID &&
+                    ((testCatID == undefined && prop.CatID == undefined) || testCatID === prop.CatID))
+                {
+                    if (Math.abs(prop.Value ?? 0) >= min)
+                    {
+                        testPassed = true;
                     }
-                  } else {
+                  else
+                  {
                     testPassed = true;
                   }
                 }
               }
               return testPassed;
             });
-          } else if (this.limiters[i].isText) {
-            let testPropName = this.limiters[i].property;
-            if (testPropName === null || testPropName === "") {
-              continue;
-            }
-            chain = chain.where(function (obj: Equipment) {
-              return obj.JpDescription !== undefined &&
-                obj.JpDescription !== null
-                ? obj.JpDescription.toLowerCase().includes(
-                    testPropName?.toLowerCase() as string
-                  )
-                : false;
-            });
           }
+          // else if (this.limiters[i].isText) {
+          //   let testPropName = this.limiters[i].text;
+          //   if (testPropName === null || testPropName === "") {
+          //     continue;
+          //   }
+          //   chain = chain.where(function (obj: Equipment) {
+          //     return obj.JpDescription !== undefined &&
+          //       obj.JpDescription !== null
+          //       ? obj.JpDescription.toLowerCase().includes(
+          //           testPropName?.toLowerCase() as string
+          //         )
+          //       : false;
+          //   });
+          // }
 
           // Sorting Chains
           if (this.limiters[i].isSort) {
             let funcGetValue = this.getPropertyValue;
             let isAsc = this.limiters[i].isAsc;
-            const filterPropName = this.limiters[i].property;
-            if (filterPropName === null || filterPropName === "") {
+            const filterPropID = this.limiters[i].propertyID;
+            const filterCateID = this.limiters[i].categoryID;
+            if (filterPropID == undefined) {
               continue;
             }
 
             chain = chain.sort(function (obj1: Equipment, obj2: Equipment) {
-              const value1 = funcGetValue(obj1, filterPropName);
-              const value2 = funcGetValue(obj2, filterPropName);
+              const value1 = funcGetValue(obj1, filterPropID, filterCateID);
+              const value2 = funcGetValue(obj2, filterPropID, filterCateID);
               let result = 0;
               if (value1 === undefined && value2 === undefined) {
                 result = 0;
@@ -300,7 +318,9 @@ export default class EquipmentList extends Mixins(xiUtils) {
   public addLimiter(): void {
     this.limiters.push({
       index: Date.now(),
-      property: "",
+      propertyID: null,
+      categoryID: null,
+      text: null,
       minValue: 0,
       isActive: true,
       isSort: false,
@@ -310,18 +330,20 @@ export default class EquipmentList extends Mixins(xiUtils) {
     });
   }
 
-  public addTextLimiter(): void {
-    this.limiters.push({
-      index: Date.now(),
-      property: "",
-      minValue: 0,
-      isActive: true,
-      isSort: false,
-      isText: true,
-      isProp: false,
-      isAsc: false,
-    });
-  }
+  // public addTextLimiter(): void {
+  //   this.limiters.push({
+  //     index: Date.now(),
+  //     propertyID: undefined,
+  //     categoryID: undefined,
+  //     text: null,
+  //     minValue: 0,
+  //     isActive: true,
+  //     isSort: false,
+  //     isText: true,
+  //     isProp: false,
+  //     isAsc: false,
+  //   });
+  // }
 
   public addSorter(): void {
     for (const lim of this.limiters) {
@@ -331,7 +353,9 @@ export default class EquipmentList extends Mixins(xiUtils) {
     }
     this.limiters.push({
       index: Date.now(),
-      property: "",
+      propertyID: null,
+      categoryID: null,
+      text: null,
       minValue: 0,
       isActive: true,
       isSort: true,
@@ -353,9 +377,17 @@ export default class EquipmentList extends Mixins(xiUtils) {
     if (obj["index"] != undefined) {
       for (let limiter of this.limiters) {
         if (limiter.index == obj["index"]) {
-          if (obj["property"] != undefined) {
-            limiter.property = obj["property"].replace("：", ":");
+          if (obj["text"] != undefined) {
+            limiter.text = obj["text"].replace("：", ":");
           }
+          if(obj["property"] != undefined)
+          {
+            limiter.propertyID = obj["property"][0]
+            limiter.categoryID = obj["property"][1]
+          }
+
+          //console.log("propID" + limiter.propertyID);
+
           if (obj["minValue"] != undefined) {
             limiter.minValue = obj["minValue"];
           }

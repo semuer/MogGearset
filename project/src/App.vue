@@ -10,7 +10,10 @@
         </v-col>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn class="mr-3 pl-2" href="https://github.com/semuer/XIUtilsEquipCalculator" icon>
+      <v-btn class="" v-on:click="changeLanguage">
+        {{ $t('test') }}
+      </v-btn>
+      <v-btn class="mr-3 pl-1" href="https://github.com/semuer/XIUtilsEquipCalculator" icon>
         <v-icon x-large>mdi-github</v-icon>
       </v-btn>
     </v-app-bar>
@@ -28,6 +31,8 @@
             :equip-query-chain="equipQueryChain"
             :equipSlot="selectedSlot"
             :propsArray="propsArray"
+            :prop-dict="propDict"
+            :cate-dict="categoryDict"
             class="fill-height pa-0 ma-0"
             style="width: 100%"
             v-on:select="equipItem"
@@ -257,8 +262,8 @@ export default class App extends Vue {
   equipQueryChain: ResultSet | null = null;
   navigationWidth = 0;
   propsArray: string[] = [];
-  propDict: Map<number,string[]> = new Map();
-  categoryDict: Map<number,string[]> = new Map();
+  propDict: Map<string,string[]> = new Map();
+  categoryDict: Map<string,string[]> = new Map();
   baseUrl: string = process.env.BASE_URL;
 
   get slotItemsArray(): Array<SlotStringPair> {
@@ -290,6 +295,17 @@ export default class App extends Vue {
   public clearSlot(selectedSlot: string): void {
     Vue.set(this.editEquipSet, selectedSlot, null);
     this.dirtyFlag = !this.dirtyFlag;
+  }
+
+  public changeLanguage():void{
+    if(this.$root.$i18n.locale === "ja")
+    {
+      this.$root.$i18n.locale = "en";
+    }
+    else
+    {
+      this.$root.$i18n.locale = "ja";
+    }
   }
 
   @Watch("selectedJob")
@@ -404,12 +420,12 @@ export default class App extends Vue {
     const promisePropData = fetch(process.env.BASE_URL + "json/properties_dict.json")
         .then((response) => response.json())
         .then((data) => {
-          this.propDict = Object.entries(data) as unknown as Map<number,string[]>;
+          this.propDict = new Map(Object.entries(data));
         });
     const promiseCateData = fetch(process.env.BASE_URL + "json/categories_dict.json")
         .then((response) => response.json())
         .then((data) => {
-          this.categoryDict = Object.entries(data) as unknown as Map<number,string[]>;
+          this.categoryDict = new Map(Object.entries(data));
         });
 
     Promise
