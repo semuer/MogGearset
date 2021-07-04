@@ -15,7 +15,7 @@
           v-model="isLevel99"
           label="Lv99"
           hide-details
-          class="ml-2 mr-2"
+          class="pl-2 pr-2"
         ></v-checkbox>
         <v-checkbox
           v-show="slotHasItemLevel"
