@@ -66,9 +66,10 @@
           </v-row>
         </v-list-item-title>
         <v-list-item-subtitle class="text-wrap">
-          <text-highlight :queries="highlightArray" :wholeWordMatch="true"
+          <v-row no-gutters style="font-size:7px" class="blue-grey--text lighten-5--text pb-1 pt-1">{{jobsString}}</v-row>
+          <v-row no-gutters><text-highlight :queries="highlightArray" :wholeWordMatch="true"
           >{{ itemDescription }}
-          </text-highlight>
+          </text-highlight></v-row>
         </v-list-item-subtitle>
         <v-list-item-subtitle>
           <v-chip
@@ -177,6 +178,19 @@ export default class EquipmentListItem extends Mixins(scrollerUtils, xiUtils) {
     {
       return this.source.En;
     }
+  }
+
+  get jobsString():string {
+    let result = "";
+    const jobs = this.jobList();
+    for(const job of jobs)
+    {
+      if((this.source as any)["Is" + job.abb] == true)
+      {
+        result += job.name + " ";
+      }
+    }
+    return result;
   }
 
   get itemDescription(): string | null {
