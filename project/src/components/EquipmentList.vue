@@ -34,7 +34,15 @@
           dense
         ></v-text-field>
       </v-row>
-
+      <v-row v-if="getTypeList() != undefined">
+        <v-select
+          :items="getTypeList()"
+          v-model="selectedType"
+          filled
+          label="Type"
+          clearable
+        ></v-select>
+      </v-row>
       <v-row class="pb-1 pt-2 justify-space-around align-center" no-gutters>
         <v-btn
           v-on:click="addLimiter"
@@ -43,17 +51,17 @@
           small
           elevation="1"
           color="blue lighten-3"
-          >{{$t('ui.filter.addPropFilter')}}</v-btn
+          >{{ $t("ui.filter.addPropFilter") }}</v-btn
         >
-<!--        <v-btn-->
-<!--          v-on:click="addTextLimiter"-->
-<!--          class="pr-2"-->
-<!--          dense-->
-<!--          small-->
-<!--          elevation="1"-->
-<!--          color="purple lighten-3"-->
-<!--          >+文書検索</v-btn-->
-<!--        >-->
+        <!--        <v-btn-->
+        <!--          v-on:click="addTextLimiter"-->
+        <!--          class="pr-2"-->
+        <!--          dense-->
+        <!--          small-->
+        <!--          elevation="1"-->
+        <!--          color="purple lighten-3"-->
+        <!--          >+文書検索</v-btn-->
+        <!--        >-->
         <v-btn
           v-on:click="addSorter"
           class=""
@@ -61,7 +69,7 @@
           small
           elevation="1"
           color="orange lighten-3"
-          >{{$t('ui.filter.addSort')}}</v-btn
+          >{{ $t("ui.filter.addSort") }}</v-btn
         >
       </v-row>
       <equipment-property-limit-unit
@@ -85,7 +93,11 @@
         :data-key="'Id'"
         :data-sources="equipData"
         :data-component="itemComponent"
-        :extra-props="{ limiters: limiters, propDict: propDict, cateDict:cateDict }"
+        :extra-props="{
+          limiters: limiters,
+          propDict: propDict,
+          cateDict: cateDict,
+        }"
         :estimate-size="35"
       ></virtual-list>
     </v-list-item-group>
@@ -115,16 +127,17 @@ export default class EquipmentList extends Mixins(xiUtils) {
   limiters: Array<Limiter> = [];
   isLevel99 = false;
   isItemLevel119 = false;
-  nameFilter : string|null = "";
+  nameFilter: string | null = "";
+  selectedType: string | null = null;
 
   itemComponent = EquipmentListItem;
 
   @Prop({ default: "" }) readonly equipSlot: string | undefined;
 
   @Prop({ default: null }) readonly equipQueryChain!: any;
-  @Prop() readonly propsArray!: Record<string,unknown>[];
-  @Prop() readonly propDict!: Map<string,string[]>;
-  @Prop() readonly cateDict!: Map<string,string[]>;
+  @Prop() readonly propsArray!: Record<string, unknown>[];
+  @Prop() readonly propDict!: Map<string, string[]>;
+  @Prop() readonly cateDict!: Map<string, string[]>;
 
   equipData: Equipment[] = [];
 
@@ -138,14 +151,35 @@ export default class EquipmentList extends Mixins(xiUtils) {
     "R.Ring",
   ];
 
-  get slotHasItemLevel(): boolean {
-    return !(this.equipSlot != undefined &&
-        this.nonILSlots.includes(this.equipSlot));
-
+  public getTypeList() {
+    if (this.equipSlot === "Main") {
+      return this.getMainHandTypeList();
+    }
+    if (this.equipSlot === "Sub") {
+      return this.getSubHandTypeList();
+    }
+    if (this.equipSlot === "Range") {
+      return this.getRangeTypeList();
+    }
+    if (this.equipSlot === "Ammo") {
+      return this.getAmmoTypeList();
+    }
+    return undefined;
   }
 
-  public nameFilterCleared():void {
+  get slotHasItemLevel(): boolean {
+    return !(
+      this.equipSlot != undefined && this.nonILSlots.includes(this.equipSlot)
+    );
+  }
+
+  public nameFilterCleared(): void {
     this.nameFilter = "";
+  }
+
+  @Watch("equipSlot")
+  slotChanged() {
+    this.selectedType = null;
   }
 
   @Watch("equipQueryChain")
@@ -153,6 +187,7 @@ export default class EquipmentList extends Mixins(xiUtils) {
   @Watch("isItemLevel119")
   @Watch("limiters")
   @Watch("nameFilter")
+  @Watch("selectedType")
   queryChanged() {
     if (this.equipQueryChain != null) {
       let chain = this.equipQueryChain.copy();
@@ -166,6 +201,25 @@ export default class EquipmentList extends Mixins(xiUtils) {
       }
       if (Object.keys(query).length !== 0) {
         chain = chain.find(query);
+      }
+
+      if (
+        this.equipSlot === "Main" ||
+        this.equipSlot === "Sub" ||
+        this.equipSlot === "Range" ||
+        this.equipSlot === "Ammo"
+      ) {
+        const selectedType = this.selectedType;
+        if (this.selectedType != undefined && this.selectedType != "") {
+          const getType = this.getItemTypeName;
+          chain = chain.where(function (obj: Equipment) {
+            const type = getType(obj);
+            if (type === selectedType) {
+              return true;
+            }
+            return false;
+          });
+        }
       }
 
       let nameFilter = this.nameFilter;
@@ -193,13 +247,19 @@ export default class EquipmentList extends Mixins(xiUtils) {
             isPassed = true;
           } else if (obj.EnFull.toLowerCase().includes(nameFilter as string)) {
             isPassed = true;
-          } else if (obj.JpDescription != null &&
-              funcKataHira(funcFullTohalf(obj.JpDescription)).toLowerCase().includes(nameFilter as string))
-          {
-             isPassed = true;
-          } else if (obj.EnDescription != null &&
-              funcFullTohalf(obj.EnDescription).toLowerCase().includes(nameFilter as string))
-          {
+          } else if (
+            obj.JpDescription != null &&
+            funcKataHira(funcFullTohalf(obj.JpDescription))
+              .toLowerCase()
+              .includes(nameFilter as string)
+          ) {
+            isPassed = true;
+          } else if (
+            obj.EnDescription != null &&
+            funcFullTohalf(obj.EnDescription)
+              .toLowerCase()
+              .includes(nameFilter as string)
+          ) {
             isPassed = true;
           }
 
@@ -223,25 +283,22 @@ export default class EquipmentList extends Mixins(xiUtils) {
             chain = chain.where(function (obj: Equipment) {
               let props = obj["Properties"];
               let testPassed = false;
-              if(props == undefined)
-              {
+              if (props == undefined) {
                 return false;
               }
               // match test
               for (let prop of props) {
-                if(testPropID == null)
-                {
+                if (testPropID == null) {
                   return testPassed;
                 }
-                if (testPropID === prop.PropID &&
-                    ((testCatID == undefined && prop.CatID == undefined) || testCatID === prop.CatID))
-                {
-                    if (Math.abs(prop.Value ?? 0) >= min)
-                    {
-                        testPassed = true;
-                    }
-                  else
-                  {
+                if (
+                  testPropID === prop.PropID &&
+                  ((testCatID == undefined && prop.CatID == undefined) ||
+                    testCatID === prop.CatID)
+                ) {
+                  if (Math.abs(prop.Value ?? 0) >= min) {
+                    testPassed = true;
+                  } else {
                     testPassed = true;
                   }
                 }
@@ -380,10 +437,9 @@ export default class EquipmentList extends Mixins(xiUtils) {
           if (obj["text"] != undefined) {
             limiter.text = obj["text"].replace("：", ":");
           }
-          if(obj["property"] != undefined)
-          {
-            limiter.propertyID = obj["property"][0]
-            limiter.categoryID = obj["property"][1]
+          if (obj["property"] != undefined) {
+            limiter.propertyID = obj["property"][0];
+            limiter.categoryID = obj["property"][1];
           }
 
           //console.log("propID" + limiter.propertyID);

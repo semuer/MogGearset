@@ -176,7 +176,76 @@ export default class xiUtils extends Vue {
     return (flag & (1 << 14)) !== 0;
   }
 
-  public getItemTypeName(item: Equipment, lang: string): string | null {
+  public getMainHandTypeList() {
+    return [
+      { value: "item.itemType.h2h", text: this.$t("item.itemType.h2h") },
+      { value: "item.itemType.dagger", text: this.$t("item.itemType.dagger") },
+      { value: "item.itemType.sword", text: this.$t("item.itemType.sword") },
+      {
+        value: "item.itemType.greatsword",
+        text: this.$t("item.itemType.greatsword"),
+      },
+      { value: "item.itemType.axe", text: this.$t("item.itemType.axe") },
+      {
+        value: "item.itemType.greataxe",
+        text: this.$t("item.itemType.greataxe"),
+      },
+      { value: "item.itemType.scythe", text: this.$t("item.itemType.scythe") },
+      {
+        value: "item.itemType.polearm",
+        text: this.$t("item.itemType.polearm"),
+      },
+      { value: "item.itemType.katana", text: this.$t("item.itemType.katana") },
+      {
+        value: "item.itemType.greatkatana",
+        text: this.$t("item.itemType.greatkatana"),
+      },
+      { value: "item.itemType.club", text: this.$t("item.itemType.club") },
+      { value: "item.itemType.staff", text: this.$t("item.itemType.staff") },
+    ];
+  }
+
+  public getSubHandTypeList() {
+    return [
+      { value: "item.itemType.shield", text: this.$t("item.itemType.shield") },
+      { value: "item.itemType.dagger", text: this.$t("item.itemType.dagger") },
+      { value: "item.itemType.sword", text: this.$t("item.itemType.sword") },
+      { value: "item.itemType.axe", text: this.$t("item.itemType.axe") },
+      { value: "item.itemType.katana", text: this.$t("item.itemType.katana") },
+      { value: "item.itemType.club", text: this.$t("item.itemType.club") },
+      { value: "item.itemType.grip", text: this.$t("item.itemType.grip") },
+    ];
+  }
+
+  public getRangeTypeList() {
+    return [
+      { value: "item.itemType.throw", text: this.$t("item.itemType.throw") },
+      {
+        value: "item.itemType.archery",
+        text: this.$t("item.itemType.archery"),
+      },
+      {
+        value: "item.itemType.marksmanship",
+        text: this.$t("item.itemType.marksmanship"),
+      },
+      {
+        value: "item.itemType.stringinst",
+        text: this.$t("item.itemType.stringinst"),
+      },
+      {
+        value: "item.itemType.windinst",
+        text: this.$t("item.itemType.windinst"),
+      },
+    ];
+  }
+  public getAmmoTypeList() {
+    return [
+      { value: "item.itemType.throw", text: this.$t("item.itemType.throw") },
+      { value: "item.itemType.ammo", text: this.$t("item.itemType.ammo") },
+    ];
+  }
+
+  public getItemTypeName(item: Equipment): string | null {
     if (item.ShieldSize != undefined) {
       return "item.itemType.shield";
     }
