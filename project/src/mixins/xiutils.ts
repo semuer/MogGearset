@@ -1,5 +1,5 @@
 import { Component, Vue } from "vue-property-decorator";
-import { Equipment, PropertyInfo } from "@/@types/equip-set";
+import { AugProperty, Equipment, PropertyInfo } from "@/@types/equip-set";
 
 @Component
 export default class xiUtils extends Vue {
@@ -26,6 +26,41 @@ export default class xiUtils extends Vue {
       }
     }
     return undefined;
+  }
+
+  public getAugString(
+    locale: string,
+    data: AugProperty,
+    propDict: Map<string, string[]>,
+    catDict: Map<string, string[]>
+  ): string | undefined {
+    let result = "";
+    const loci = locale == "ja" ? 0 : 1;
+    let catString = "";
+    if (data.PropIDs == null) {
+      return result;
+    }
+    if (data.CatID != null) {
+      const cat = catDict.get(data.CatID.toString());
+      if (cat != null) {
+        catString += cat[loci] + ":";
+      }
+    }
+
+    let valueString = "";
+    if (data.Value != null) {
+      valueString =
+        (data.Value > 0 ? "+" : "") + data.Value.toString() + (data.Unit ?? "");
+    }
+
+    for (const prop of data.PropIDs) {
+      const rProp = propDict.get(prop.toString());
+      if (rProp != null) {
+        result += catString + rProp[loci] + valueString + " ";
+      }
+    }
+
+    return result.trim();
   }
 
   public jobList() {

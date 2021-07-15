@@ -37,15 +37,25 @@ export interface Equipment {
   Damage?: number;
   ShieldSize?: number;
   Flags?: number;
-
   Properties?: Property[];
   // Augments
-  AugMultiRand?: string;
-  AugRange?: string;
-  AugFixed?: string;
+  AugCape?: AugSet[];
+  AugFixed?: AugSet[];
+  AugRoute?: AugSet[];
   // Combination
   CombGroupID?: number;
 }
+
+export type AugSet = {
+  Augs: AugProperty[];
+};
+
+export type AugProperty = {
+  PropIDs: number[];
+  CatID?: number;
+  Value?: number;
+  Unit?: string;
+};
 
 export type Property = {
   PropID: number;

@@ -88,6 +88,11 @@
               >{{ itemDescription }}
             </text-highlight></v-row
           >
+          <v-row v-if="hasAug" no-gutters
+            ><v-row v-for="(item, idx) in AugString" v-bind:key="idx"
+              >{{ item }}
+            </v-row></v-row
+          >
         </v-list-item-subtitle>
         <v-list-item-subtitle>
           <v-chip
@@ -230,7 +235,7 @@ export default class EquipmentListItem extends Mixins(scrollerUtils, xiUtils) {
             continue;
           }
           let propNameMatches = propName.match(/[:：](.+)/);
-          if (propNameMatches != null && propNameMatches.length > 1) {
+          if (propNameMatches != undefined && propNameMatches.length > 1) {
             propName = propNameMatches[1];
           }
           result.push(
@@ -243,6 +248,35 @@ export default class EquipmentListItem extends Mixins(scrollerUtils, xiUtils) {
         }
       }
     }
+    return result;
+  }
+
+  get hasAug(): boolean {
+    return (
+      this.source.AugCape != null ||
+      this.source.AugFixed != null ||
+      this.source.AugRoute != null
+    );
+  }
+
+  get AugString(): string[] {
+    let result: string[] = [];
+    if (this.source.AugCape != undefined) {
+      for (const augs of this.source.AugCape) {
+        let rsub = "";
+        for (const aug of augs.Augs) {
+          rsub +=
+            this.getAugString(
+              this.$i18n.locale,
+              aug,
+              this.propDict,
+              this.cateDict
+            ) + " ";
+        }
+        result.push(rsub);
+      }
+    }
+
     return result;
   }
 
