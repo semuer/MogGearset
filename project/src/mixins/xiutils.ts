@@ -280,6 +280,42 @@ export default class xiUtils extends Vue {
     ];
   }
 
+  get slotItemsArray(): Array<SlotStringPair> {
+    return [
+      { index: "Main", label: "メイン" }, // 0
+      { index: "Sub", label: "サブ" }, // 1
+      { index: "Range", label: "遠隔" }, // 2
+      { index: "Ammo", label: "弾" }, // 3
+      { index: "Head", label: "頭" }, // 4
+      { index: "Body", label: "胴" }, // 5
+      { index: "Hands", label: "手" }, // 6
+      { index: "Legs", label: "脚" }, // 7
+      { index: "Feet", label: "足" }, // 8
+      { index: "Neck", label: "首" }, // 9
+      { index: "Waist", label: "腰" }, // 10
+      { index: "L.Earring", label: "左耳" }, //11
+      { index: "R.Earring", label: "右耳" }, //12
+      { index: "L.Ring", label: "左指" }, //13
+      { index: "R.Ring", label: "右指" }, //14
+      { index: "Cape", label: "背" }, //15
+    ];
+  }
+
+  public getItemSlot(item: Equipment): string | null {
+    const slot = item.Slots;
+    const dict = this.slotItemsArray;
+    if (slot == null) {
+      return null;
+    }
+    for (let i = 0; i <= 15; i++) {
+      if ((slot & (1 << i)) !== 0) {
+        return dict[i]["index"];
+      }
+    }
+
+    return null;
+  }
+
   public getItemTypeName(item: Equipment): string | null {
     if (item.ShieldSize != undefined) {
       return "item.itemType.shield";
@@ -375,4 +411,9 @@ export default class xiUtils extends Vue {
   public getItemIconUrl(id: number): string {
     return "https://semuer.github.io/XIUtilsItemIcons/icon/" + id + ".png";
   }
+}
+
+interface SlotStringPair {
+  index: string;
+  label: string;
 }

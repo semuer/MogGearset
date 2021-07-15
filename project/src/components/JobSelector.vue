@@ -28,10 +28,11 @@
         >
           {{ job.name }}
         </v-chip>
-      </v-chip-group>
+
+      </v-chip-group><v-chip small label v-on:click="clearJobs">{{ $t('ui.job.clearAll') }}</v-chip>
     </v-row>
     <v-row no-gutters>
-      <v-btn small v-on:click="clearJobs">{{ $t('ui.job.clearAll') }}</v-btn>
+
     </v-row>
   </v-col>
 </template>

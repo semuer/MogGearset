@@ -271,7 +271,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from "vue-property-decorator";
+import {Component, Mixins, Vue, Watch} from "vue-property-decorator";
 import EquipmentList from "@/components/EquipmentList.vue";
 import JobSelector from "./components/JobSelector.vue";
 import EquipSlotSelector from "./components/EquipSlotSelector.vue";
@@ -279,6 +279,7 @@ import EquipIconSlotSelector from "./components/EquipIconSlotSelector.vue";
 import EquipSetPerformanceView from "@/components/EquipSetPerformanceView.vue";
 import { Equipment, EquipSet } from "./@types/equip-set";
 import loki, { Collection } from "lokijs";
+import xiUtils from "@/mixins/xiutils";
 
 @Component({
   components: {
@@ -289,7 +290,7 @@ import loki, { Collection } from "lokijs";
     EquipIconSlotSelector,
   },
 })
-export default class App extends Vue {
+export default class App extends Mixins(xiUtils) {
   // data
   db = new loki("data.db");
   selectedJob: string[] = [];
@@ -299,36 +300,30 @@ export default class App extends Vue {
   editEquipSet: EquipSet = {};
   dirtyFlag = false;
   equipQueryChain: ResultSet | null = null;
-  navigationWidth = 0;
+  navigationWidth = 450;
   propsArray: string[] = [];
   propDict: Map<string, string[]> = new Map();
   categoryDict: Map<string, string[]> = new Map();
   baseUrl: string = process.env.BASE_URL;
 
-  get slotItemsArray(): Array<SlotStringPair> {
-    return [
-      { index: "Main", label: "メイン" }, // 0
-      { index: "Sub", label: "サブ" }, // 1
-      { index: "Range", label: "遠隔" }, // 2
-      { index: "Ammo", label: "弾" }, // 3
-      { index: "Head", label: "頭" }, // 4
-      { index: "Body", label: "胴" }, // 5
-      { index: "Hands", label: "手" }, // 6
-      { index: "Legs", label: "脚" }, // 7
-      { index: "Feet", label: "足" }, // 8
-      { index: "Neck", label: "首" }, // 9
-      { index: "Waist", label: "腰" }, // 10
-      { index: "L.Earring", label: "左耳" }, //11
-      { index: "R.Earring", label: "右耳" }, //12
-      { index: "L.Ring", label: "左指" }, //13
-      { index: "R.Ring", label: "右指" }, //14
-      { index: "Cape", label: "背" }, //15
-    ];
-  }
+
 
   public equipItem(item: Equipment): void {
-    Vue.set(this.editEquipSet, this.selectedSlot, item);
-    this.dirtyFlag = !this.dirtyFlag;
+
+    if(this.selectedSlot != null && this.selectedSlot != "")
+    {
+      Vue.set(this.editEquipSet, this.selectedSlot, item);
+      this.dirtyFlag = !this.dirtyFlag;
+    }
+    else
+    {
+      const slot = this.getItemSlot(item);
+      if(slot != null)
+      {
+        Vue.set(this.editEquipSet,slot, item);
+        this.dirtyFlag = !this.dirtyFlag;
+      }
+    }
   }
 
   public clearSlot(selectedSlot: string): void {
@@ -359,11 +354,15 @@ export default class App extends Vue {
     //query["ItemLevel"] = 119;
     //console.log(query);
     if (newSlot == "" || newSlot == null) {
-      this.equipQueryChain = null;
-      this.navigationWidth = 0;
+      if (this.equipCollection != null) {
+        this.equipQueryChain = this.equipCollection
+            .chain()
+            .find(query);
+      } else {
+        this.equipQueryChain = null;
+      }
       return;
     }
-    this.navigationWidth = 450;
     let slotToIdDict: Record<string, number> = {
       Main: 0,
       Sub: 1,
@@ -479,10 +478,7 @@ export default class App extends Vue {
   }
 }
 
-interface SlotStringPair {
-  index: string;
-  label: string;
-}
+
 
 type ResultSet = ReturnType<Collection["chain"]>;
 </script>
