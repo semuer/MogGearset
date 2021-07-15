@@ -1,6 +1,11 @@
 {
-  "test": "english",
+  "test": "日/英",
   "ui" : {
+    "item":
+    {
+      "augheader": "Augments",
+      "type": "Item Type"
+    },
     "filter" : {
       "searchBoxLabel" : "Search",
       "addPropFilter": "+Filter",
@@ -37,6 +42,7 @@
     }
   },
   "item" : {
+
     "itemType": {
       "shield": "Shield",
       "grip": "Grip",

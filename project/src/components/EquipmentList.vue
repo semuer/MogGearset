@@ -34,12 +34,17 @@
           dense
         ></v-text-field>
       </v-row>
-      <v-row v-if="getTypeList() != undefined">
+      <v-row v-if="getTypeList() != undefined" class="ml-4 mr-4 mb-2">
         <v-select
+      solo
           :items="getTypeList()"
           v-model="selectedType"
           filled
-          label="Type"
+      dense
+      flat
+      hide-details
+      outlined
+          :label="$t('ui.item.type')"
           clearable
         ></v-select>
       </v-row>

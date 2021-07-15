@@ -1,6 +1,11 @@
 {
-  "test": "日本語",
+  "test": "EN/JA",
   "ui" : {
+    "item":
+    {
+      "augheader": "オグメ",
+      "type": "装備タイプ"
+    },
     "filter" : {
       "searchBoxLabel" : "検索",
       "addPropFilter": "+フィルタ",
@@ -38,6 +43,7 @@
   },
 
   "item" : {
+
     "itemType": {
       "shield": "盾",
       "grip": "グリップ",

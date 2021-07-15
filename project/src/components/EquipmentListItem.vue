@@ -85,14 +85,26 @@
           >
           <v-row no-gutters
             ><text-highlight :queries="highlightArray" :wholeWordMatch="true"
-              >{{ itemDescription }}
+                             style="word-break: keep-all;overflow-wrap: break-word;">{{ itemDescription }}
             </text-highlight></v-row
           >
           <v-row v-if="hasAug" no-gutters
-            ><v-row v-for="(item, idx) in AugString" v-bind:key="idx"
-              >{{ item }}
-            </v-row></v-row
-          >
+            >
+            <v-divider class="mt-1 mb-1"></v-divider>
+            <v-expansion-panels accordion class="ma-2">
+              <v-expansion-panel
+                  v-for="(item, idx) in AugString"
+                  :key="idx"
+                  multiple
+              >
+                <v-expansion-panel-header>{{ $t('ui.item.augheader') + idx }}</v-expansion-panel-header>
+                <v-expansion-panel-content style="word-break: keep-all;overflow-wrap: break-word;">
+                  {{ item }}
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+            </v-expansion-panels>
+
+          </v-row>
         </v-list-item-subtitle>
         <v-list-item-subtitle>
           <v-chip
