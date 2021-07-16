@@ -25,6 +25,15 @@ MMORPG「ファイナルファンタジーXI」用装備セットシミュレー
 Currently under heavy development. Source code is ugly for now.
 I'm not a professional web developer, please understand :)
 
+### Main TODOs
+
+* Augments Data / オグメ性能データ入力
+* Combination Data / セット性能データ入力
+* Local Saved Gearsets Data / ローカル装備セット保存機能
+* Total Properties Viewer / 装備性能ビュー
+* Mobile Support / モバイル端末サポート
+* Multiple Gearsets Comparison / 複数装備セット比較機能
+
 ### About Item Properties Parsing
 
 There's no simple way to parse item(equipment)'s properties to semantic or structure data with English version to my knowledge.
