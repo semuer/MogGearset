@@ -91,20 +91,46 @@
       class="fill-height"
       style="width: 100%; min-height: 100px; flex: 0 1 auto"
     >
-      <virtual-list
-        style="overflow-y: auto"
-        class="fill-height"
-        ref="v-scroller"
-        :data-key="'Id'"
-        :data-sources="equipData"
-        :data-component="itemComponent"
-        :extra-props="{
-          limiters: limiters,
-          propDict: propDict,
-          cateDict: cateDict,
-        }"
-        :estimate-size="35"
-      ></virtual-list>
+      <DynamicScroller
+          :items="equipData"
+          :min-item-size="54"
+          style="height:100%"
+          key-field="Id"
+      >
+        <template v-slot="{ item, index, active }">
+          <DynamicScrollerItem
+              :item="item"
+              :active="active"
+              :size-dependencies="[
+          item.JpDescription,item.EnDescription,item.AugCape,item.AugFixed,item.AugRoute
+        ]"
+              :data-index="index"
+          >
+            <equipment-list-item
+                :index="item.Id"
+                :source="item"
+                :limiters="limiters"
+                :propDict="propDict"
+                :cateDict="cateDict">
+            </equipment-list-item>
+          </DynamicScrollerItem>
+        </template>
+      </DynamicScroller>
+<!--      <virtual-list-->
+<!--        style="overflow-y: auto"-->
+<!--        class="fill-height"-->
+<!--        ref="v-scroller"-->
+<!--        :data-key="'Id'"-->
+<!--        :data-sources="equipData"-->
+<!--        :data-component="itemComponent"-->
+<!--        :extra-props="{-->
+<!--          limiters: limiters,-->
+<!--          propDict: propDict,-->
+<!--          cateDict: cateDict,-->
+<!--        }"-->
+<!--        :keeps="50"-->
+<!--        :estimate-size="55"-->
+<!--      ></virtual-list>-->
     </v-list-item-group>
   </v-container>
 </template>
@@ -447,8 +473,8 @@ export default class EquipmentList extends Mixins(xiUtils) {
 
       this.equipData = Object.freeze(chain.data());
     }
-    let list = this.$refs["v-scroller"] as InstanceType<typeof VirtualList>;
-    list.scrollToOffset(0);
+    //let list = this.$refs["v-scroller"] as InstanceType<typeof VirtualList>;
+    //list.scrollToOffset(0);
   }
 
   public addLimiter(): void {

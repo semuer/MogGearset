@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-list-item :value="source" class="align-center" two-line>
+    <v-list-item :value="source" class="align-center" two-line :ripple="false">
       <v-list-item-content>
         <v-list-item-title class="align-center">
           <v-row>
@@ -91,11 +91,11 @@
           <v-row v-if="hasAug" no-gutters
             >
             <v-divider class="mt-1 mb-1"></v-divider>
-            <v-expansion-panels accordion class="ma-2">
+            <v-expansion-panels accordion multiple class="ma-2">
               <v-expansion-panel
                   v-for="(item, idx) in AugString"
                   :key="idx"
-                  multiple
+
               >
                 <v-expansion-panel-header>{{ $t('ui.item.augheader') + idx }}</v-expansion-panel-header>
                 <v-expansion-panel-content style="word-break: keep-all;overflow-wrap: break-word;">
