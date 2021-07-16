@@ -1,8 +1,8 @@
 {
   "test": "日/英",
   "ui" : {
-    "siteDesc1": "This is an unofficial equipment database site for FINAL FANTASY XI, with some calculation functions (planned).",
-    "siteDesc2":"We still need time to finish basic contents. The site is open-sourced on GitHub",
+    "siteDesc1": "This is an unofficial equipment database site for FINAL FANTASY XI, with some calculation functions (planned). Mobile devices are not supported currently.",
+    "siteDesc2":"We still need time to finish basic contents. The site is open-sourced on GitHub.",
     "siteDesc3":"Any suggestions or advices are welcomed. Please use repository's issue page or join our Discord channel.",
     "item":
     {
