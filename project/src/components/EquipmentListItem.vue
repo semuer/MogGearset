@@ -84,23 +84,24 @@
             >{{ jobsString }}</v-row
           >
           <v-row no-gutters
-            ><text-highlight :queries="highlightArray" :wholeWordMatch="true"
-                             style="word-break: keep-all;overflow-wrap: break-word;">{{ itemDescription }}
+            ><text-highlight :queries="highlightArray" :wholeWordMatch="true" class="grey--text text--darken-1"
+                             style="word-break: keep-all;overflow-wrap: break-word;line-height:1.4em">{{ itemDescription }}
             </text-highlight></v-row
           >
           <v-row v-if="hasAug" no-gutters
             >
             <v-divider class="mt-1 mb-1"></v-divider>
-            <v-expansion-panels accordion multiple class="ma-2">
+            <v-expansion-panels accordion multiple tile class="ma-2">
               <v-expansion-panel
                   v-for="(item, idx) in AugString"
                   :key="idx"
-
+                  class="mb-0 pb-0"
               >
-                <v-expansion-panel-header>{{ $t('ui.item.augheader') + idx }}</v-expansion-panel-header>
-                <v-expansion-panel-content style="word-break: keep-all;overflow-wrap: break-word;">
-                  {{ item }}
-                </v-expansion-panel-content>
+                <v-expansion-panel-header class="grey--text text--darken-2" color="grey lighten-4" style="min-height: 15px; height:15px">{{ $t('ui.item.augheader') + idx }}</v-expansion-panel-header>
+                <v-expansion-panel-content class="pt-4 pb-0 mb-0 grey--text text--darken-1" style="word-break: keep-all;overflow-wrap: break-word;">
+                  <text-highlight :queries="highlightArray" :wholeWordMatch="true"
+                                  style="word-break: keep-all;overflow-wrap: break-word;line-height:1.4em">{{ item }}
+                  </text-highlight> </v-expansion-panel-content>
               </v-expansion-panel>
             </v-expansion-panels>
 
