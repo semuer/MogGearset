@@ -36,14 +36,14 @@
       </v-row>
       <v-row v-if="getTypeList() != undefined" class="ml-4 mr-4 mb-2">
         <v-select
-      solo
+          solo
           :items="getTypeList()"
           v-model="selectedType"
           filled
-      dense
-      flat
-      hide-details
-      outlined
+          dense
+          flat
+          hide-details
+          outlined
           :label="$t('ui.item.type')"
           clearable
         ></v-select>
@@ -286,29 +286,103 @@ export default class EquipmentList extends Mixins(xiUtils) {
             }
             let min = this.limiters[i].minValue;
             chain = chain.where(function (obj: Equipment) {
-              let props = obj["Properties"];
+              let props = obj.Properties;
+              let augsCape = obj.AugCape;
+              let augsFix = obj.AugFixed;
+              let augsRoute = obj.AugRoute;
+              let totalValue = 0;
               let testPassed = false;
-              if (props == undefined) {
+              if (
+                props == undefined &&
+                augsCape == undefined &&
+                augsFix == undefined &&
+                augsRoute == undefined
+              ) {
                 return false;
               }
               // match test
-              for (let prop of props) {
-                if (testPropID == null) {
-                  return testPassed;
-                }
-                if (
-                  testPropID === prop.PropID &&
-                  ((testCatID == undefined && prop.CatID == undefined) ||
-                    testCatID === prop.CatID)
-                ) {
-                  if (Math.abs(prop.Value ?? 0) >= min) {
-                    testPassed = true;
-                  } else {
+              if (props != undefined) {
+                for (let prop of props) {
+                  if (testPropID == null) {
+                    return false;
+                  }
+                  if (
+                    testPropID === prop.PropID &&
+                    ((testCatID == null && prop.CatID == null) ||
+                      testCatID === prop.CatID)
+                  ) {
+                    totalValue += Math.abs(prop.Value ?? 0);
                     testPassed = true;
                   }
                 }
               }
-              return testPassed;
+
+              // Calculate All Routes Total
+              if (augsCape != undefined) {
+                for (const augs of augsCape) {
+                  for (const aug of augs.Augs) {
+                    for (const augProp of aug.PropIDs) {
+                      if (
+                        testPropID == augProp &&
+                        ((testCatID == null && aug.CatID == null) ||
+                          testCatID == aug.CatID)
+                      ) {
+                        totalValue += Math.abs(aug.Value ?? 0);
+                        testPassed = true;
+                        break;
+                      }
+                    }
+                    if (testPassed) break;
+                  }
+                  if (testPassed) break;
+                }
+              }
+
+              // Calculate All Routes Total
+              if (augsFix != undefined) {
+                for (const augs of augsFix) {
+                  for (const aug of augs.Augs) {
+                    for (const augProp of aug.PropIDs) {
+                      if (
+                        testPropID == augProp &&
+                        ((testCatID == null && aug.CatID == null) ||
+                          testCatID == aug.CatID)
+                      ) {
+                        totalValue += Math.abs(aug.Value ?? 0);
+                        testPassed = true;
+                        break;
+                      }
+                    }
+                    if (testPassed) break;
+                  }
+                  if (testPassed) break;
+                }
+              }
+
+              // Calculate Max Route Value
+              let routeMax = 0;
+              if (augsRoute != undefined) {
+                for (const augs of augsRoute) {
+                  for (const aug of augs.Augs) {
+                    for (const augProp of aug.PropIDs) {
+                      if (
+                        testPropID == augProp &&
+                        ((testCatID == null && aug.CatID == null) ||
+                          testCatID == aug.CatID)
+                      ) {
+                        const value = Math.abs(aug.Value ?? 0);
+                        if (value >= routeMax) {
+                          testPassed = true;
+                          routeMax = value;
+                        }
+                        break;
+                      }
+                    }
+                  }
+                }
+              }
+              totalValue += routeMax;
+              return testPassed && totalValue >= min;
             });
           }
           // else if (this.limiters[i].isText) {
