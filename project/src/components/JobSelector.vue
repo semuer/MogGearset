@@ -28,8 +28,10 @@
         >
           {{ job.name }}
         </v-chip>
-
-      </v-chip-group><v-chip small label v-on:click="clearJobs">{{ $t('ui.job.clearAll') }}</v-chip>
+        <v-chip small label outlined value="clear" color="red"><v-icon left small>
+          mdi-close
+        </v-icon>{{ $t('ui.job.clearAll') }}</v-chip>
+      </v-chip-group>
     </v-row>
     <v-row no-gutters>
 
@@ -61,6 +63,14 @@ export default class JobSelector extends Mixins(xiUtils) {
   }
 
   set inputVal(val: string[]) {
+    if(val.includes("clear"))
+    {
+      const index = val.findIndex((e) => e == "clear")
+      if(index !== -1)
+      {
+        val = []
+      }
+    }
     this.$emit('input', val);
   }
 

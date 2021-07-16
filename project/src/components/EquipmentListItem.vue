@@ -297,5 +297,3 @@ export default class EquipmentListItem extends Mixins(scrollerUtils, xiUtils) {
   }
 }
 </script>
-
-<style scoped></style>
