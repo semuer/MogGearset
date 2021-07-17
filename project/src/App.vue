@@ -45,7 +45,7 @@
           <job-selector v-model="selectedJob" />
         </v-row>
         <v-row class="ml-0">
-          <v-col class="pl-0" cols="6">
+          <v-col class="pl-0" cols="12" md="8">
             <v-card color="clear" outlined>
               <equip-icon-slot-selector :edit-equip-set="editEquipSet" v-model="selectedSlot" :dirty-flag="dirtyFlag" @clear="(v)=>clearSlot(v)"></equip-icon-slot-selector>
             </v-card>
@@ -66,7 +66,7 @@
 <!--              </v-list-item-group>-->
 <!--            </v-card>-->
           </v-col>
-          <v-col class="pr-4" cols="6">
+          <v-col class="pr-4" cols="12" md="4">
                   <svg
                     id="svg"
                     xmlns="http://www.w3.org/2000/svg"
