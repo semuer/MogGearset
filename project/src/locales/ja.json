@@ -42,11 +42,28 @@
       "GEO": "風",
       "RUN": "剣",
       "clearAll": "クリア"
+    },
+    "equipSlot": {
+      "Main":"メイン" ,
+      "Sub": "サブ" ,
+      "Range":  "遠隔" ,
+      "Ammo":  "弾" ,
+      "Head":  "頭" ,
+      "Body":  "胴",
+      "Hands":  "手" ,
+      "Legs":  "脚" ,
+      "Feet":  "足",
+      "Neck":  "首",
+      "Waist":  "腰" ,
+      "LEarring":  "左耳" ,
+      "REarring":  "右耳",
+      "LRing":  "左指" ,
+      "RRing":  "右指" ,
+      "Cape":  "背"
     }
   },
 
   "item" : {
-
     "itemType": {
       "shield": "盾",
       "grip": "グリップ",

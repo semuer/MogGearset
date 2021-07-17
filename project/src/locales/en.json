@@ -42,6 +42,24 @@
       "GEO": "GEO",
       "RUN": "RUN",
       "clearAll": "Clear"
+    },
+    "equipSlot": {
+      "Main":"Main" ,
+      "Sub": "Sub" ,
+      "Range":  "Range" ,
+      "Ammo":  "Ammo" ,
+      "Head":  "Head" ,
+      "Body":  "Body",
+      "Hands":  "Hands" ,
+      "Legs":  "Legs" ,
+      "Feet":  "Feet",
+      "Neck":  "Neck",
+      "Waist":  "Waist" ,
+      "LEarring":  "L.Ear" ,
+      "REarring":  "R.Ear",
+      "LRing":  "L.Ring" ,
+      "RRing":  "R.Ring" ,
+      "Cape":  "Cape"
     }
   },
   "item" : {

@@ -46,182 +46,25 @@
         </v-row>
         <v-row class="ml-0">
           <v-col class="pl-0" cols="6">
-<!--            <v-card>-->
-<!--              <v-item-group v-model="selectedSlot">-->
-<!--                <v-row no-gutters>-->
-<!--                  &lt;!&ndash; ROW 1 &ndash;&gt;-->
-<!--                  <v-col cols="3">-->
-<!--                    <equip-icon-slot-selector-->
-<!--                      :dirty="dirtyFlag"-->
-<!--                      :items="editEquipSet"-->
-<!--                      :index-name="slotItemsArray[0].index"-->
-<!--                      :label-name="slotItemsArray[0].label"-->
-<!--                      @clearSlot="slotItemsArray[0].index"-->
-<!--                    />-->
-<!--                  </v-col>-->
-<!--                  <v-col cols="3">-->
-<!--                    <equip-icon-slot-selector-->
-<!--                      :dirty="dirtyFlag"-->
-<!--                      :items="editEquipSet"-->
-<!--                      :index-name="slotItemsArray[1].index"-->
-<!--                      :label-name="slotItemsArray[1].label"-->
-<!--                      @clearSlot="slotItemsArray[1].index"-->
-<!--                    />-->
-<!--                  </v-col>-->
-<!--                  <v-col cols="3">-->
-<!--                    <equip-icon-slot-selector-->
-<!--                      :dirty="dirtyFlag"-->
-<!--                      :items="editEquipSet"-->
-<!--                      :index-name="slotItemsArray[2].index"-->
-<!--                      :label-name="slotItemsArray[2].label"-->
-<!--                      @clearSlot="slotItemsArray[2].index"-->
-<!--                    />-->
-<!--                  </v-col>-->
-<!--                  <v-col cols="3">-->
-<!--                    <equip-icon-slot-selector-->
-<!--                      :dirty="dirtyFlag"-->
-<!--                      :items="editEquipSet"-->
-<!--                      :index-name="slotItemsArray[3].index"-->
-<!--                      :label-name="slotItemsArray[3].label"-->
-<!--                      @clearSlot="slotItemsArray[3].index"-->
-<!--                    />-->
-<!--                  </v-col>-->
-<!--                </v-row>-->
-<!--                &lt;!&ndash; ROW 2 &ndash;&gt;-->
-<!--                <v-row no-gutters>-->
-<!--                  <v-col cols="3">-->
-<!--                    <equip-icon-slot-selector-->
-<!--                      :dirty="dirtyFlag"-->
-<!--                      :items="editEquipSet"-->
-<!--                      :index-name="slotItemsArray[4].index"-->
-<!--                      :label-name="slotItemsArray[4].label"-->
-<!--                      @clearSlot="slotItemsArray[4].index"-->
-<!--                    />-->
-<!--                  </v-col>-->
-<!--                  <v-col cols="3">-->
-<!--                    <equip-icon-slot-selector-->
-<!--                      :dirty="dirtyFlag"-->
-<!--                      :items="editEquipSet"-->
-<!--                      :index-name="slotItemsArray[9].index"-->
-<!--                      :label-name="slotItemsArray[9].label"-->
-<!--                      @clearSlot="slotItemsArray[9].index"-->
-<!--                    />-->
-<!--                  </v-col>-->
-<!--                  <v-col cols="3">-->
-<!--                    <equip-icon-slot-selector-->
-<!--                      :dirty="dirtyFlag"-->
-<!--                      :items="editEquipSet"-->
-<!--                      :index-name="slotItemsArray[11].index"-->
-<!--                      :label-name="slotItemsArray[11].label"-->
-<!--                      @clearSlot="slotItemsArray[11].index"-->
-<!--                    />-->
-<!--                  </v-col>-->
-<!--                  <v-col cols="3">-->
-<!--                    <equip-icon-slot-selector-->
-<!--                      :dirty="dirtyFlag"-->
-<!--                      :items="editEquipSet"-->
-<!--                      :index-name="slotItemsArray[12].index"-->
-<!--                      :label-name="slotItemsArray[12].label"-->
-<!--                      @clearSlot="slotItemsArray[12].index"-->
-<!--                    />-->
-<!--                  </v-col>-->
-<!--                </v-row>-->
-<!--                <v-row no-gutters>-->
-<!--                  &lt;!&ndash; ROW 3 &ndash;&gt;-->
-<!--                  <v-col cols="3">-->
-<!--                    <equip-icon-slot-selector-->
-<!--                      :dirty="dirtyFlag"-->
-<!--                      :items="editEquipSet"-->
-<!--                      :index-name="slotItemsArray[5].index"-->
-<!--                      :label-name="slotItemsArray[5].label"-->
-<!--                      @clearSlot="slotItemsArray[5].index"-->
-<!--                    />-->
-<!--                  </v-col>-->
-<!--                  <v-col cols="3">-->
-<!--                    <equip-icon-slot-selector-->
-<!--                      :dirty="dirtyFlag"-->
-<!--                      :items="editEquipSet"-->
-<!--                      :index-name="slotItemsArray[6].index"-->
-<!--                      :label-name="slotItemsArray[6].label"-->
-<!--                      @clearSlot="slotItemsArray[6].index"-->
-<!--                    />-->
-<!--                  </v-col>-->
-<!--                  <v-col cols="3">-->
-<!--                    <equip-icon-slot-selector-->
-<!--                      :dirty="dirtyFlag"-->
-<!--                      :items="editEquipSet"-->
-<!--                      :index-name="slotItemsArray[13].index"-->
-<!--                      :label-name="slotItemsArray[13].label"-->
-<!--                      @clearSlot="slotItemsArray[13].index"-->
-<!--                    />-->
-<!--                  </v-col>-->
-<!--                  <v-col cols="3">-->
-<!--                    <equip-icon-slot-selector-->
-<!--                      :dirty="dirtyFlag"-->
-<!--                      :items="editEquipSet"-->
-<!--                      :index-name="slotItemsArray[14].index"-->
-<!--                      :label-name="slotItemsArray[14].label"-->
-<!--                      @clearSlot="slotItemsArray[14].index"-->
-<!--                    />-->
-<!--                  </v-col>-->
-<!--                </v-row>-->
-<!--                <v-row no-gutters>-->
-<!--                  &lt;!&ndash; ROW 4 &ndash;&gt;-->
-<!--                  <v-col cols="3">-->
-<!--                    <equip-icon-slot-selector-->
-<!--                      :dirty="dirtyFlag"-->
-<!--                      :items="editEquipSet"-->
-<!--                      :index-name="slotItemsArray[15].index"-->
-<!--                      :label-name="slotItemsArray[15].label"-->
-<!--                      @clearSlot="slotItemsArray[15].index"-->
-<!--                    />-->
-<!--                  </v-col>-->
-<!--                  <v-col cols="3">-->
-<!--                    <equip-icon-slot-selector-->
-<!--                      :dirty="dirtyFlag"-->
-<!--                      :items="editEquipSet"-->
-<!--                      :index-name="slotItemsArray[10].index"-->
-<!--                      :label-name="slotItemsArray[10].label"-->
-<!--                      @clearSlot="slotItemsArray[10].index"-->
-<!--                    />-->
-<!--                  </v-col>-->
-<!--                  <v-col cols="3">-->
-<!--                    <equip-icon-slot-selector-->
-<!--                      :dirty="dirtyFlag"-->
-<!--                      :items="editEquipSet"-->
-<!--                      :index-name="slotItemsArray[7].index"-->
-<!--                      :label-name="slotItemsArray[7].label"-->
-<!--                      @clearSlot="slotItemsArray[7].index"-->
-<!--                    />-->
-<!--                  </v-col>-->
-<!--                  <v-col cols="3">-->
-<!--                    <equip-icon-slot-selector-->
-<!--                      :dirty="dirtyFlag"-->
-<!--                      :items="editEquipSet"-->
-<!--                      :index-name="slotItemsArray[8].index"-->
-<!--                      :label-name="slotItemsArray[8].label"-->
-<!--                      @clearSlot="slotItemsArray[8].index"-->
-<!--                    />-->
-<!--                  </v-col>-->
-<!--                </v-row>-->
-<!--              </v-item-group>-->
-<!--            </v-card>-->
-            <v-card>
-              <v-list-item-group
-                v-model="selectedSlot"
-                active-class="highlight-border"
-              >
-                <equip-slot-selector
-                  v-for="item in slotItemsArray"
-                  v-bind:key="item.index"
-                  :dirty="dirtyFlag"
-                  :items="editEquipSet"
-                  :index-name="item.index"
-                  :label-name="item.label"
-                  @clearSlot="clearSlot(item.index)"
-                />
-              </v-list-item-group>
+            <v-card color="clear" outlined>
+              <equip-icon-slot-selector :edit-equip-set="editEquipSet" v-model="selectedSlot" :dirty-flag="dirtyFlag" @clear="(v)=>clearSlot(v)"></equip-icon-slot-selector>
             </v-card>
+<!--            <v-card>-->
+<!--              <v-list-item-group-->
+<!--                v-model="selectedSlot"-->
+<!--                active-class="highlight-border"-->
+<!--              >-->
+<!--                <equip-slot-selector-->
+<!--                  v-for="item in slotItemsArray"-->
+<!--                  v-bind:key="item.index"-->
+<!--                  :dirty="dirtyFlag"-->
+<!--                  :items="editEquipSet"-->
+<!--                  :index-name="item.index"-->
+<!--                  :label-name="item.label"-->
+<!--                  @clearSlot="clearSlot(item.index)"-->
+<!--                />-->
+<!--              </v-list-item-group>-->
+<!--            </v-card>-->
           </v-col>
           <v-col class="pr-4" cols="6">
                   <svg
@@ -312,7 +155,7 @@ export default class App extends Mixins(xiUtils) {
   editEquipSet: EquipSet = {};
   dirtyFlag = false;
   equipQueryChain: ResultSet | null = null;
-  navigationWidth = 450;
+  navigationWidth = 400;
   propsArray: string[] = [];
   propDict: Map<string, string[]> = new Map();
   categoryDict: Map<string, string[]> = new Map();

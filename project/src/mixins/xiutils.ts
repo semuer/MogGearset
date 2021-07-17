@@ -328,10 +328,10 @@ export default class xiUtils extends Vue {
       { index: "Feet", label: "足" }, // 8
       { index: "Neck", label: "首" }, // 9
       { index: "Waist", label: "腰" }, // 10
-      { index: "L.Earring", label: "左耳" }, //11
-      { index: "R.Earring", label: "右耳" }, //12
-      { index: "L.Ring", label: "左指" }, //13
-      { index: "R.Ring", label: "右指" }, //14
+      { index: "LEarring", label: "左耳" }, //11
+      { index: "REarring", label: "右耳" }, //12
+      { index: "LRing", label: "左指" }, //13
+      { index: "RRing", label: "右指" }, //14
       { index: "Cape", label: "背" }, //15
     ];
   }
