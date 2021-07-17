@@ -4,6 +4,17 @@
       <v-list-item-content>
         <v-list-item-title class="align-center">
           <v-row>
+            <v-col cols="1">
+                  <v-btn
+                      class="pa-0"
+                      color="blue lighten-5"
+                      dark
+                      elevation="1"
+                      fab
+                      x-small
+                      v-on:click="onSelectItem"
+                  ><v-icon color="blue darken-1">mdi-plus</v-icon> </v-btn>
+            </v-col>
             <v-col cols="2">
               <v-img
                 aspect-ratio="1"
@@ -13,7 +24,7 @@
                 max-height="32px"
               ></v-img>
             </v-col>
-            <v-col cols="10" class="pl-0">
+            <v-col cols="9" class="pl-0">
               <v-row class="align-center pb-1" no-gutters
                 >{{ itemName }}
                 <v-chip
@@ -75,7 +86,10 @@
               </v-row>
             </v-col>
           </v-row>
+
         </v-list-item-title>
+
+
         <v-list-item-subtitle class="text-wrap">
           <v-row
             no-gutters
@@ -153,20 +167,7 @@
           </v-chip>
         </v-list-item-subtitle>
       </v-list-item-content>
-      <v-list-item-icon class="pr-0 mr-3">
-        <v-row no-gutters style="width: 100%; height: 100%">
-          <v-btn
-            class="mt-2"
-            color="blue lighten-2"
-            dark
-            elevation="1"
-            fab
-            small
-            v-on:click="onSelectItem"
-            >⇒
-          </v-btn>
-        </v-row>
-      </v-list-item-icon>
+
     </v-list-item>
     <v-divider />
   </div>
