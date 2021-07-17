@@ -24,6 +24,7 @@
           hide-details
         ></v-checkbox>
         <v-text-field
+            :validate-on-blur="true"
           class="pt-3 pl-2 pr-3"
           clearable
           :label="$t('ui.filter.searchBoxLabel')"
@@ -143,6 +144,7 @@ import EquipmentPropertyLimitUnit from "@/components/EquipmentPropertyLimitUnit.
 import TextHighlight from "vue-text-highlight";
 import VirtualList from "vue-virtual-scroll-list";
 import EquipmentListItem from "@/components/EquipmentListItem.vue";
+import { debounce } from 'lodash'
 
 @Component({
   components: {
@@ -213,13 +215,20 @@ export default class EquipmentList extends Mixins(xiUtils) {
     this.selectedType = null;
   }
 
+
+  @Watch("nameFilter")
+  queryChanged(){
+    this.queryChangedDebounced();
+  }
+
   @Watch("equipQueryChain")
   @Watch("isLevel99")
   @Watch("isItemLevel119")
   @Watch("limiters")
   @Watch("nameFilter")
   @Watch("selectedType")
-  queryChanged() {
+  queryChangedInstant()
+  {
     if (this.equipQueryChain != null) {
       let chain = this.equipQueryChain.copy();
       let query: Record<string, any> = {};
@@ -235,10 +244,10 @@ export default class EquipmentList extends Mixins(xiUtils) {
       }
 
       if (
-        this.equipSlot === "Main" ||
-        this.equipSlot === "Sub" ||
-        this.equipSlot === "Range" ||
-        this.equipSlot === "Ammo"
+          this.equipSlot === "Main" ||
+          this.equipSlot === "Sub" ||
+          this.equipSlot === "Range" ||
+          this.equipSlot === "Ammo"
       ) {
         const selectedType = this.selectedType;
         if (this.selectedType != undefined && this.selectedType != "") {
@@ -256,22 +265,26 @@ export default class EquipmentList extends Mixins(xiUtils) {
       let nameFilter = this.nameFilter;
       if (nameFilter !== "" && nameFilter !== null) {
         nameFilter = this.kataToHira(
-          this.fullWidthStrToHalfWidthStr(nameFilter as string).toLowerCase()
+            this.fullWidthStrToHalfWidthStr(nameFilter as string).toLowerCase()
         );
         let funcKataHira = this.kataToHira;
         let funcFullTohalf = this.fullWidthStrToHalfWidthStr;
+        let augStringGetter = this.getAugStringForSearch;
+        let propDict = this.propDict;
+        let cateDict = this.cateDict;
+        let locale = this.$i18n.locale;
         chain = chain.where(function (obj: Equipment) {
           let isPassed = false;
           if (
-            funcKataHira(funcFullTohalf(obj.Jp.toLowerCase())).includes(
-              nameFilter as string
-            )
+              funcKataHira(funcFullTohalf(obj.Jp.toLowerCase())).includes(
+                  nameFilter as string
+              )
           ) {
             isPassed = true;
           } else if (
-            funcKataHira(funcFullTohalf(obj.JpFull.toLowerCase())).includes(
-              nameFilter as string
-            )
+              funcKataHira(funcFullTohalf(obj.JpFull.toLowerCase())).includes(
+                  nameFilter as string
+              )
           ) {
             isPassed = true;
           } else if (obj.En.toLowerCase().includes(nameFilter as string)) {
@@ -279,17 +292,38 @@ export default class EquipmentList extends Mixins(xiUtils) {
           } else if (obj.EnFull.toLowerCase().includes(nameFilter as string)) {
             isPassed = true;
           } else if (
-            obj.JpDescription != null &&
-            funcKataHira(funcFullTohalf(obj.JpDescription))
-              .toLowerCase()
-              .includes(nameFilter as string)
+              obj.JpDescription != null &&
+              funcKataHira(funcFullTohalf(obj.JpDescription))
+                  .toLowerCase()
+                  .includes(nameFilter as string)
           ) {
             isPassed = true;
           } else if (
-            obj.EnDescription != null &&
-            funcFullTohalf(obj.EnDescription)
-              .toLowerCase()
-              .includes(nameFilter as string)
+              obj.EnDescription != null &&
+              funcFullTohalf(obj.EnDescription)
+                  .toLowerCase()
+                  .includes(nameFilter as string)
+          ) {
+            isPassed = true;
+          } else if (
+              obj.AugCape != null &&
+              funcFullTohalf(augStringGetter(obj.AugCape,propDict, cateDict))
+                  .toLowerCase()
+                  .includes(nameFilter as string)
+          ) {
+            isPassed = true;
+          }else if (
+              obj.AugFixed != null &&
+              funcFullTohalf(augStringGetter([obj.AugFixed],propDict, cateDict))
+                  .toLowerCase()
+                  .includes(nameFilter as string)
+          ) {
+            isPassed = true;
+          }else if (
+              obj.AugRoute != null &&
+              funcFullTohalf(augStringGetter(obj.AugRoute,propDict, cateDict))
+                  .toLowerCase()
+                  .includes(nameFilter as string)
           ) {
             isPassed = true;
           }
@@ -319,10 +353,10 @@ export default class EquipmentList extends Mixins(xiUtils) {
               let totalValue = 0;
               let testPassed = false;
               if (
-                props == undefined &&
-                augsCape == undefined &&
-                augsFix == undefined &&
-                augsRoute == undefined
+                  props == undefined &&
+                  augsCape == undefined &&
+                  augsFix == undefined &&
+                  augsRoute == undefined
               ) {
                 return false;
               }
@@ -333,9 +367,9 @@ export default class EquipmentList extends Mixins(xiUtils) {
                     return false;
                   }
                   if (
-                    testPropID === prop.PropID &&
-                    ((testCatID == null && prop.CatID == null) ||
-                      testCatID === prop.CatID)
+                      testPropID === prop.PropID &&
+                      ((testCatID == null && prop.CatID == null) ||
+                          testCatID === prop.CatID)
                   ) {
                     totalValue += Math.abs(prop.Value ?? 0);
                     testPassed = true;
@@ -349,9 +383,9 @@ export default class EquipmentList extends Mixins(xiUtils) {
                   for (const aug of augs.Augs) {
                     for (const augProp of aug.PropIDs) {
                       if (
-                        testPropID == augProp &&
-                        ((testCatID == null && aug.CatID == null) ||
-                          testCatID == aug.CatID)
+                          testPropID == augProp &&
+                          ((testCatID == null && aug.CatID == null) ||
+                              testCatID == aug.CatID)
                       ) {
                         totalValue += Math.abs(aug.Value ?? 0);
                         testPassed = true;
@@ -366,20 +400,17 @@ export default class EquipmentList extends Mixins(xiUtils) {
 
               // Calculate All Routes Total
               if (augsFix != undefined) {
-                for (const augs of augsFix) {
-                  for (const aug of augs.Augs) {
-                    for (const augProp of aug.PropIDs) {
-                      if (
+                for (const aug of augsFix.Augs) {
+                  for (const augProp of aug.PropIDs) {
+                    if (
                         testPropID == augProp &&
                         ((testCatID == null && aug.CatID == null) ||
-                          testCatID == aug.CatID)
-                      ) {
-                        totalValue += Math.abs(aug.Value ?? 0);
-                        testPassed = true;
-                        break;
-                      }
+                            testCatID == aug.CatID)
+                    ) {
+                      totalValue += Math.abs(aug.Value ?? 0);
+                      testPassed = true;
+                      break;
                     }
-                    if (testPassed) break;
                   }
                   if (testPassed) break;
                 }
@@ -392,9 +423,9 @@ export default class EquipmentList extends Mixins(xiUtils) {
                   for (const aug of augs.Augs) {
                     for (const augProp of aug.PropIDs) {
                       if (
-                        testPropID == augProp &&
-                        ((testCatID == null && aug.CatID == null) ||
-                          testCatID == aug.CatID)
+                          testPropID == augProp &&
+                          ((testCatID == null && aug.CatID == null) ||
+                              testCatID == aug.CatID)
                       ) {
                         const value = Math.abs(aug.Value ?? 0);
                         if (value >= routeMax) {
@@ -476,6 +507,12 @@ export default class EquipmentList extends Mixins(xiUtils) {
     //let list = this.$refs["v-scroller"] as InstanceType<typeof VirtualList>;
     //list.scrollToOffset(0);
   }
+
+  queryChangedDebounced()
+  {
+    this.queryChangedInstant();
+  }
+
 
   public addLimiter(): void {
     this.limiters.push({
@@ -578,6 +615,10 @@ export default class EquipmentList extends Mixins(xiUtils) {
         }
       }
     }
+  }
+
+  created(){
+    this.queryChangedDebounced = debounce(this.queryChangedDebounced,500);
   }
 }
 </script>

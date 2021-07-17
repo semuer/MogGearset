@@ -40,7 +40,7 @@ export interface Equipment {
   Properties?: Property[];
   // Augments
   AugCape?: AugSet[];
-  AugFixed?: AugSet[];
+  AugFixed?: AugSet;
   AugRoute?: AugSet[];
   // Combination
   CombGroupID?: number;

@@ -100,7 +100,7 @@
                 <v-expansion-panel-header class="grey--text text--darken-2" color="grey lighten-4" style="min-height: 15px; height:15px">{{ $t('ui.item.augheader') + idx }}</v-expansion-panel-header>
                 <v-expansion-panel-content class="pt-4 pb-0 mb-0 grey--text text--darken-1" style="word-break: keep-all;overflow-wrap: break-word;">
                   <text-highlight :queries="highlightArray" :wholeWordMatch="true"
-                                  style="word-break: keep-all;overflow-wrap: break-word;line-height:1.4em">{{ item }}
+                                  style="word-break: keep-all;overflow-wrap: normal;line-height:1.4em" v-html="item">
                   </text-highlight> </v-expansion-panel-content>
               </v-expansion-panel>
             </v-expansion-panels>
@@ -284,10 +284,42 @@ export default class EquipmentListItem extends Mixins(scrollerUtils, xiUtils) {
               aug,
               this.propDict,
               this.cateDict
-            ) + " ";
+            )?.replace(" ","&nbsp;") + " &#8203;";
         }
         result.push(rsub);
       }
+    }
+
+    if (this.source.AugRoute != undefined) {
+      for (const augs of this.source.AugRoute) {
+        let rsub = "";
+        for (const aug of augs.Augs) {
+          rsub +=
+              this.getAugString(
+                  this.$i18n.locale,
+                  aug,
+                  this.propDict,
+                  this.cateDict
+              )?.replace(" ","&nbsp;") + " &#8203;";
+        }
+        result.push(rsub);
+      }
+    }
+
+    if (this.source.AugFixed != undefined) {
+      const augs = this.source.AugFixed;
+        let rsub = "";
+        for (const aug of augs.Augs) {
+          rsub +=
+              this.getAugString(
+                  this.$i18n.locale,
+                  aug,
+                  this.propDict,
+                  this.cateDict
+              )?.replace(" ","&nbsp;") + " &#8203;";
+        }
+        result.push(rsub);
+
     }
 
     return result;
