@@ -230,10 +230,10 @@ export default class App extends Mixins(xiUtils) {
       Feet: 8,
       Neck: 9,
       Waist: 10,
-      "L.Earring": 11,
-      "R.Earring": 12,
-      "L.Ring": 13,
-      "R.Ring": 14,
+      "LEarring": 11,
+      "REarring": 12,
+      "LRing": 13,
+      "RRing": 14,
       Cape: 15,
     };
 
