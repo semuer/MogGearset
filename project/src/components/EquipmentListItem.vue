@@ -6,11 +6,13 @@
           <v-row>
             <v-col cols="1">
                   <v-btn
-                      class="pa-0"
+                      class="pa-0 ma-0"
                       color="blue lighten-5"
                       dark
                       elevation="1"
                       fab
+                      width="22px"
+                      height="22px"
                       x-small
                       v-on:click="onSelectItem"
                   ><v-icon color="blue darken-1">mdi-plus</v-icon> </v-btn>
