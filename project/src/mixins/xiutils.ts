@@ -4,10 +4,32 @@ import {
   Equipment,
   PropertyInfo,
   AugSet,
+  CalculatedAugInfo,
 } from "@/@types/equip-set";
 
 @Component
 export default class xiUtils extends Vue {
+  get slotItemsArray(): Array<SlotStringPair> {
+    return [
+      { index: "Main", label: "メイン" }, // 0
+      { index: "Sub", label: "サブ" }, // 1
+      { index: "Range", label: "遠隔" }, // 2
+      { index: "Ammo", label: "弾" }, // 3
+      { index: "Head", label: "頭" }, // 4
+      { index: "Body", label: "胴" }, // 5
+      { index: "Hands", label: "手" }, // 6
+      { index: "Legs", label: "脚" }, // 7
+      { index: "Feet", label: "足" }, // 8
+      { index: "Neck", label: "首" }, // 9
+      { index: "Waist", label: "腰" }, // 10
+      { index: "LEarring", label: "左耳" }, //11
+      { index: "REarring", label: "右耳" }, //12
+      { index: "LRing", label: "左指" }, //13
+      { index: "RRing", label: "右指" }, //14
+      { index: "Cape", label: "背" }, //15
+    ];
+  }
+
   public getPropertyValue(
     item: Equipment,
     property: number | undefined,
@@ -66,6 +88,37 @@ export default class xiUtils extends Vue {
     }
 
     return result.trim();
+  }
+
+  public getCalculatedAugString(
+    locale: string,
+    data: CalculatedAugInfo,
+    propDict: Map<string, string[]>,
+    catDict: Map<string, string[]>
+  ): string | undefined {
+    let result = "";
+    const loci = locale == "ja" ? 0 : 1;
+    let catString = "";
+
+    if (data.CateID != null) {
+      const cat = catDict.get(data.CateID.toString());
+      if (cat != null) {
+        catString += cat[loci] + ":";
+      }
+    }
+
+    let valueString = "";
+    if (data.Value != null) {
+      valueString =
+        (data.Value > 0 ? "+" : "") + data.Value.toString() + (data.Unit ?? "");
+    }
+
+    const rProp = propDict.get(data.PropID.toString());
+    if (rProp != null) {
+      result += catString + rProp[loci] + valueString;
+    }
+
+    return result;
   }
 
   public getAugStringForSearch(
@@ -308,31 +361,11 @@ export default class xiUtils extends Vue {
       },
     ];
   }
+
   public getAmmoTypeList() {
     return [
       { value: "item.itemType.throw", text: this.$t("item.itemType.throw") },
       { value: "item.itemType.ammo", text: this.$t("item.itemType.ammo") },
-    ];
-  }
-
-  get slotItemsArray(): Array<SlotStringPair> {
-    return [
-      { index: "Main", label: "メイン" }, // 0
-      { index: "Sub", label: "サブ" }, // 1
-      { index: "Range", label: "遠隔" }, // 2
-      { index: "Ammo", label: "弾" }, // 3
-      { index: "Head", label: "頭" }, // 4
-      { index: "Body", label: "胴" }, // 5
-      { index: "Hands", label: "手" }, // 6
-      { index: "Legs", label: "脚" }, // 7
-      { index: "Feet", label: "足" }, // 8
-      { index: "Neck", label: "首" }, // 9
-      { index: "Waist", label: "腰" }, // 10
-      { index: "LEarring", label: "左耳" }, //11
-      { index: "REarring", label: "右耳" }, //12
-      { index: "LRing", label: "左指" }, //13
-      { index: "RRing", label: "右指" }, //14
-      { index: "Cape", label: "背" }, //15
     ];
   }
 

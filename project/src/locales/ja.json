@@ -7,7 +7,28 @@
     "item":
     {
       "augheader": "オグメ",
-      "type": "装備タイプ"
+      "type": "装備タイプ",
+      "properties": "装備性能",
+      "augments": "オーグメント",
+      "addAugments": "オーグメント変更",
+      "propertyModification":"装備情報＆オグメ調整 ver.α",
+      "value": "性能値",
+      "apply": "適用",
+      "disclaimerAug": "早期開発段階の機能です。動作は保証しません。",
+      "disclaimerViewer": "建設中..."
+    },
+    "aug":
+    {
+      "thread": "アブダルスの糸",
+      "dust": "アブダルスの金粉",
+      "sap": "アブダルスの水油",
+      "dye": "アブダルスの染料",
+      "resin": "アブダルスの樹脂",
+      "fixed":"固定",
+      "route1": "タイプA",
+      "route2": "タイプB",
+      "route3": "タイプC",
+      "route4": "タイプD"
     },
     "filter" : {
       "searchBoxLabel" : "検索",

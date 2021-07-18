@@ -46,9 +46,18 @@
         </v-row>
         <v-row class="ml-0">
           <v-col class="pl-0" cols="12" md="8">
-            <v-card color="clear" outlined>
+            <v-row no-gutters>
+            <v-card color="clear" outlined style="width:100%">
               <equip-icon-slot-selector :edit-equip-set="editEquipSet" v-model="selectedSlot" :dirty-flag="dirtyFlag" @clear="(v)=>clearSlot(v)"></equip-icon-slot-selector>
             </v-card>
+            </v-row>
+            <v-row no-gutters class="pt-4" v-if="selectedSlot != '' && selectedSlot != null && editEquipSet[selectedSlot] != null">
+              <augment-selector :equip-set-info="editEquipSet" :slot-name="selectedSlot" :dirty="dirtyFlag"
+              :prop-dict="propDict" :cate-dict="categoryDict" v-on:apply="applySlotAugments($event)"></augment-selector>
+            </v-row>
+            <v-row no-gutters class="pt-4">
+              <performance-viewer :equip-set-info="editEquipSet" :dirty="dirtyFlag"></performance-viewer>
+            </v-row>
 <!--            <v-card>-->
 <!--              <v-list-item-group-->
 <!--                v-model="selectedSlot"-->
@@ -132,12 +141,16 @@ import JobSelector from "./components/JobSelector.vue";
 import EquipSlotSelector from "./components/EquipSlotSelector.vue";
 import EquipIconSlotSelector from "./components/EquipIconSlotSelector.vue";
 import EquipSetPerformanceView from "@/components/EquipSetPerformanceView.vue";
-import { Equipment, EquipSet } from "./@types/equip-set";
+import {CalculatedAugInfo, Equipment, EquipSet} from "./@types/equip-set";
 import loki, { Collection } from "lokijs";
 import xiUtils from "@/mixins/xiutils";
+import PerformanceViewer from "@/components/PerformanceViewer.vue";
+import AugmentSelector from "@/components/AugmentSelector.vue";
 
 @Component({
   components: {
+    AugmentSelector,
+    PerformanceViewer,
     EquipmentList,
     JobSelector,
     EquipSlotSelector,
@@ -161,13 +174,25 @@ export default class App extends Mixins(xiUtils) {
   categoryDict: Map<string, string[]> = new Map();
   baseUrl: string = process.env.BASE_URL;
 
-
+  public applySlotAugments(event:any):void{
+    if(event == undefined)
+    {
+      return;
+    }
+    const augs = event as CalculatedAugInfo[];
+    const slotItem = this.editEquipSet[this.selectedSlot];
+    if(slotItem == null)
+    {
+      return;
+    }
+    Vue.set(slotItem, "Aug", augs);
+  }
 
   public equipItem(item: Equipment): void {
 
     if(this.selectedSlot != null && this.selectedSlot != "")
     {
-      Vue.set(this.editEquipSet, this.selectedSlot, item);
+      Vue.set(this.editEquipSet, this.selectedSlot, {Equip:item});
       this.dirtyFlag = !this.dirtyFlag;
     }
     else
@@ -175,7 +200,7 @@ export default class App extends Mixins(xiUtils) {
       const slot = this.getItemSlot(item);
       if(slot != null)
       {
-        Vue.set(this.editEquipSet,slot, item);
+        Vue.set(this.editEquipSet,slot, {Equip:item});
         this.dirtyFlag = !this.dirtyFlag;
       }
     }
@@ -192,6 +217,15 @@ export default class App extends Mixins(xiUtils) {
     } else {
       this.$root.$i18n.locale = "ja";
     }
+  }
+
+  get selectedEquip():Equipment | undefined {
+    const equip = this.editEquipSet[this.selectedSlot];
+    if(equip != null)
+    {
+      return equip.Equip;
+    }
+    return undefined;
   }
 
   @Watch("selectedJob")

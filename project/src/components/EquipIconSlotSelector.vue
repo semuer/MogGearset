@@ -1,5 +1,5 @@
 <template>
-  <v-item-group v-model="listSelectedSlot" active-class="highlighted">
+  <v-item-group v-model="listSelectedSlot" key="Equip.Id" active-class="highlighted">
     <v-row no-gutters>
       <!-- ROW 1 -->
       <v-col cols="3">

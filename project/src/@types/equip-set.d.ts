@@ -47,6 +47,7 @@ export interface Equipment {
 }
 
 export type AugSet = {
+  Label: string;
   Augs: AugProperty[];
 };
 
@@ -65,24 +66,37 @@ export type Property = {
   Unit?: string;
 };
 
-export interface EquipSet extends Record<string, Equipment> {
-  Main?: Equipment;
-  Sub?: Equipment;
-  Range?: Equipment;
-  Ammo?: Equipment;
-  Head?: Equipment;
-  Body?: Equipment;
-  Hands?: Equipment;
-  Legs?: Equipment;
-  Feet?: Equipment;
-  Neck?: Equipment;
-  Waist?: Equipment;
-  "L.Earring"?: Equipment;
-  "R.Earring"?: Equipment;
-  "L.Ring"?: Equipment;
-  "R.Ring"?: Equipment;
-  Cape?: Equipment;
+export interface CalculatedAugInfo {
+  CateID?: number;
+  PropID: string;
+  Value?: number;
+  Unit?: string;
 }
+
+export interface EquipSet extends Record<string, EquipmentWithAug> {
+  Main?: EquipmentWithAug;
+  Sub?: EquipmentWithAug;
+  Range?: EquipmentWithAug;
+  Ammo?: EquipmentWithAug;
+  Head?: EquipmentWithAug;
+  Body?: EquipmentWithAug;
+  Hands?: EquipmentWithAug;
+  Legs?: EquipmentWithAug;
+  Feet?: EquipmentWithAug;
+  Neck?: EquipmentWithAug;
+  Waist?: EquipmentWithAug;
+  "L.Earring"?: EquipmentWithAug;
+  "R.Earring"?: EquipmentWithAug;
+  "L.Ring"?: EquipmentWithAug;
+  "R.Ring"?: EquipmentWithAug;
+  Cape?: EquipmentWithAug;
+}
+
+export type EquipmentWithAug = {
+  Equip: Equipment;
+  AugType: number;
+  Aug: CalculatedAugInfo[];
+};
 
 export interface PropertyInfo {
   name: string;

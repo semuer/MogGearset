@@ -113,10 +113,10 @@
                   :key="idx"
                   class="mb-0 pb-0"
               >
-                <v-expansion-panel-header class="grey--text text--darken-2" color="grey lighten-4" style="min-height: 15px; height:15px">{{ $t('ui.item.augheader') + idx }}</v-expansion-panel-header>
+                <v-expansion-panel-header class="grey--text text--darken-2" color="grey lighten-4" style="min-height: 15px; height:15px">{{ item.label }}</v-expansion-panel-header>
                 <v-expansion-panel-content class="pt-4 pb-0 mb-0 grey--text text--darken-1" style="word-break: keep-all;overflow-wrap: break-word;">
                   <text-highlight :queries="highlightArray" :wholeWordMatch="true"
-                                  style="word-break: keep-all;overflow-wrap: normal;line-height:1.4em" v-html="item">
+                                  style="word-break: keep-all;overflow-wrap: normal;line-height:1.4em" v-html="item.aug">
                   </text-highlight> </v-expansion-panel-content>
               </v-expansion-panel>
             </v-expansion-panels>
@@ -275,8 +275,8 @@ export default class EquipmentListItem extends Mixins(scrollerUtils, xiUtils) {
     );
   }
 
-  get AugString(): string[] {
-    let result: string[] = [];
+  get AugString(): {label:string,aug:string}[] {
+    let result: {label:string,aug:string}[] = [];
     if (this.source.AugCape != undefined) {
       for (const augs of this.source.AugCape) {
         let rsub = "";
@@ -289,7 +289,7 @@ export default class EquipmentListItem extends Mixins(scrollerUtils, xiUtils) {
               this.cateDict
             )?.replace(" ","&nbsp;") + " &#8203;";
         }
-        result.push(rsub);
+        result.push({label:this.$t("ui.aug."+augs.Label).toString(),aug:rsub});
       }
     }
 
@@ -305,7 +305,7 @@ export default class EquipmentListItem extends Mixins(scrollerUtils, xiUtils) {
                   this.cateDict
               )?.replace(" ","&nbsp;") + " &#8203;";
         }
-        result.push(rsub);
+        result.push({label:this.$t("ui.aug."+augs.Label).toString(),aug:rsub});
       }
     }
 
@@ -321,7 +321,7 @@ export default class EquipmentListItem extends Mixins(scrollerUtils, xiUtils) {
                   this.cateDict
               )?.replace(" ","&nbsp;") + " &#8203;";
         }
-        result.push(rsub);
+      result.push({label:this.$t("ui.aug."+augs.Label).toString(),aug:rsub});
 
     }
 

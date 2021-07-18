@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { Component, Mixins, Prop, Watch } from "vue-property-decorator";
-import { Equipment, EquipSet } from "@/@types/equip-set";
+import {Equipment, EquipmentWithAug, EquipSet} from "@/@types/equip-set";
 import xiUtils from "@/mixins/xiutils";
 
 @Component
@@ -47,11 +47,11 @@ export default class EquipSetPerformanceView extends Mixins(xiUtils) {
 
     for (let slotName in this.equipSetInfo) {
       if (Object.prototype.hasOwnProperty.call(this.equipSetInfo, slotName)) {
-        let slot: Equipment | null = this.equipSetInfo[slotName];
+        let slot: EquipmentWithAug | null = this.equipSetInfo[slotName];
         if (slot == null) {
           continue;
         }
-        let props = this.getPropertiesArray(slot);
+        let props = this.getPropertiesArray(slot.Equip);
         for (let prop of props) {
           let added = false;
           let nameWithUnit = prop.valueUnit

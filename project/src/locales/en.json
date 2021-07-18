@@ -7,7 +7,28 @@
     "item":
     {
       "augheader": "Augments",
-      "type": "Item Type"
+      "type": "Item Type",
+      "properties": "Item Properties",
+      "augments": "Augments",
+      "addAugments": "Overwrite Augments",
+      "propertyModification":"Item Info & Adjustment ver.α",
+      "value": "Value",
+      "apply": "APPLY",
+      "disclaimerAug": "This module is at an early development stage. Functions may not behave normally.",
+      "disclaimerViewer": "In development..."
+    },
+    "aug":
+    {
+      "thread": "Abdhaljs Thread",
+      "dust": "Abdhaljs Dust",
+      "sap": "Abdhaljs Sap",
+      "dye": "Abdhaljs Dye",
+      "resin": "Abdhaljs Resin",
+      "fixed":"Fixed",
+      "route1": "TypeA",
+      "route2": "TypeB",
+      "route3": "TypeC",
+      "route4": "TypeD"
     },
     "filter" : {
       "searchBoxLabel" : "Search",
