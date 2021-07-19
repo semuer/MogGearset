@@ -24,7 +24,7 @@
           hide-details
         ></v-checkbox>
         <v-text-field
-            :validate-on-blur="true"
+          :validate-on-blur="true"
           class="pt-3 pl-2 pr-3"
           clearable
           :label="$t('ui.filter.searchBoxLabel')"
@@ -93,45 +93,50 @@
       style="width: 100%; min-height: 100px; flex: 0 1 auto"
     >
       <DynamicScroller
-          :items="equipData"
-          :min-item-size="54"
-          style="height:100%"
-          key-field="Id"
+        :items="equipData"
+        :min-item-size="54"
+        style="height: 100%"
+        key-field="Id"
       >
         <template v-slot="{ item, index, active }">
           <DynamicScrollerItem
-              :item="item"
-              :active="active"
-              :size-dependencies="[
-          item.JpDescription,item.EnDescription,item.AugCape,item.AugFixed,item.AugRoute
-        ]"
-              :data-index="index"
+            :item="item"
+            :active="active"
+            :size-dependencies="[
+              item.JpDescription,
+              item.EnDescription,
+              item.AugCape,
+              item.AugFixed,
+              item.AugRoute,
+            ]"
+            :data-index="index"
           >
             <equipment-list-item
-                :index="item.Id"
-                :source="item"
-                :limiters="limiters"
-                :propDict="propDict"
-                :cateDict="cateDict">
+              :index="item.Id"
+              :source="item"
+              :limiters="limiters"
+              :propDict="propDict"
+              :cateDict="cateDict"
+            >
             </equipment-list-item>
           </DynamicScrollerItem>
         </template>
       </DynamicScroller>
-<!--      <virtual-list-->
-<!--        style="overflow-y: auto"-->
-<!--        class="fill-height"-->
-<!--        ref="v-scroller"-->
-<!--        :data-key="'Id'"-->
-<!--        :data-sources="equipData"-->
-<!--        :data-component="itemComponent"-->
-<!--        :extra-props="{-->
-<!--          limiters: limiters,-->
-<!--          propDict: propDict,-->
-<!--          cateDict: cateDict,-->
-<!--        }"-->
-<!--        :keeps="50"-->
-<!--        :estimate-size="55"-->
-<!--      ></virtual-list>-->
+      <!--      <virtual-list-->
+      <!--        style="overflow-y: auto"-->
+      <!--        class="fill-height"-->
+      <!--        ref="v-scroller"-->
+      <!--        :data-key="'Id'"-->
+      <!--        :data-sources="equipData"-->
+      <!--        :data-component="itemComponent"-->
+      <!--        :extra-props="{-->
+      <!--          limiters: limiters,-->
+      <!--          propDict: propDict,-->
+      <!--          cateDict: cateDict,-->
+      <!--        }"-->
+      <!--        :keeps="50"-->
+      <!--        :estimate-size="55"-->
+      <!--      ></virtual-list>-->
     </v-list-item-group>
   </v-container>
 </template>
@@ -144,7 +149,7 @@ import EquipmentPropertyLimitUnit from "@/components/EquipmentPropertyLimitUnit.
 import TextHighlight from "vue-text-highlight";
 import VirtualList from "vue-virtual-scroll-list";
 import EquipmentListItem from "@/components/EquipmentListItem.vue";
-import { debounce } from 'lodash'
+import { debounce } from "lodash";
 
 @Component({
   components: {
@@ -178,10 +183,10 @@ export default class EquipmentList extends Mixins(xiUtils) {
     "Cape",
     "Neck",
     "Waist",
-    "L.Earring",
-    "R.Earring",
-    "L.Ring",
-    "R.Ring",
+    "LEarring",
+    "REarring",
+    "LRing",
+    "RRing",
   ];
 
   public getTypeList() {
@@ -215,9 +220,8 @@ export default class EquipmentList extends Mixins(xiUtils) {
     this.selectedType = null;
   }
 
-
   @Watch("nameFilter")
-  queryChanged(){
+  queryChanged() {
     this.queryChangedDebounced();
   }
 
@@ -227,8 +231,7 @@ export default class EquipmentList extends Mixins(xiUtils) {
   @Watch("limiters")
   @Watch("nameFilter")
   @Watch("selectedType")
-  queryChangedInstant()
-  {
+  queryChangedInstant() {
     if (this.equipQueryChain != null) {
       let chain = this.equipQueryChain.copy();
       let query: Record<string, any> = {};
@@ -244,10 +247,10 @@ export default class EquipmentList extends Mixins(xiUtils) {
       }
 
       if (
-          this.equipSlot === "Main" ||
-          this.equipSlot === "Sub" ||
-          this.equipSlot === "Range" ||
-          this.equipSlot === "Ammo"
+        this.equipSlot === "Main" ||
+        this.equipSlot === "Sub" ||
+        this.equipSlot === "Range" ||
+        this.equipSlot === "Ammo"
       ) {
         const selectedType = this.selectedType;
         if (this.selectedType != undefined && this.selectedType != "") {
@@ -265,7 +268,7 @@ export default class EquipmentList extends Mixins(xiUtils) {
       let nameFilter = this.nameFilter;
       if (nameFilter !== "" && nameFilter !== null) {
         nameFilter = this.kataToHira(
-            this.fullWidthStrToHalfWidthStr(nameFilter as string).toLowerCase()
+          this.fullWidthStrToHalfWidthStr(nameFilter as string).toLowerCase()
         );
         let funcKataHira = this.kataToHira;
         let funcFullTohalf = this.fullWidthStrToHalfWidthStr;
@@ -276,15 +279,15 @@ export default class EquipmentList extends Mixins(xiUtils) {
         chain = chain.where(function (obj: Equipment) {
           let isPassed = false;
           if (
-              funcKataHira(funcFullTohalf(obj.Jp.toLowerCase())).includes(
-                  nameFilter as string
-              )
+            funcKataHira(funcFullTohalf(obj.Jp.toLowerCase())).includes(
+              nameFilter as string
+            )
           ) {
             isPassed = true;
           } else if (
-              funcKataHira(funcFullTohalf(obj.JpFull.toLowerCase())).includes(
-                  nameFilter as string
-              )
+            funcKataHira(funcFullTohalf(obj.JpFull.toLowerCase())).includes(
+              nameFilter as string
+            )
           ) {
             isPassed = true;
           } else if (obj.En.toLowerCase().includes(nameFilter as string)) {
@@ -292,38 +295,38 @@ export default class EquipmentList extends Mixins(xiUtils) {
           } else if (obj.EnFull.toLowerCase().includes(nameFilter as string)) {
             isPassed = true;
           } else if (
-              obj.JpDescription != null &&
-              funcKataHira(funcFullTohalf(obj.JpDescription))
-                  .toLowerCase()
-                  .includes(nameFilter as string)
+            obj.JpDescription != null &&
+            funcKataHira(funcFullTohalf(obj.JpDescription))
+              .toLowerCase()
+              .includes(nameFilter as string)
           ) {
             isPassed = true;
           } else if (
-              obj.EnDescription != null &&
-              funcFullTohalf(obj.EnDescription)
-                  .toLowerCase()
-                  .includes(nameFilter as string)
+            obj.EnDescription != null &&
+            funcFullTohalf(obj.EnDescription)
+              .toLowerCase()
+              .includes(nameFilter as string)
           ) {
             isPassed = true;
           } else if (
-              obj.AugCape != null &&
-              funcFullTohalf(augStringGetter(obj.AugCape,propDict, cateDict))
-                  .toLowerCase()
-                  .includes(nameFilter as string)
+            obj.AugCape != null &&
+            funcFullTohalf(augStringGetter(obj.AugCape, propDict, cateDict))
+              .toLowerCase()
+              .includes(nameFilter as string)
           ) {
             isPassed = true;
-          }else if (
-              obj.AugFixed != null &&
-              funcFullTohalf(augStringGetter([obj.AugFixed],propDict, cateDict))
-                  .toLowerCase()
-                  .includes(nameFilter as string)
+          } else if (
+            obj.AugFixed != null &&
+            funcFullTohalf(augStringGetter([obj.AugFixed], propDict, cateDict))
+              .toLowerCase()
+              .includes(nameFilter as string)
           ) {
             isPassed = true;
-          }else if (
-              obj.AugRoute != null &&
-              funcFullTohalf(augStringGetter(obj.AugRoute,propDict, cateDict))
-                  .toLowerCase()
-                  .includes(nameFilter as string)
+          } else if (
+            obj.AugRoute != null &&
+            funcFullTohalf(augStringGetter(obj.AugRoute, propDict, cateDict))
+              .toLowerCase()
+              .includes(nameFilter as string)
           ) {
             isPassed = true;
           }
@@ -353,10 +356,10 @@ export default class EquipmentList extends Mixins(xiUtils) {
               let totalValue = 0;
               let testPassed = false;
               if (
-                  props == undefined &&
-                  augsCape == undefined &&
-                  augsFix == undefined &&
-                  augsRoute == undefined
+                props == undefined &&
+                augsCape == undefined &&
+                augsFix == undefined &&
+                augsRoute == undefined
               ) {
                 return false;
               }
@@ -367,9 +370,9 @@ export default class EquipmentList extends Mixins(xiUtils) {
                     return false;
                   }
                   if (
-                      testPropID === prop.PropID &&
-                      ((testCatID == null && prop.CatID == null) ||
-                          testCatID === prop.CatID)
+                    testPropID === prop.PropID &&
+                    ((testCatID == null && prop.CatID == null) ||
+                      testCatID === prop.CatID)
                   ) {
                     totalValue += Math.abs(prop.Value ?? 0);
                     testPassed = true;
@@ -383,9 +386,9 @@ export default class EquipmentList extends Mixins(xiUtils) {
                   for (const aug of augs.Augs) {
                     for (const augProp of aug.PropIDs) {
                       if (
-                          testPropID == augProp &&
-                          ((testCatID == null && aug.CatID == null) ||
-                              testCatID == aug.CatID)
+                        testPropID == augProp &&
+                        ((testCatID == null && aug.CatID == null) ||
+                          testCatID == aug.CatID)
                       ) {
                         totalValue += Math.abs(aug.Value ?? 0);
                         testPassed = true;
@@ -403,9 +406,9 @@ export default class EquipmentList extends Mixins(xiUtils) {
                 for (const aug of augsFix.Augs) {
                   for (const augProp of aug.PropIDs) {
                     if (
-                        testPropID == augProp &&
-                        ((testCatID == null && aug.CatID == null) ||
-                            testCatID == aug.CatID)
+                      testPropID == augProp &&
+                      ((testCatID == null && aug.CatID == null) ||
+                        testCatID == aug.CatID)
                     ) {
                       totalValue += Math.abs(aug.Value ?? 0);
                       testPassed = true;
@@ -423,9 +426,9 @@ export default class EquipmentList extends Mixins(xiUtils) {
                   for (const aug of augs.Augs) {
                     for (const augProp of aug.PropIDs) {
                       if (
-                          testPropID == augProp &&
-                          ((testCatID == null && aug.CatID == null) ||
-                              testCatID == aug.CatID)
+                        testPropID == augProp &&
+                        ((testCatID == null && aug.CatID == null) ||
+                          testCatID == aug.CatID)
                       ) {
                         const value = Math.abs(aug.Value ?? 0);
                         if (value >= routeMax) {
@@ -508,11 +511,9 @@ export default class EquipmentList extends Mixins(xiUtils) {
     //list.scrollToOffset(0);
   }
 
-  queryChangedDebounced()
-  {
+  queryChangedDebounced() {
     this.queryChangedInstant();
   }
-
 
   public addLimiter(): void {
     this.limiters.push({
@@ -617,8 +618,8 @@ export default class EquipmentList extends Mixins(xiUtils) {
     }
   }
 
-  created(){
-    this.queryChangedDebounced = debounce(this.queryChangedDebounced,500);
+  created() {
+    this.queryChangedDebounced = debounce(this.queryChangedDebounced, 500);
   }
 }
 </script>
