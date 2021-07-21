@@ -18,6 +18,7 @@
        v-model="drawer"
       :width="navigationWidth"
       app
+       :style="$vuetify.breakpoint.xsOnly?'max-height:100%;':''"
       :clipped="$vuetify.breakpoint.xsOnly?false:true"
       :left="$vuetify.breakpoint.xsOnly?false:true"
       :permanent="$vuetify.breakpoint.xsOnly?false:true"
@@ -258,11 +259,19 @@ export default class App extends Mixins(xiUtils) {
 
   @Watch("selectedJob")
   selectedJobChanged(): void {
-    this.selectedSlotChanged(this.selectedSlot);
+    this.changeQuery(this.selectedSlot);
   }
 
   @Watch("selectedSlot")
-  selectedSlotChanged(newSlot: string): void {
+  selectedSlotChanged(newSlot:string):void{
+    if (newSlot != null) {
+      this.drawer = true;
+    }
+
+    this.changeQuery(this.selectedSlot);
+  }
+
+  public changeQuery(newSlot: string): void {
     let query: Record<string, unknown> = {};
     for (const job of this.selectedJob) {
       query["Is" + job] = true;
@@ -278,8 +287,6 @@ export default class App extends Mixins(xiUtils) {
       }
       return;
     }
-
-    this.drawer = true;
 
     let slotToIdDict: Record<string, number> = {
       Main: 0,
