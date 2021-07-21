@@ -34,7 +34,7 @@
                 )
               "
             ></td>
-            <td v-text="item.Value == null ? '' : item.Value"></td>
+            <td v-text="item.Value == null ? '' : (item.Value + ((item.Unit==null)?'':item.Unit))"></td>
           </tr>
         </tbody>
       </template>
