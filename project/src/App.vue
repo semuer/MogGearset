@@ -18,8 +18,8 @@
     <v-navigation-drawer
        v-model="drawer"
       :width="navigationWidth"
-       v-resize="onResize"
       app
+       style="overflow-y:hidden"
       :clipped="$vuetify.breakpoint.xsOnly?false:true"
       left
       :permanent="$vuetify.breakpoint.xsOnly?false:true"
@@ -365,11 +365,12 @@ export default class App extends Mixins(xiUtils) {
       false
     );
   }
-
-  public onResize():void{
-    const el = (this.$refs.drawer as Vue).$el;
-    (el as HTMLElement).style.height = "100vh";
-  }
+  //
+  // public onResize():void{
+  //   const el = (this.$refs.drawer as Vue).$el;
+  //   (el as HTMLElement).style.height = window.innerHeight + "px";
+  //   (el as HTMLElement).style.display = "block"
+  // }
 
   mounted(): void {
     this.setBorderWidth();

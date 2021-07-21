@@ -1,8 +1,7 @@
 <template>
   <v-container
-      v-resize="onResize"
       ref="container"
-    style="height: 100%; display: flex; flex-flow: column; width: 100%"
+      style="height: 100%; display: flex; flex-flow: column; width: 100%"
   >
     <v-sheet
       tile
@@ -91,13 +90,14 @@
       />
     </v-sheet>
     <v-list-item-group
+        ref="itemlist"
       class="fill-height"
       style="width: 100%; min-height: 100px; flex: 0 1 auto"
     >
       <DynamicScroller
         :items="equipData"
         :min-item-size="54"
-        style="height: 100%"
+        style="height: 100%;overflow-y: scroll;-webkit-overflow-scrolling:touch;"
         key-field="Id"
         class="scrollbarTheme"
       >
@@ -621,17 +621,20 @@ export default class EquipmentList extends Mixins(xiUtils) {
     }
   }
 
-  public onResize():void{
-    const el = this.$refs.container;
-    if(this.$vuetify.breakpoint.xsOnly)
-    {
-      (el as HTMLDivElement).style.height = window.innerHeight + "px";
-    }
-    else
-    {
-      (el as HTMLDivElement).style.height = "100%"
-    }
-  }
+  // public onResize():void{
+  //   const el = this.$refs.container;
+  //   const list = this.$refs.itemlist;
+  //   if(this.$vuetify.breakpoint.xsOnly)
+  //   {
+  //     (el as HTMLDivElement).style.height = window.innerHeight+ "px";
+  //     (el as HTMLDivElement).style.display = "block";
+  //     (list as HTMLElement).style.height = 100 + "px";
+  //   }
+  //   else
+  //   {
+  //     (el as HTMLDivElement).style.height = "100%"
+  //   }
+  // }
 
   created() {
     this.queryChangedDebounced = debounce(this.queryChangedDebounced, 500);
