@@ -17,6 +17,7 @@
     </v-app-bar>
     <v-navigation-drawer
        v-model="drawer"
+       v-resize="onResize"
       :width="navigationWidth"
       app
        style="height:100vh;"
@@ -364,6 +365,10 @@ export default class App extends Mixins(xiUtils) {
       },
       false
     );
+  }
+
+  public onResize():void{
+    (this.$refs.drawer as HTMLElement).style.height = "100vh";
   }
 
   mounted(): void {
