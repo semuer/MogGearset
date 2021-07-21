@@ -17,11 +17,10 @@
     </v-app-bar>
     <v-navigation-drawer
        v-model="drawer"
-       v-resize="onResize"
       :width="navigationWidth"
       app
        style="height:100vh;"
-      clipped
+      clipped="$vuetify.breakpoint.xsOnly?true:false"
       left
       :permanent="$vuetify.breakpoint.xsOnly?false:true"
       ref="drawer"
