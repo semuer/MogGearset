@@ -97,7 +97,7 @@
       <DynamicScroller
         :items="equipData"
         :min-item-size="54"
-        style="height: 100%;overflow-y: scroll;-webkit-overflow-scrolling:touch;"
+        style="height: 100%;"
         key-field="Id"
         class="scrollbarTheme"
       >

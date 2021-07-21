@@ -1,13 +1,12 @@
 <template>
   <v-app>
     <v-app-bar app clipped-left fixed>
-      <v-app-bar-nav-icon v-if="$vuetify.breakpoint.xsOnly" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>
-        <v-col>
+      <v-app-bar-nav-icon v-if="$vuetify.breakpoint.xsOnly" @click.stop="drawer = !drawer" class="mr-0"></v-app-bar-nav-icon>
+      <v-toolbar-title class="pl-0">
+        <v-col class="pl-0">
           <v-row no-gutters class="align-center"
-            ><v-col class="titlelogo">Mog Gearset</v-col></v-row
-          >
-          <!--<v-row no-gutters class="titlesub pt-0 mt-0">for FINAL FANTASY XI</v-row>-->
+            ><v-col class="titlelogo">Mog Gearset</v-col>
+          </v-row>
         </v-col>
       </v-toolbar-title>
       <v-spacer></v-spacer>
@@ -19,10 +18,10 @@
        v-model="drawer"
       :width="navigationWidth"
       app
-       style="overflow-y:hidden"
       :clipped="$vuetify.breakpoint.xsOnly?false:true"
-      left
+      :left="$vuetify.breakpoint.xsOnly?false:true"
       :permanent="$vuetify.breakpoint.xsOnly?false:true"
+       bottom
       ref="drawer"
     >
       <v-btn
