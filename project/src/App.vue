@@ -18,8 +18,8 @@
     <v-navigation-drawer
        v-model="drawer"
       :width="navigationWidth"
+       v-resize="onResize"
       app
-       style="height:100vh;"
       :clipped="$vuetify.breakpoint.xsOnly?false:true"
       left
       :permanent="$vuetify.breakpoint.xsOnly?false:true"
@@ -367,7 +367,8 @@ export default class App extends Mixins(xiUtils) {
   }
 
   public onResize():void{
-    (this.$refs.drawer as HTMLElement).style.height = "100vh";
+    const el = (this.$refs.drawer as Vue).$el;
+    (el as HTMLElement).style.height = "100vh";
   }
 
   mounted(): void {
