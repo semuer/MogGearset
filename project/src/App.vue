@@ -20,7 +20,7 @@
       :width="navigationWidth"
       app
        style="height:100vh;"
-      clipped="$vuetify.breakpoint.xsOnly?true:false"
+      :clipped="$vuetify.breakpoint.xsOnly?false:true"
       left
       :permanent="$vuetify.breakpoint.xsOnly?false:true"
       ref="drawer"
