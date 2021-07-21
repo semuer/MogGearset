@@ -20,6 +20,7 @@
       :width="navigationWidth"
       app
       class="fill-height"
+       style="transform: translate3d(0,0,0)"
       clipped
       left
       :permanent="$vuetify.breakpoint.xsOnly?false:true"
