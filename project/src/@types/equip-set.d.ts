@@ -73,6 +73,21 @@ export interface CalculatedAugInfo {
   Unit?: string;
 }
 
+export interface CalculatedPropInfo {
+  CateID?: number;
+  PropID: number;
+  MinValue?: number;
+  Value?: number;
+  Unit?: string;
+
+  MainHandOnly: boolean;
+  IsUnity: boolean;
+
+  EquivalentCateIDs?: [number];
+  EquivalentPropIDs?: [number];
+  EquivalentUnit?: string;
+}
+
 export interface EquipSet extends Record<string, EquipmentWithAug> {
   Main?: EquipmentWithAug;
   Sub?: EquipmentWithAug;

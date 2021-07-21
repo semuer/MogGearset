@@ -55,6 +55,27 @@ export default class xiUtils extends Vue {
     return undefined;
   }
 
+  public getSinglePropString(
+    locale: string,
+    cateID: number | undefined,
+    propID: number,
+    propDict: Map<string, string[]>,
+    catDict: Map<string, string[]>
+  ): string {
+    let result = "";
+    const loci = locale == "ja" ? 0 : 1;
+    if (cateID != null) {
+      const cat = catDict.get(cateID.toString());
+      if (cat != null) {
+        result += cat[loci] + ":";
+      }
+    }
+
+    const rProp = propDict.get(propID.toString());
+    result += rProp == null ? "" : rProp[loci];
+    return result;
+  }
+
   public getAugString(
     locale: string,
     data: AugProperty,

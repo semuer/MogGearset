@@ -12,6 +12,7 @@
       "augments": "Augments",
       "addAugments": "Overwrite Augments",
       "propertyModification":"Item Info & Adjustment ver.α",
+      "propertyViewer":"GearSet Calculator ver.α",
       "value": "Value",
       "apply": "APPLY",
       "disclaimerAug": "This module is at an early development stage. Functions may not behave normally.",

@@ -12,6 +12,7 @@
       "augments": "オーグメント",
       "addAugments": "オーグメント変更",
       "propertyModification":"装備情報＆オグメ調整 ver.α",
+      "propertyViewer":"装備性能計算 ver.α",
       "value": "性能値",
       "apply": "適用",
       "disclaimerAug": "早期開発段階の機能です。動作は保証しません。",
