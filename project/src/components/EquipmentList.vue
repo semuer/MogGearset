@@ -1,5 +1,7 @@
 <template>
   <v-container
+      v-resize="onResize"
+      ref="container"
     style="height: 100%; display: flex; flex-flow: column; width: 100%"
   >
     <v-sheet
@@ -143,7 +145,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Mixins, Prop, Watch } from "vue-property-decorator";
+import {Component, Mixins, Prop, Vue, Watch} from "vue-property-decorator";
 import { Equipment, Limiter } from "@/@types/equip-set";
 import xiUtils from "@/mixins/xiutils";
 import EquipmentPropertyLimitUnit from "@/components/EquipmentPropertyLimitUnit.vue";
@@ -616,6 +618,18 @@ export default class EquipmentList extends Mixins(xiUtils) {
           this.queryChanged();
         }
       }
+    }
+  }
+
+  public onResize():void{
+    const el = this.$refs.container;
+    if(this.$vuetify.breakpoint.xsOnly)
+    {
+      (el as HTMLDivElement).style.height = window.innerHeight + "px";
+    }
+    else
+    {
+      (el as HTMLDivElement).style.height = "100%"
     }
   }
 
