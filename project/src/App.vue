@@ -18,7 +18,7 @@
        v-model="drawer"
       :width="navigationWidth"
       app
-       :style="$vuetify.breakpoint.xsOnly?'max-height:100%;':''"
+       :style="$vuetify.breakpoint.xsOnly?'max-height:100%;height:100vh;':''"
       :clipped="$vuetify.breakpoint.xsOnly?false:true"
       :left="$vuetify.breakpoint.xsOnly?false:true"
       :permanent="$vuetify.breakpoint.xsOnly?false:true"
