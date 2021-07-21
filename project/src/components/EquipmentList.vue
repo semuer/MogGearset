@@ -97,6 +97,7 @@
         :min-item-size="54"
         style="height: 100%"
         key-field="Id"
+        class="scrollbarTheme"
       >
         <template v-slot="{ item, index, active }">
           <DynamicScrollerItem
@@ -624,4 +625,23 @@ export default class EquipmentList extends Mixins(xiUtils) {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.scrollbarTheme::-webkit-scrollbar {
+  width: 15px;
+}
+
+.scrollbarTheme::-webkit-scrollbar-track {
+  background: #eaeaea;
+  border-left: 1px solid #dadada;
+}
+
+.scrollbarTheme::-webkit-scrollbar-thumb {
+  background: #b0b0b0;
+  border: solid 3px #e6e6e6;
+  border-radius: 7px;
+}
+
+.scrollbarTheme::-webkit-scrollbar-thumb:hover {
+  background: black;
+}
+</style>
