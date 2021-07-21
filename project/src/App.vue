@@ -11,7 +11,7 @@
         </v-col>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn class="" v-on:click="changeLanguage">
+      <v-btn outlined x-small class="" v-on:click="changeLanguage">
         {{ $t("test") }}
       </v-btn>
     </v-app-bar>
@@ -19,8 +19,7 @@
        v-model="drawer"
       :width="navigationWidth"
       app
-      class="fill-height"
-       style="transform: translate3d(0,0,0)"
+       style="height:100vh;"
       clipped
       left
       :permanent="$vuetify.breakpoint.xsOnly?false:true"
@@ -46,7 +45,7 @@
         :prop-dict="propDict"
         :cate-dict="categoryDict"
         class="fill-height pa-0 ma-0"
-        style="width: 100%"
+        style="width: 100%;"
         v-on:select="equipItem"
       />
 
