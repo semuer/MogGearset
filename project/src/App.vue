@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <v-app-bar app clipped-left>
+      <v-app-bar-nav-icon v-if="$vuetify.breakpoint.xsOnly" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>
         <v-col>
           <v-row no-gutters class="align-center"
@@ -15,18 +16,28 @@
       </v-btn>
     </v-app-bar>
     <v-navigation-drawer
+       v-model="drawer"
       :width="navigationWidth"
       app
       class="fill-height"
       clipped
       left
-      permanent
-      bottom
-      floating
-      stateless
-      touchless
+      :permanent="$vuetify.breakpoint.xsOnly?false:true"
       ref="drawer"
     >
+      <v-btn
+          class="mb-10 mr-4"
+          v-if="$vuetify.breakpoint.xsOnly"
+          fab
+          color="blue-grey lighten-2"
+          right
+          bottom
+          absolute
+          small
+          @click="drawer = !drawer"
+      >
+        <v-icon>mdi-close-circle</v-icon>
+      </v-btn>
       <equipment-list
         :equip-query-chain="equipQueryChain"
         :equipSlot="selectedSlot"
@@ -37,6 +48,8 @@
         style="width: 100%"
         v-on:select="equipItem"
       />
+
+
     </v-navigation-drawer>
     <v-main style="height: 100vh; width: 100%">
       <v-container class="grey lighten-5 pa-4" fluid>
@@ -210,6 +223,7 @@ export default class App extends Mixins(xiUtils) {
   propDict: Map<string, string[]> = new Map();
   categoryDict: Map<string, string[]> = new Map();
   baseUrl: string = process.env.BASE_URL;
+  drawer = false;
 
   public applySlotAugments(event: any): void {
     if (event == undefined) {
@@ -224,6 +238,7 @@ export default class App extends Mixins(xiUtils) {
   }
 
   public equipItem(item: Equipment): void {
+    this.drawer=false;
     if (this.selectedSlot != null && this.selectedSlot != "") {
       Vue.set(this.editEquipSet, this.selectedSlot, { Equip: item });
       this.dirtyFlag = !this.dirtyFlag;
@@ -279,6 +294,9 @@ export default class App extends Mixins(xiUtils) {
       }
       return;
     }
+
+    this.drawer = true;
+
     let slotToIdDict: Record<string, number> = {
       Main: 0,
       Sub: 1,
