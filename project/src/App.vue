@@ -94,29 +94,13 @@
                 :cate-dict="categoryDict"
               ></performance-viewer>
             </v-row>
-            <!--            <v-card>-->
-            <!--              <v-list-item-group-->
-            <!--                v-model="selectedSlot"-->
-            <!--                active-class="highlight-border"-->
-            <!--              >-->
-            <!--                <equip-slot-selector-->
-            <!--                  v-for="item in slotItemsArray"-->
-            <!--                  v-bind:key="item.index"-->
-            <!--                  :dirty="dirtyFlag"-->
-            <!--                  :items="editEquipSet"-->
-            <!--                  :index-name="item.index"-->
-            <!--                  :label-name="item.label"-->
-            <!--                  @clearSlot="clearSlot(item.index)"-->
-            <!--                />-->
-            <!--              </v-list-item-group>-->
-            <!--            </v-card>-->
           </v-col>
-          <v-col class="pr-4" cols="12" md="4">
+          <v-col class="pr-4" align-self="center" cols="12" md="4">
+            <v-row no-gutters class="mb-2" align-content="center" align="center" justify="center">
             <svg
               id="svg"
               xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-              width="90%"
+              :width="$vuetify.breakpoint.smAndDown?'50%':'90%'"
               viewBox="0, 0, 400,385.8565737051793"
             >
               <g id="svgg">
@@ -129,6 +113,7 @@
                 ></path>
               </g>
             </svg>
+            </v-row>
             <v-card>
               <v-card-text class="mb-0 pb-0"
                 ><p>{{ $t("ui.siteDesc1") }}</p>
