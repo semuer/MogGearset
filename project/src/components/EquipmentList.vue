@@ -11,76 +11,68 @@
       elevation="1"
       rounded
     >
-      <v-row class="align-center" no-gutters style="width: 100%">
-        <v-checkbox
-          v-model="isLevel99"
-          label="Lv99"
-          hide-details
-          class="pl-2 pr-2"
-        ></v-checkbox>
-        <v-checkbox
-          v-show="slotHasItemLevel"
-          v-model="isItemLevel119"
-          label="IL119"
-          hide-details
-        ></v-checkbox>
-        <v-text-field
-          :validate-on-blur="true"
-          class="pt-3 pl-2 pr-3"
-          clearable
-          :label="$t('ui.filter.searchBoxLabel')"
-          v-model="nameFilter"
-          @click:clear="nameFilterCleared"
-          outlined
-          hide-details
-          dense
-        ></v-text-field>
+      <v-row no-gutters class="ml-2"
+             style="width: 100%">
+        <v-col cols="3"><v-checkbox
+            v-model="isLevel99"
+            label="Lv99"
+            hide-details
+            class="pl-2 pr-2"
+        ></v-checkbox></v-col>
+        <v-col cols="3"><v-checkbox
+            v-show="slotHasItemLevel"
+            v-model="isItemLevel119"
+            label="IL119"
+            hide-details
+        ></v-checkbox></v-col>
+        <v-col cols="6"> <v-text-field
+            :validate-on-blur="true"
+            class="pt-3 pl-2 pr-6"
+            clearable
+            :label="$t('ui.filter.searchBoxLabel')"
+            v-model="nameFilter"
+            @click:clear="nameFilterCleared"
+            outlined
+            hide-details
+            dense
+        ></v-text-field></v-col>
+
       </v-row>
-      <v-row v-if="getTypeList() != undefined" class="ml-4 mr-4 mb-2">
-        <v-select
-          solo
-          :items="getTypeList()"
-          v-model="selectedType"
-          filled
-          dense
-          flat
-          hide-details
-          outlined
-          :label="$t('ui.item.type')"
-          clearable
-        ></v-select>
-      </v-row>
-      <v-row class="pb-1 pt-2 justify-space-around align-center" no-gutters>
-        <v-btn
-          v-on:click="addLimiter"
-          class="pr-2"
-          dense
-          small
-          elevation="1"
-          color="blue lighten-3"
-          >{{ $t("ui.filter.addPropFilter") }}</v-btn
-        >
-        <!--        <v-btn-->
-        <!--          v-on:click="addTextLimiter"-->
-        <!--          class="pr-2"-->
-        <!--          dense-->
-        <!--          small-->
-        <!--          elevation="1"-->
-        <!--          color="purple lighten-3"-->
-        <!--          >+文書検索</v-btn-->
-        <!--        >-->
-        <v-btn
-          v-on:click="addSorter"
-          class=""
-          dense
-          small
-          elevation="1"
-          color="orange lighten-3"
-          >{{ $t("ui.filter.addSort") }}</v-btn
-        >
+      <v-row no-gutters  class="pl-4 mt-1 pr-0 pb-0 mb-0 align-center">
+
+        <v-col cols="3"><v-btn
+            v-on:click="addLimiter"
+            class="pr-3"
+            dense
+            small
+            elevation="1"
+            color="blue lighten-3"
+        >{{ $t("ui.filter.addPropFilter") }}</v-btn
+        ></v-col>
+        <v-col cols="3"> <v-btn
+            v-on:click="addSorter"
+            class="mr-0 pr-4"
+            dense
+            small
+            elevation="1"
+            color="orange lighten-3"
+        >{{ $t("ui.filter.addSort") }}</v-btn
+        ></v-col>
+        <v-col cols="6" class="pr-4" v-if="getTypeList() != undefined"> <v-select
+            solo
+            :items="getTypeList()"
+            v-model="selectedType"
+            filled
+            dense
+            flat
+            hide-details
+            outlined
+            :label="$t('ui.item.type')"
+            clearable
+        ></v-select></v-col>
       </v-row>
       <equipment-property-limit-unit
-        class="pl-0 pr-3 pt-1 pb-1 ma-2"
+        class="pl-1 pr-3 pt-1 pb-1 ma-1"
         :limiters="limiters"
         :props-array="propsArray"
         @delete="deleteLimiter"
