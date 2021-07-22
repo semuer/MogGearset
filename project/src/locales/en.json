@@ -1,9 +1,11 @@
 {
   "test": "日/英",
   "ui" : {
-    "siteDesc1": "This is an unofficial equipment database site for FINAL FANTASY XI, with some calculation functions (planned). Mobile devices are not supported currently.",
+    "siteDesc1": "This is an unofficial equipment database site for FINAL FANTASY XI, with some calculation functions (planned). The site is running on client side, so performance may differ depending on the device.",
     "siteDesc2":"We still need time to finish basic contents. The site is open-sourced on GitHub.",
     "siteDesc3":"Any suggestions or advices are welcomed. Please use repository's issue page or join our Discord channel.",
+    "siteDesc4":"Augment properties data are not automatically parsed. If you find out inaccurate augment infos, please contact me. :)",
+    "siteDesc5":"Augments currently be implemented： Su5 JSE Necks, Su5 Weapons, Ambuscade Capes, Unity Wanted, Odyssey",
     "item":
     {
       "augheader": "Augments",
@@ -16,7 +18,9 @@
       "value": "Value",
       "apply": "APPLY",
       "disclaimerAug": "This module is at an early development stage. Functions may not behave normally.",
-      "disclaimerViewer": "Under development...There is no assurance about the calculations showed behind at this moment."
+      "disclaimerViewer": "Under development...There is no assurance about the calculations showed behind at this moment.",
+      "calculateunitycheck": "Max Unity Rank",
+      "calculatemaxaug": "Max Aug Value"
     },
     "aug":
     {
@@ -29,7 +33,10 @@
       "route1": "TypeA",
       "route2": "TypeB",
       "route3": "TypeC",
-      "route4": "TypeD"
+      "route4": "TypeD",
+      "unityscale": "Lustreless Scale",
+      "unityhide": "Lustreless Hide",
+      "unitywing": "Lustreless Wing"
     },
     "filter" : {
       "searchBoxLabel" : "Search",

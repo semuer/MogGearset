@@ -95,8 +95,8 @@
               ></performance-viewer>
             </v-row>
           </v-col>
-          <v-col class="pr-4" align-self="center" cols="12" md="4">
-            <v-row no-gutters class="mb-2" align-content="center" align="center" justify="center">
+          <v-col class="pr-4" cols="12" md="4">
+            <v-row no-gutters class="mb-2"  justify="center">
             <svg
               id="svg"
               xmlns="http://www.w3.org/2000/svg"
@@ -118,7 +118,9 @@
               <v-card-text class="mb-0 pb-0"
                 ><p>{{ $t("ui.siteDesc1") }}</p>
                 <p>{{ $t("ui.siteDesc2") }}</p>
-                <p>{{ $t("ui.siteDesc3") }}</p></v-card-text
+                <p>{{ $t("ui.siteDesc3") }}</p>
+                <p>{{ $t("ui.siteDesc4") }}</p>
+                <p>{{ $t("ui.siteDesc5") }}</p></v-card-text
               >
               <v-card-actions class="ml-2">
                 <v-btn

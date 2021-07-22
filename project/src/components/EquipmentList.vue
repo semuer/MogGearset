@@ -11,11 +11,12 @@
       elevation="1"
       rounded
     >
-      <v-row no-gutters class="ml-2"
+      <v-row no-gutters class="ml-2 align-baseline"
              style="width: 100%">
         <v-col cols="3"><v-checkbox
             v-model="isLevel99"
             label="Lv99"
+            dense
             hide-details
             class="pl-2 pr-2"
         ></v-checkbox></v-col>
@@ -23,6 +24,7 @@
             v-show="slotHasItemLevel"
             v-model="isItemLevel119"
             label="IL119"
+            dense
             hide-details
         ></v-checkbox></v-col>
         <v-col cols="6"> <v-text-field
@@ -35,9 +37,26 @@
             outlined
             hide-details
             dense
+            height="10px"
         ></v-text-field></v-col>
 
       </v-row>
+      <v-row no-gutters class="ml-2"
+             style="width: 100%">
+        <v-col class="pl-2"><v-checkbox
+            v-model="isCalUnity"
+            :label="$t('ui.item.calculateunitycheck')"
+            dense
+            hide-details
+        ></v-checkbox></v-col>
+        <v-col class="pl-2"><v-checkbox
+            v-model="isCalMaxAug"
+            :label="$t('ui.item.calculatemaxaug')"
+            dense
+            hide-details
+        ></v-checkbox></v-col>
+      </v-row>
+
       <v-row no-gutters  class="pl-4 mt-1 pr-0 pb-0 mb-0 align-center">
 
         <v-col cols="3"><v-btn
@@ -158,10 +177,12 @@ import { debounce } from "lodash";
 export default class EquipmentList extends Mixins(xiUtils) {
   selectedItem = 1;
   limiters: Array<Limiter> = [];
-  isLevel99 = false;
-  isItemLevel119 = false;
+  isLevel99 = true;
+  isItemLevel119 = true;
   nameFilter: string | null = "";
   selectedType: string | null = null;
+  isCalUnity = true;
+  isCalMaxAug = true;
 
   itemComponent = EquipmentListItem;
 
@@ -224,6 +245,7 @@ export default class EquipmentList extends Mixins(xiUtils) {
   @Watch("isLevel99")
   @Watch("isItemLevel119")
   @Watch("limiters")
+  @Watch("isCalUnity")
   @Watch("nameFilter")
   @Watch("selectedType")
   queryChangedInstant() {
@@ -339,6 +361,7 @@ export default class EquipmentList extends Mixins(xiUtils) {
           if (this.limiters[i].isProp) {
             let testPropID = this.limiters[i].propertyID;
             let testCatID = this.limiters[i].categoryID;
+            let calUnity = this.isCalUnity;
             if (testPropID == undefined) {
               continue;
             }
@@ -365,12 +388,27 @@ export default class EquipmentList extends Mixins(xiUtils) {
                     return false;
                   }
                   if (
-                    testPropID === prop.PropID &&
-                    ((testCatID == null && prop.CatID == null) ||
-                      testCatID === prop.CatID)
+                    testPropID === prop.PropID
                   ) {
-                    totalValue += Math.abs(prop.Value ?? 0);
-                    testPassed = true;
+                    if((testCatID == null && prop.CatID == null) ||
+                        testCatID === prop.CatID)
+                    {
+                      totalValue += Math.abs(prop.Value ?? 0);
+                      testPassed = true;
+                    }
+                    else if(calUnity)
+                    {
+                      if(testCatID == null && prop.CatID == 13)
+                      {
+                        totalValue += Math.abs(prop.Value ?? 0);
+                        testPassed = true;
+                      }
+                      else if(testCatID == 8 && prop.CatID == 195)
+                      {
+                        totalValue += Math.abs(prop.Value ?? 0);
+                        testPassed = true;
+                      }
+                    }
                   }
                 }
               }
@@ -440,20 +478,6 @@ export default class EquipmentList extends Mixins(xiUtils) {
               return testPassed && totalValue >= min;
             });
           }
-          // else if (this.limiters[i].isText) {
-          //   let testPropName = this.limiters[i].text;
-          //   if (testPropName === null || testPropName === "") {
-          //     continue;
-          //   }
-          //   chain = chain.where(function (obj: Equipment) {
-          //     return obj.JpDescription !== undefined &&
-          //       obj.JpDescription !== null
-          //       ? obj.JpDescription.toLowerCase().includes(
-          //           testPropName?.toLowerCase() as string
-          //         )
-          //       : false;
-          //   });
-          // }
 
           // Sorting Chains
           if (this.limiters[i].isSort) {
@@ -464,10 +488,11 @@ export default class EquipmentList extends Mixins(xiUtils) {
             if (filterPropID == undefined) {
               continue;
             }
-
+            const calUnity = this.isCalUnity;
+            const calAug = this.isCalMaxAug;
             chain = chain.sort(function (obj1: Equipment, obj2: Equipment) {
-              const value1 = funcGetValue(obj1, filterPropID, filterCateID);
-              const value2 = funcGetValue(obj2, filterPropID, filterCateID);
+              const value1 = funcGetValue(obj1, filterPropID, filterCateID,calUnity,calAug);
+              const value2 = funcGetValue(obj2, filterPropID, filterCateID,calUnity,calAug);
               let result = 0;
               if (value1 === undefined && value2 === undefined) {
                 result = 0;

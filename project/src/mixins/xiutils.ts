@@ -33,26 +33,116 @@ export default class xiUtils extends Vue {
   public getPropertyValue(
     item: Equipment,
     property: number | undefined,
-    category: number | undefined | null
+    category: number | undefined | null,
+    calUnity: boolean,
+    calMaxAug: boolean
   ): number | undefined {
     const props = item.Properties;
     if (props == undefined) {
       return undefined;
     }
+    let result = undefined;
     for (const prop of props) {
-      if (
-        property === prop.PropID &&
-        ((category == undefined && prop.CatID == undefined) ||
-          category === prop.CatID)
-      ) {
-        if (prop.Value == undefined) {
-          return 0;
-        } else {
-          return prop.Value;
+      if (property === prop.PropID) {
+        if (
+          (category == undefined && prop.CatID == undefined) ||
+          category === prop.CatID
+        ) {
+          if (prop.Value == undefined) {
+            result = result == null ? 0 : result;
+          } else {
+            result = result == null ? prop.Value : result + prop.Value;
+          }
+        } else if (calUnity) {
+          if (
+            (category == null && prop.CatID == 13) ||
+            (category == 8 && prop.CatID == 195)
+          ) {
+            if (prop.Value == undefined) {
+              result = result == null ? 0 : result;
+            } else {
+              result = result == null ? prop.Value : result + prop.Value;
+            }
+          }
         }
       }
     }
-    return undefined;
+
+    // Augs
+    if (calMaxAug) {
+      let routeMax = 0;
+      // Calculate All Routes Total
+      let testPassed = false;
+      if (item.AugCape != undefined) {
+        for (const augs of item.AugCape) {
+          for (const aug of augs.Augs) {
+            for (const augProp of aug.PropIDs) {
+              if (
+                property == augProp &&
+                ((category == null && aug.CatID == null) ||
+                  category == aug.CatID)
+              ) {
+                if (aug.Value == undefined) {
+                  result = result == null ? 0 : result;
+                } else {
+                  result = result == null ? aug.Value : result + aug.Value;
+                }
+                testPassed = true;
+                break;
+              }
+            }
+            if (testPassed) break;
+          }
+          if (testPassed) break;
+        }
+      }
+
+      // Calculate All Routes Total
+      else if (item.AugFixed != undefined) {
+        for (const aug of item.AugFixed.Augs) {
+          for (const augProp of aug.PropIDs) {
+            if (
+              property == augProp &&
+              ((category == null && aug.CatID == null) || category == aug.CatID)
+            ) {
+              if (aug.Value == undefined) {
+                result = result == null ? 0 : result;
+              } else {
+                result = result == null ? aug.Value : result + aug.Value;
+              }
+              testPassed = true;
+              break;
+            }
+          }
+          if (testPassed) break;
+        }
+      }
+
+      // Calculate Max Route Value
+      else if (item.AugRoute != undefined) {
+        for (const augs of item.AugRoute) {
+          for (const aug of augs.Augs) {
+            for (const augProp of aug.PropIDs) {
+              if (
+                property == augProp &&
+                ((category == null && aug.CatID == null) ||
+                  category == aug.CatID)
+              ) {
+                const value = aug.Value == undefined ? 0 : aug.Value;
+                if (Math.abs(value) >= Math.abs(routeMax)) {
+                  testPassed = true;
+                  routeMax = value;
+                }
+                break;
+              }
+            }
+          }
+        }
+      }
+      result = result == null ? routeMax : result + routeMax;
+    }
+
+    return result;
   }
 
   public getSinglePropString(

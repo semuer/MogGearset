@@ -282,8 +282,7 @@
                 ><span
                   class="grey--text text--darken-1"
                   style="
-                    word-break: keep-all;
-                    overflow-wrap: break-word;
+                    word-break: break-word;
                     line-height: 1.4em;
                   "
                   >{{ calculatedAugsString }}
