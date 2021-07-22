@@ -36,7 +36,10 @@
       "route4": "タイプD",
       "unityscale": "色褪せた鱗",
       "unityhide": "色褪せた皮",
-      "unitywing": "色褪せた羽"
+      "unitywing": "色褪せた羽",
+      "odsat1": "オデシーAT1",
+      "odsat2": "オデシーAT2",
+      "odsat3": "オデシーAT3"
     },
     "filter" : {
       "searchBoxLabel" : "検索",

@@ -36,7 +36,10 @@
       "route4": "TypeD",
       "unityscale": "Lustreless Scale",
       "unityhide": "Lustreless Hide",
-      "unitywing": "Lustreless Wing"
+      "unitywing": "Lustreless Wing",
+      "odsat1": "Odyssey AT1",
+      "odsat2": "Odyssey AT2",
+      "odsat3": "Odyssey AT3"
     },
     "filter" : {
       "searchBoxLabel" : "Search",
