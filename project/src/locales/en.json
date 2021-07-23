@@ -41,7 +41,9 @@
       "odsat1": "Odyssey AT1",
       "odsat2": "Odyssey AT2",
       "odsat3": "Odyssey AT3",
-      "rmea": "S. Astral Detritus"
+      "rmea": "S. Astral Detritus",
+      "adoulincape": "Refractive Crystal",
+      "jseweapon": "Oboro JSE Weapon"
     },
     "filter" : {
       "searchBoxLabel" : "Search",

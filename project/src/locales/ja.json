@@ -41,7 +41,9 @@
       "odsat1": "オデシーAT1",
       "odsat2": "オデシーAT2",
       "odsat3": "オデシーAT3",
-      "rmea": "黒の残魂"
+      "rmea": "黒の残魂",
+      "adoulincape": "幻光結晶",
+      "jseweapon": "Oboroジョブ武器"
     },
     "filter" : {
       "searchBoxLabel" : "検索",
