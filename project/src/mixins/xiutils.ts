@@ -149,11 +149,15 @@ export default class xiUtils extends Vue {
     locale: string,
     cateID: number | undefined,
     propID: number,
+    mainhand: boolean,
     propDict: Map<string, string[]>,
     catDict: Map<string, string[]>
   ): string {
     let result = "";
     const loci = locale == "ja" ? 0 : 1;
+    if (mainhand === true) {
+      result += this.$t("ui.item.mainhand") + ":";
+    }
     if (cateID != null) {
       const cat = catDict.get(cateID.toString());
       if (cat != null) {
@@ -178,6 +182,11 @@ export default class xiUtils extends Vue {
     if (data.PropIDs == null) {
       return result;
     }
+
+    if (data.MainHand === true) {
+      result += this.$t("ui.item.mainhand") + ":";
+    }
+
     if (data.CatID != null) {
       const cat = catDict.get(data.CatID.toString());
       if (cat != null) {
@@ -210,6 +219,10 @@ export default class xiUtils extends Vue {
     let result = "";
     const loci = locale == "ja" ? 0 : 1;
     let catString = "";
+
+    if (data.MainHand === true) {
+      result += this.$t("ui.item.mainhand") + ":";
+    }
 
     if (data.CateID != null) {
       const cat = catDict.get(data.CateID.toString());

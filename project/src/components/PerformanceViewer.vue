@@ -29,6 +29,7 @@
                   $i18n.locale,
                   item.CateID,
                   item.PropID,
+                  item.MainHand,
                   propDict,
                   cateDict
                 )
@@ -105,7 +106,7 @@ export default class PerformanceViewer extends Mixins(xiUtils) {
       MinValue: prop.MinValue,
       Value: prop.Value,
       Unit: prop.Unit,
-      MainHandOnly: false,
+      MainHand: prop.MainHand,
       IsUnity: false,
     };
     this.AddInfo(newProp);
@@ -123,7 +124,7 @@ export default class PerformanceViewer extends Mixins(xiUtils) {
       CateID: aug.CateID,
       Value: aug.Value,
       Unit: aug.Unit,
-      MainHandOnly: false,
+      MainHand: aug.MainHand,
       IsUnity: false,
     };
     this.AddInfo(newProp);
@@ -136,7 +137,8 @@ export default class PerformanceViewer extends Mixins(xiUtils) {
       if (
         orig.CateID === info.CateID &&
         orig.PropID === info.PropID &&
-        orig.Unit === info.Unit
+        orig.Unit === info.Unit &&
+          orig.MainHand == info.MainHand
       ) {
         added = true;
         if (info.Value == null) {

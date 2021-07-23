@@ -20,7 +20,8 @@
       "disclaimerAug": "早期開発段階の機能です。動作は保証しません。",
       "disclaimerViewer": "建設中...現段階では参考にしないでください^^",
       "calculateunitycheck": "ユニティランクMAX",
-      "calculatemaxaug": "オグメMAX"
+      "calculatemaxaug": "オグメMAX",
+      "mainhand": "メインウェポン"
     },
     "aug":
     {
@@ -39,7 +40,8 @@
       "unitywing": "色褪せた羽",
       "odsat1": "オデシーAT1",
       "odsat2": "オデシーAT2",
-      "odsat3": "オデシーAT3"
+      "odsat3": "オデシーAT3",
+      "rmea": "黒の残魂"
     },
     "filter" : {
       "searchBoxLabel" : "検索",

@@ -717,7 +717,7 @@ export default class AugmentSelector extends Mixins(xiUtils) {
         if (
           p.CateID == aug.CatID &&
           p.PropID == prop.toString() &&
-          p.Unit == aug.Unit
+          p.Unit == aug.Unit && p.MainHand == aug.MainHand
         ) {
           if (p.Value != null && value != null) {
             p.Value += value;
@@ -737,6 +737,7 @@ export default class AugmentSelector extends Mixins(xiUtils) {
         PropID: prop.toString(),
         Unit: aug.Unit,
         Value: value,
+        MainHand: aug.MainHand
       });
     }
   }
@@ -811,6 +812,9 @@ export default class AugmentSelector extends Mixins(xiUtils) {
   public getPropertyName(aug: AugProperty): string {
     let result = "";
     let loci = this.$i18n.locale == "ja" ? 0 : 1;
+    if (aug.MainHand === true) {
+      result += this.$t("ui.item.mainhand") + ":";
+    }
     if (aug.CatID != null) {
       const cats = this.cateDict.get(aug.CatID.toString());
       if (cats != null) {

@@ -56,6 +56,7 @@ export type AugProperty = {
   CatID?: number;
   Value?: number;
   Unit?: string;
+  MainHand?: boolean;
 };
 
 export type Property = {
@@ -64,6 +65,7 @@ export type Property = {
   MinValue?: number;
   Value?: number;
   Unit?: string;
+  MainHand?: boolean;
 };
 
 export interface CalculatedAugInfo {
@@ -71,6 +73,7 @@ export interface CalculatedAugInfo {
   PropID: string;
   Value?: number;
   Unit?: string;
+  MainHand?: boolean;
 }
 
 export interface CalculatedPropInfo {
@@ -79,8 +82,8 @@ export interface CalculatedPropInfo {
   MinValue?: number;
   Value?: number;
   Unit?: string;
+  MainHand?: boolean;
 
-  MainHandOnly: boolean;
   IsUnity: boolean;
 
   EquivalentCateIDs?: [number];

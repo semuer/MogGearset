@@ -20,7 +20,8 @@
       "disclaimerAug": "This module is at an early development stage. Functions may not behave normally.",
       "disclaimerViewer": "Under development...There is no assurance about the calculations showed behind at this moment.",
       "calculateunitycheck": "Max Unity Rank",
-      "calculatemaxaug": "Max Aug Value"
+      "calculatemaxaug": "Max Aug Value",
+      "mainhand": "Main hand"
     },
     "aug":
     {
@@ -39,7 +40,8 @@
       "unitywing": "Lustreless Wing",
       "odsat1": "Odyssey AT1",
       "odsat2": "Odyssey AT2",
-      "odsat3": "Odyssey AT3"
+      "odsat3": "Odyssey AT3",
+      "rmea": "S. Astral Detritus"
     },
     "filter" : {
       "searchBoxLabel" : "Search",
