@@ -271,7 +271,6 @@ export default class xiUtils extends Vue {
         }
       }
     }
-
     return result;
   }
 

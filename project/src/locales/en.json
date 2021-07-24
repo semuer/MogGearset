@@ -43,7 +43,10 @@
       "odsat3": "Odyssey AT3",
       "rmea": "S. Astral Detritus",
       "adoulincape": "Refractive Crystal",
-      "jseweapon": "Oboro JSE Weapon"
+      "jseweapon": "Oboro JSE Weapon",
+      "adlsnow": "Snow Stone",
+      "adlleaf": "Leaf Stone",
+      "adldusk": "Dusk Stone"
     },
     "filter" : {
       "searchBoxLabel" : "Search",

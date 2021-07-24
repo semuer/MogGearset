@@ -43,7 +43,10 @@
       "odsat3": "オデシーAT3",
       "rmea": "黒の残魂",
       "adoulincape": "幻光結晶",
-      "jseweapon": "Oboroジョブ武器"
+      "jseweapon": "Oboroジョブ武器",
+      "adlsnow": "白石",
+      "adlleaf": "緑石",
+      "adldusk": "黒石"
     },
     "filter" : {
       "searchBoxLabel" : "検索",

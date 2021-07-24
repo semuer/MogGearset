@@ -246,6 +246,7 @@ export default class EquipmentList extends Mixins(xiUtils) {
   @Watch("isItemLevel119")
   @Watch("limiters")
   @Watch("isCalUnity")
+  @Watch("isCalMaxAug")
   @Watch("nameFilter")
   @Watch("selectedType")
   queryChangedInstant() {
@@ -295,17 +296,9 @@ export default class EquipmentList extends Mixins(xiUtils) {
         let locale = this.$i18n.locale;
         chain = chain.where(function (obj: Equipment) {
           let isPassed = false;
-          if (
-            funcKataHira(funcFullTohalf(obj.Jp.toLowerCase())).includes(
-              nameFilter as string
-            )
-          ) {
+          if ( funcKataHira(funcFullTohalf(obj.Jp.toLowerCase())).includes(nameFilter as string )) {
             isPassed = true;
-          } else if (
-            funcKataHira(funcFullTohalf(obj.JpFull.toLowerCase())).includes(
-              nameFilter as string
-            )
-          ) {
+          } else if (funcKataHira(funcFullTohalf(obj.JpFull.toLowerCase())).includes(nameFilter as string)) {
             isPassed = true;
           } else if (obj.En.toLowerCase().includes(nameFilter as string)) {
             isPassed = true;
@@ -320,28 +313,28 @@ export default class EquipmentList extends Mixins(xiUtils) {
             isPassed = true;
           } else if (
             obj.EnDescription != null &&
-            funcFullTohalf(obj.EnDescription)
+              funcKataHira(funcFullTohalf(obj.EnDescription))
               .toLowerCase()
               .includes(nameFilter as string)
           ) {
             isPassed = true;
           } else if (
             obj.AugCape != null &&
-            funcFullTohalf(augStringGetter(obj.AugCape, propDict, cateDict))
+              funcKataHira(funcFullTohalf(augStringGetter(obj.AugCape, propDict, cateDict)))
               .toLowerCase()
               .includes(nameFilter as string)
           ) {
             isPassed = true;
           } else if (
             obj.AugFixed != null &&
-            funcFullTohalf(augStringGetter([obj.AugFixed], propDict, cateDict))
+              funcKataHira(funcFullTohalf(augStringGetter([obj.AugFixed], propDict, cateDict)))
               .toLowerCase()
               .includes(nameFilter as string)
           ) {
             isPassed = true;
           } else if (
             obj.AugRoute != null &&
-            funcFullTohalf(augStringGetter(obj.AugRoute, propDict, cateDict))
+              funcKataHira(funcFullTohalf(augStringGetter(obj.AugRoute, propDict, cateDict)))
               .toLowerCase()
               .includes(nameFilter as string)
           ) {
