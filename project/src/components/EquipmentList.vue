@@ -1,7 +1,7 @@
 <template>
   <v-container
-      ref="container"
-      style="height: 100%; display: flex; flex-flow: column; width: 100%"
+    ref="container"
+    style="height: 100%; display: flex; flex-flow: column; width: 100%"
   >
     <v-sheet
       tile
@@ -11,23 +11,27 @@
       elevation="1"
       rounded
     >
-      <v-row no-gutters class="ml-2 align-baseline"
-             style="width: 100%">
-        <v-col cols="3"><v-checkbox
+      <v-row no-gutters class="ml-2 align-baseline" style="width: 100%">
+        <v-col cols="3"
+          ><v-checkbox
             v-model="isLevel99"
             label="Lv99"
             dense
             hide-details
             class="pl-2 pr-2"
-        ></v-checkbox></v-col>
-        <v-col cols="3"><v-checkbox
+          ></v-checkbox
+        ></v-col>
+        <v-col cols="3"
+          ><v-checkbox
             v-show="slotHasItemLevel"
             v-model="isItemLevel119"
             label="IL119"
             dense
             hide-details
-        ></v-checkbox></v-col>
-        <v-col cols="6"> <v-text-field
+          ></v-checkbox
+        ></v-col>
+        <v-col cols="6">
+          <v-text-field
             :validate-on-blur="true"
             class="pt-3 pl-2 pr-6"
             clearable
@@ -38,46 +42,53 @@
             hide-details
             dense
             height="10px"
-        ></v-text-field></v-col>
-
+          ></v-text-field
+        ></v-col>
       </v-row>
-      <v-row no-gutters class="ml-2"
-             style="width: 100%">
-        <v-col class="pl-2"><v-checkbox
+      <v-row no-gutters class="ml-2" style="width: 100%">
+        <v-col class="pl-2"
+          ><v-checkbox
             v-model="isCalUnity"
             :label="$t('ui.item.calculateunitycheck')"
             dense
             hide-details
-        ></v-checkbox></v-col>
-        <v-col class="pl-2"><v-checkbox
+          ></v-checkbox
+        ></v-col>
+        <v-col class="pl-2"
+          ><v-checkbox
             v-model="isCalMaxAug"
             :label="$t('ui.item.calculatemaxaug')"
             dense
             hide-details
-        ></v-checkbox></v-col>
+          ></v-checkbox
+        ></v-col>
       </v-row>
 
-      <v-row no-gutters  class="pl-4 mt-1 pr-0 pb-0 mb-0 align-center">
-
-        <v-col cols="3"><v-btn
+      <v-row no-gutters class="pl-4 mt-1 pr-0 pb-0 mb-0 align-center">
+        <v-col cols="3"
+          ><v-btn
             v-on:click="addLimiter"
             class="pr-3"
             dense
             small
             elevation="1"
             color="blue lighten-3"
-        >{{ $t("ui.filter.addPropFilter") }}</v-btn
-        ></v-col>
-        <v-col cols="3"> <v-btn
+            >{{ $t("ui.filter.addPropFilter") }}</v-btn
+          ></v-col
+        >
+        <v-col cols="3">
+          <v-btn
             v-on:click="addSorter"
             class="mr-0 pr-4"
             dense
             small
             elevation="1"
             color="orange lighten-3"
-        >{{ $t("ui.filter.addSort") }}</v-btn
-        ></v-col>
-        <v-col cols="6" class="pr-4" v-if="getTypeList() != undefined"> <v-select
+            >{{ $t("ui.filter.addSort") }}</v-btn
+          ></v-col
+        >
+        <v-col cols="6" class="pr-4" v-if="getTypeList() != undefined">
+          <v-select
             solo
             :items="getTypeList()"
             v-model="selectedType"
@@ -88,7 +99,8 @@
             outlined
             :label="$t('ui.item.type')"
             clearable
-        ></v-select></v-col>
+          ></v-select
+        ></v-col>
       </v-row>
       <equipment-property-limit-unit
         class="pl-1 pr-3 pt-1 pb-1 ma-1"
@@ -101,15 +113,15 @@
       />
     </v-sheet>
     <v-list-item-group
-        ref="itemlist"
       class="fill-height"
       style="width: 100%; min-height: 100px; flex: 0 1 auto"
     >
       <DynamicScroller
         :items="equipData"
         :min-item-size="54"
-        style="height: 100%;"
+        style="height: 100%"
         key-field="Id"
+        ref="itemlist"
         class="scrollbarTheme"
       >
         <template v-slot="{ item, index, active }">
@@ -156,7 +168,7 @@
 </template>
 
 <script lang="ts">
-import {Component, Mixins, Prop, Vue, Watch} from "vue-property-decorator";
+import { Component, Mixins, Prop, Vue, Watch } from "vue-property-decorator";
 import { Equipment, Limiter } from "@/@types/equip-set";
 import xiUtils from "@/mixins/xiutils";
 import EquipmentPropertyLimitUnit from "@/components/EquipmentPropertyLimitUnit.vue";
@@ -296,9 +308,17 @@ export default class EquipmentList extends Mixins(xiUtils) {
         let locale = this.$i18n.locale;
         chain = chain.where(function (obj: Equipment) {
           let isPassed = false;
-          if ( funcKataHira(funcFullTohalf(obj.Jp.toLowerCase())).includes(nameFilter as string )) {
+          if (
+            funcKataHira(funcFullTohalf(obj.Jp.toLowerCase())).includes(
+              nameFilter as string
+            )
+          ) {
             isPassed = true;
-          } else if (funcKataHira(funcFullTohalf(obj.JpFull.toLowerCase())).includes(nameFilter as string)) {
+          } else if (
+            funcKataHira(funcFullTohalf(obj.JpFull.toLowerCase())).includes(
+              nameFilter as string
+            )
+          ) {
             isPassed = true;
           } else if (obj.En.toLowerCase().includes(nameFilter as string)) {
             isPassed = true;
@@ -313,28 +333,36 @@ export default class EquipmentList extends Mixins(xiUtils) {
             isPassed = true;
           } else if (
             obj.EnDescription != null &&
-              funcKataHira(funcFullTohalf(obj.EnDescription))
+            funcKataHira(funcFullTohalf(obj.EnDescription))
               .toLowerCase()
               .includes(nameFilter as string)
           ) {
             isPassed = true;
           } else if (
             obj.AugCape != null &&
-              funcKataHira(funcFullTohalf(augStringGetter(obj.AugCape, propDict, cateDict)))
+            funcKataHira(
+              funcFullTohalf(augStringGetter(obj.AugCape, propDict, cateDict))
+            )
               .toLowerCase()
               .includes(nameFilter as string)
           ) {
             isPassed = true;
           } else if (
             obj.AugFixed != null &&
-              funcKataHira(funcFullTohalf(augStringGetter([obj.AugFixed], propDict, cateDict)))
+            funcKataHira(
+              funcFullTohalf(
+                augStringGetter([obj.AugFixed], propDict, cateDict)
+              )
+            )
               .toLowerCase()
               .includes(nameFilter as string)
           ) {
             isPassed = true;
           } else if (
             obj.AugRoute != null &&
-              funcKataHira(funcFullTohalf(augStringGetter(obj.AugRoute, propDict, cateDict)))
+            funcKataHira(
+              funcFullTohalf(augStringGetter(obj.AugRoute, propDict, cateDict))
+            )
               .toLowerCase()
               .includes(nameFilter as string)
           ) {
@@ -380,24 +408,18 @@ export default class EquipmentList extends Mixins(xiUtils) {
                   if (testPropID == null) {
                     return false;
                   }
-                  if (
-                    testPropID === prop.PropID
-                  ) {
-                    if((testCatID == null && prop.CatID == null) ||
-                        testCatID === prop.CatID)
-                    {
+                  if (testPropID === prop.PropID) {
+                    if (
+                      (testCatID == null && prop.CatID == null) ||
+                      testCatID === prop.CatID
+                    ) {
                       totalValue += Math.abs(prop.Value ?? 0);
                       testPassed = true;
-                    }
-                    else if(calUnity)
-                    {
-                      if(testCatID == null && prop.CatID == 13)
-                      {
+                    } else if (calUnity) {
+                      if (testCatID == null && prop.CatID == 13) {
                         totalValue += Math.abs(prop.Value ?? 0);
                         testPassed = true;
-                      }
-                      else if(testCatID == 8 && prop.CatID == 195)
-                      {
+                      } else if (testCatID == 8 && prop.CatID == 195) {
                         totalValue += Math.abs(prop.Value ?? 0);
                         testPassed = true;
                       }
@@ -484,8 +506,20 @@ export default class EquipmentList extends Mixins(xiUtils) {
             const calUnity = this.isCalUnity;
             const calAug = this.isCalMaxAug;
             chain = chain.sort(function (obj1: Equipment, obj2: Equipment) {
-              const value1 = funcGetValue(obj1, filterPropID, filterCateID,calUnity,calAug);
-              const value2 = funcGetValue(obj2, filterPropID, filterCateID,calUnity,calAug);
+              const value1 = funcGetValue(
+                obj1,
+                filterPropID,
+                filterCateID,
+                calUnity,
+                calAug
+              );
+              const value2 = funcGetValue(
+                obj2,
+                filterPropID,
+                filterCateID,
+                calUnity,
+                calAug
+              );
               let result = 0;
               if (value1 === undefined && value2 === undefined) {
                 result = 0;
@@ -519,9 +553,8 @@ export default class EquipmentList extends Mixins(xiUtils) {
       }
 
       this.equipData = Object.freeze(chain.data());
+      this.scrollToTop();
     }
-    //let list = this.$refs["v-scroller"] as InstanceType<typeof VirtualList>;
-    //list.scrollToOffset(0);
   }
 
   queryChangedDebounced() {
@@ -631,20 +664,13 @@ export default class EquipmentList extends Mixins(xiUtils) {
     }
   }
 
-  // public onResize():void{
-  //   const el = this.$refs.container;
-  //   const list = this.$refs.itemlist;
-  //   if(this.$vuetify.breakpoint.xsOnly)
-  //   {
-  //     (el as HTMLDivElement).style.height = window.innerHeight+ "px";
-  //     (el as HTMLDivElement).style.display = "block";
-  //     (list as HTMLElement).style.height = 100 + "px";
-  //   }
-  //   else
-  //   {
-  //     (el as HTMLDivElement).style.height = "100%"
-  //   }
-  // }
+  public scrollToTop() {
+    ((this.$refs.itemlist as Vue).$el as HTMLDivElement).scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "auto",
+    });
+  }
 
   created() {
     this.queryChangedDebounced = debounce(this.queryChangedDebounced, 500);
