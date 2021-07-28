@@ -9,6 +9,27 @@ import {
 
 @Component
 export default class xiUtils extends Vue {
+  get slotNames(): Record<string, string> {
+    return {
+      Main: "Main",
+      Sub: "Sub",
+      Range: "Range",
+      Ammo: "Ammo",
+      Head: "Head",
+      Body: "Body",
+      Hands: "Hands",
+      Legs: "Legs",
+      Feet: "Feet",
+      Neck: "Neck",
+      Waist: "Waist",
+      LEarring: "LEarring",
+      REarring: "REarring",
+      LRing: "LRing",
+      RRing: "RRing",
+      Cape: "Cape",
+    };
+  }
+
   get slotItemsArray(): Array<SlotStringPair> {
     return [
       { index: "Main", label: "メイン" }, // 0
@@ -422,6 +443,22 @@ export default class xiUtils extends Vue {
     return (flag & (1 << 14)) !== 0;
   }
 
+  public isTwoHandWeapon(item: Equipment): boolean {
+    const type = this.getItemTypeName(item);
+    if (
+      type == "item.itemType.h2h" ||
+      type == "item.itemType.greatsword" ||
+      type == "item.itemType.greataxe" ||
+      type == "item.itemType.scythe" ||
+      type == "item.itemType.polearm" ||
+      type == "item.itemType.greatkatana" ||
+      type == "item.itemType.staff"
+    ) {
+      return true;
+    }
+    return false;
+  }
+
   public getMainHandTypeList() {
     return [
       { value: "item.itemType.h2h", text: this.$t("item.itemType.h2h") },
@@ -551,6 +588,9 @@ export default class xiUtils extends Vue {
           }
           return "item.itemType.archery";
         case 26:
+          if (item.Slots === 8) {
+            return "item.itemType.ammo";
+          }
           return "item.itemType.marksmanship";
         case 27:
           return "item.itemType.throw";

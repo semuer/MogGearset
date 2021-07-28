@@ -226,16 +226,134 @@ export default class App extends Mixins(xiUtils) {
 
   public equipItem(item: Equipment): void {
     this.drawer=false;
+    let newslot = null;
     if (this.selectedSlot != null && this.selectedSlot != "") {
       Vue.set(this.editEquipSet, this.selectedSlot, { Equip: item });
       this.dirtyFlag = !this.dirtyFlag;
+      newslot = this.selectedSlot;
     } else {
       const slot = this.getItemSlot(item);
       if (slot != null) {
         Vue.set(this.editEquipSet, slot, { Equip: item });
         this.dirtyFlag = !this.dirtyFlag;
+        newslot = slot;
       }
     }
+
+    if(newslot != null)
+    {
+      if(newslot == "Main")
+      {
+        const mainType = this.getItemTypeName(item);
+
+        if(this.editEquipSet.Sub != null && this.editEquipSet.Sub.Equip != null)
+        {
+          const subType = this.getItemTypeName(this.editEquipSet.Sub.Equip);
+          if(this.isTwoHandWeapon(item))
+          {
+            if(subType != "item.itemType.grip")
+            {
+              Vue.set(this.editEquipSet, this.slotNames.Sub, undefined);
+            }
+          }
+          else
+          {
+            if(subType == "item.itemType.grip")
+            {
+              Vue.set(this.editEquipSet, this.slotNames.Sub, undefined);
+            }
+          }
+        }
+      }
+      else if(newslot == "Sub")
+      {
+
+        const subType = this.getItemTypeName(item);
+        if(this.editEquipSet.Main != null && this.editEquipSet.Main.Equip != null)
+        {
+          const mainType = this.getItemTypeName(this.editEquipSet.Main.Equip);
+          const isMainTwoHand = this.isTwoHandWeapon(this.editEquipSet.Main.Equip);
+
+          if(subType != "item.itemType.grip")
+          {
+            if(isMainTwoHand)
+            {
+              Vue.set(this.editEquipSet, this.slotNames.Main, undefined);
+            }
+          }
+          else {
+            if(!isMainTwoHand)
+            {
+              Vue.set(this.editEquipSet, this.slotNames.Main, undefined);
+            }
+          }
+        }
+      }
+      else if(newslot == "Range" && this.editEquipSet.Ammo != null && this.editEquipSet.Ammo.Equip != null)
+      {
+        const slotType = this.getItemTypeName(item);
+        const ammoType = this.getItemTypeName(this.editEquipSet.Ammo.Equip);
+
+        if(slotType == "item.itemType.archery" || slotType == "item.itemType.marksmanship")
+        {
+          if(ammoType == "item.itemType.throw")
+          {
+            Vue.set(this.editEquipSet, this.slotNames.Ammo, undefined);
+          }
+        }
+        if(slotType == "item.itemType.throw" ||slotType == "item.itemType.stringinst" || slotType == "item.itemType.windinst")
+        {
+            Vue.set(this.editEquipSet, this.slotNames.Ammo, undefined);
+        }
+      }
+      else if(newslot == "Ammo" && this.editEquipSet.Range != null && this.editEquipSet.Range.Equip != null)
+      {
+        const slotType = this.getItemTypeName(item);
+        const rangeType = this.getItemTypeName(this.editEquipSet.Range.Equip);
+        if(slotType == "item.itemType.throw")
+        {
+            Vue.set(this.editEquipSet, this.slotNames.Range, undefined);
+        }
+        if(slotType == "item.itemType.ammo")
+        {
+          if(rangeType == "item.itemType.throw"
+              ||rangeType == "item.itemType.stringinst"
+              || rangeType == "item.itemType.windinst")
+          Vue.set(this.editEquipSet, this.slotNames.Range, undefined);
+        }
+      }
+    }
+
+    if(item.Properties != null)
+    {
+      for ( const prop of item.Properties)
+      {
+        switch (prop.PropID) {
+          case 0: //両手両脚両足装備不可
+              Vue.set(this.editEquipSet, this.slotNames.Hands, undefined);
+            Vue.set(this.editEquipSet, this.slotNames.Legs, undefined);
+            Vue.set(this.editEquipSet, this.slotNames.Feet, undefined);
+            break;
+          case 2: // 両手装備不可
+            Vue.set(this.editEquipSet, this.slotNames.Hands, undefined);
+            break;
+          case 41: //頭装備不可"
+            Vue.set(this.editEquipSet, this.slotNames.Head, undefined);
+            break;
+          case 63: //"両足装備不可
+            Vue.set(this.editEquipSet, this.slotNames.Feet, undefined);
+            break;
+          case 1070: //"頭両手装備不可
+            Vue.set(this.editEquipSet, this.slotNames.Head, undefined);
+            Vue.set(this.editEquipSet, this.slotNames.Hands, undefined);
+            break;
+          case 1177: //"両脚装備不可
+            Vue.set(this.editEquipSet, this.slotNames.Legs, undefined);
+            break;
+        }
+      }
+    }
+
   }
 
   public clearSlot(selectedSlot: string): void {
