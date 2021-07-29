@@ -525,7 +525,8 @@ export default class xiUtils extends Vue {
   public getAmmoTypeList() {
     return [
       { value: "item.itemType.throw", text: this.$t("item.itemType.throw") },
-      { value: "item.itemType.ammo", text: this.$t("item.itemType.ammo") },
+      { value: "item.itemType.arrow", text: this.$t("item.itemType.arrow") },
+      { value: "item.itemType.bullet", text: this.$t("item.itemType.bullet") },
     ];
   }
 
@@ -584,12 +585,12 @@ export default class xiUtils extends Vue {
           return "item.itemType.staff";
         case 25:
           if (item.Slots === 8) {
-            return "item.itemType.ammo";
+            return "item.itemType.arrow";
           }
           return "item.itemType.archery";
         case 26:
           if (item.Slots === 8) {
-            return "item.itemType.ammo";
+            return "item.itemType.bullet";
           }
           return "item.itemType.marksmanship";
         case 27:
