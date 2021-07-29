@@ -21,9 +21,9 @@
     <v-navigation-drawer
       ref="drawer"
       v-model="drawer"
-      :clipped="$vuetify.breakpoint.xsOnly ? false : true"
-      :left="$vuetify.breakpoint.xsOnly ? false : true"
-      :permanent="$vuetify.breakpoint.xsOnly ? false : true"
+      :clipped="!$vuetify.breakpoint.xsOnly"
+      :left="!$vuetify.breakpoint.xsOnly"
+      :permanent="!$vuetify.breakpoint.xsOnly"
       :style="$vuetify.breakpoint.xsOnly ? 'max-height:100%;height:100vh;' : ''"
       :width="navigationWidth"
       app
@@ -72,8 +72,8 @@
             </v-row>
             <v-row
               v-if="
-                selectedSlot != '' &&
                 selectedSlot != null &&
+                selectedSlot !== '' &&
                 editEquipSet[selectedSlot] != null
               "
               class="pt-4"
@@ -223,7 +223,7 @@ export default class App extends Mixins(xiUtils) {
     return undefined;
   }
 
-  public applySlotAugments(event: any): void {
+  public applySlotAugments(event: unknown): void {
     if (event == undefined) {
       return;
     }
@@ -237,24 +237,22 @@ export default class App extends Mixins(xiUtils) {
 
   public equipItem(item: Equipment): void {
     this.drawer = false;
-    let newslot = null;
+    let newSlot = null;
     if (this.selectedSlot != null && this.selectedSlot != "") {
       Vue.set(this.editEquipSet, this.selectedSlot, { Equip: item });
       this.dirtyFlag = !this.dirtyFlag;
-      newslot = this.selectedSlot;
+      newSlot = this.selectedSlot;
     } else {
       const slot = this.getItemSlot(item);
       if (slot != null) {
         Vue.set(this.editEquipSet, slot, { Equip: item });
         this.dirtyFlag = !this.dirtyFlag;
-        newslot = slot;
+        newSlot = slot;
       }
     }
 
-    if (newslot != null) {
-      if (newslot == "Main") {
-        const mainType = this.getItemTypeName(item);
-
+    if (newSlot != null) {
+      if (newSlot == "Main") {
         if (
           this.editEquipSet.Sub != null &&
           this.editEquipSet.Sub.Equip != null
@@ -270,13 +268,12 @@ export default class App extends Mixins(xiUtils) {
             }
           }
         }
-      } else if (newslot == "Sub") {
+      } else if (newSlot == "Sub") {
         const subType = this.getItemTypeName(item);
         if (
           this.editEquipSet.Main != null &&
           this.editEquipSet.Main.Equip != null
         ) {
-          const mainType = this.getItemTypeName(this.editEquipSet.Main.Equip);
           const isMainTwoHand = this.isTwoHandWeapon(
             this.editEquipSet.Main.Equip
           );
@@ -292,7 +289,7 @@ export default class App extends Mixins(xiUtils) {
           }
         }
       } else if (
-        newslot == "Range" &&
+        newSlot == "Range" &&
         this.editEquipSet.Ammo != null &&
         this.editEquipSet.Ammo.Equip != null
       ) {
@@ -321,7 +318,7 @@ export default class App extends Mixins(xiUtils) {
           Vue.set(this.editEquipSet, this.slotNames.Ammo, undefined);
         }
       } else if (
-        newslot == "Ammo" &&
+        newSlot == "Ammo" &&
         this.editEquipSet.Range != null &&
         this.editEquipSet.Range.Equip != null
       ) {
@@ -456,7 +453,7 @@ export default class App extends Mixins(xiUtils) {
     }
   }
 
-  setBorderWidth() {
+  setBorderWidth(): void {
     let i = (this.$refs.drawer as Vue).$el.querySelector(
       ".v-navigation-drawer__border"
     );
@@ -466,7 +463,7 @@ export default class App extends Mixins(xiUtils) {
     }
   }
 
-  setEvents() {
+  setEvents(): void {
     const minSize = this.navigationWidth;
     const el = (this.$refs.drawer as Vue).$el;
     const drawerBorder = el.querySelector(".v-navigation-drawer__border");
