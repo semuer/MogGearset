@@ -5,7 +5,7 @@
 ![GitHub issues](https://img.shields.io/github/issues/semuer/XIUtilsEquipCalculator)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/semuer/XIUtilsEquipCalculator)
 
-An Equipment Parameters Calculator for FINAL FANTASY XI.
+An Equipment Database & Gearset Arranger for FINAL FANTASY XI.
 
 * DevEnv: NodeJs / VueJs
 * JP/EN support is planned (Currently in active development for JP UI)
