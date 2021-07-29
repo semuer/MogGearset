@@ -1,9 +1,9 @@
 # MogGearset
-[![Pages Build](https://travis-ci.com/semuer/XIUtilsEquipCalculator.svg?branch=main)](https://travis-ci.com/semuer/XIUtilsEquipCalculator)
-![GitHub](https://img.shields.io/github/license/semuer/XIUtilsEquipCalculator)
+[![Pages Build](https://travis-ci.com/semuer/MogGearset.svg?branch=main)](https://travis-ci.com/semuer/MogGearset)
+![GitHub](https://img.shields.io/github/license/semuer/MogGearset)
 ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)
-![GitHub issues](https://img.shields.io/github/issues/semuer/XIUtilsEquipCalculator)
-![GitHub commit activity](https://img.shields.io/github/commit-activity/m/semuer/XIUtilsEquipCalculator)
+![GitHub issues](https://img.shields.io/github/issues/semuer/MogGearset)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/semuer/MogGearset)
 
 An Equipment Database & Gearset Arranger for FINAL FANTASY XI.
 
