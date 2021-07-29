@@ -1,4 +1,4 @@
-# XIUtilsEquipCalculator
+# MogGearset
 [![Pages Build](https://travis-ci.com/semuer/XIUtilsEquipCalculator.svg?branch=main)](https://travis-ci.com/semuer/XIUtilsEquipCalculator)
 ![GitHub](https://img.shields.io/github/license/semuer/XIUtilsEquipCalculator)
 ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)
