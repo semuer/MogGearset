@@ -4,11 +4,11 @@ module.exports = {
   ],
 
   publicPath: process.env.NODE_ENV === 'production'
-      ? '/XIUtilsEquipCalculator/'
+      ? '/MogGearset/'
       : '/',
 
   pwa: {
-    name: 'XI EquipSet Simulator',
+    name: 'MogGearset',
     themeColor: '#4DBA87',
     msTileColor: '#000000',
     appleMobileWebAppCapable: 'yes',
