@@ -1,5 +1,5 @@
 # MogGearset
-![Pages Build](https://img.shields.io/travis-ci/semuer/XIUtilsEquipCalculator.svg?style=flat-square)
+![Pages Build](https://img.shields.io/travis/com/semuer/XIUtilsEquipCalculator?style=flat-square)
 ![GitHub](https://img.shields.io/github/license/semuer/MogGearset?style=flat-square)
 ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange.svg?style=flat-square)
 ![GitHub issues](https://img.shields.io/github/issues/semuer/MogGearset?style=flat-square)
