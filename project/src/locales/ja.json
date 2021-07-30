@@ -99,6 +99,15 @@
       "LRing":  "左指" ,
       "RRing":  "右指" ,
       "Cape":  "背"
+    },
+    "set": {
+      "save": "保存",
+      "load": "読込",
+      "delete": "削除",
+      "no-set-text": "データありません",
+      "saved-set-list": "保存した装備セット",
+      "disclaimerStorage": "テスト中の機能です。データが失われる可能性があります。",
+      "setStorage": "装備セット保管所"
     }
   },
 

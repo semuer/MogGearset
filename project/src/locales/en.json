@@ -99,6 +99,15 @@
       "LRing":  "L.Ring" ,
       "RRing":  "R.Ring" ,
       "Cape":  "Cape"
+    },
+    "set": {
+      "save": "SAVE",
+      "load": "LOAD",
+      "delete": "DELETE",
+      "no-set-text": "No Set Data",
+      "saved-set-list": "Saved GearSets",
+      "disclaimerStorage": "Experimental. Data can be lost.",
+      "setStorage": "GearSets Storage"
     }
   },
   "item" : {

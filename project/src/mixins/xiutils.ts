@@ -5,6 +5,7 @@ import {
   PropertyInfo,
   AugSet,
   CalculatedAugInfo,
+  EquipmentWithAug,
 } from "@/@types/equip-set";
 
 @Component
@@ -642,6 +643,13 @@ export default class xiUtils extends Vue {
 
   public getItemIconUrl(id: number): string {
     return "https://semuer.github.io/XIUtilsItemIcons/icon/" + id + ".png";
+  }
+
+  public setCurrentEquipSlot(slot: string, data: EquipmentWithAug | undefined) {
+    this.$store.commit("setCurrentEquipSetSlot", {
+      slot: slot,
+      data: data,
+    });
   }
 }
 
