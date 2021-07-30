@@ -104,6 +104,7 @@
       "save": "SAVE",
       "load": "LOAD",
       "delete": "DELETE",
+      "cur-name": "GearSet Name",
       "no-set-text": "No Set Data",
       "saved-set-list": "Saved GearSets",
       "disclaimerStorage": "Experimental. Data can be lost.",

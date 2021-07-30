@@ -71,7 +71,7 @@
                 </v-alert>
                 <v-row no-gutters class="ml-2 mr-2 flex-row align-center justify-space-between">
                   <v-col cols="9" lg="3" class="mt-2">
-                    <v-text-field dense outlined hide-details :value="currentEquipSet.name" @change="setCurrentEquipSetName"
+                    <v-text-field :label="$t('ui.set.cur-name')" dense outlined hide-details :value="currentEquipSet.name" @change="setCurrentEquipSetName"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="3" lg="2" class="pl-2 mt-2">
