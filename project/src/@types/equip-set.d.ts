@@ -135,3 +135,8 @@ export interface Limiter {
   isProp: boolean;
   isAsc: boolean;
 }
+
+export interface EquipSetSaveData {
+  name: string;
+  data: EquipSet;
+}

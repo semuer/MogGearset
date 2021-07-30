@@ -6,6 +6,7 @@ import VueVirtualScroller from "vue-virtual-scroller";
 
 import TextHighlight from "vue-text-highlight";
 import i18n from "./i18n";
+import store from './store'
 
 Vue.component("text-highlight", TextHighlight);
 
@@ -18,5 +19,6 @@ Vue.prototype.$categoryDict = new Map<number, string[]>();
 new Vue({
   vuetify,
   i18n,
-  render: (h) => h(App),
+  store,
+  render: (h) => h(App)
 }).$mount("#app");

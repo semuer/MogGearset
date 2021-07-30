@@ -600,12 +600,6 @@ type ResultSet = ReturnType<Collection["chain"]>;
 </script>
 <style lang="css" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Mali:wght@500&display=swap");
-
-.highlight-border {
-  outline: 2px dashed #1976d2;
-  outline-offset: -2px;
-}
-
 .title-logo {
   font-family: "Alegreya Sans SC", sans-serif;
   font-size: 2.5rem;
