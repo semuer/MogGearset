@@ -9,7 +9,7 @@
       <v-toolbar-title class="pl-0">
         <v-col class="pl-0">
           <v-row class="align-center" no-gutters>
-            <v-col class="titlelogo">Mog Gearset</v-col>
+            <v-col class="title-logo">Mog Gearset</v-col>
           </v-row>
         </v-col>
       </v-toolbar-title>
@@ -475,7 +475,7 @@ export default class App extends Mixins(xiUtils) {
       document.body.style.cursor = "ew-resize";
       let f =
         direction === "right"
-          ? document.body.scrollWidth - e.clientX
+          ? document.body.scrollWidth - (e.clientX as number)
           : e.clientX;
       (el as HTMLElement).style.width = f + "px";
     }
@@ -606,7 +606,7 @@ type ResultSet = ReturnType<Collection["chain"]>;
   outline-offset: -2px;
 }
 
-.titlelogo {
+.title-logo {
   font-family: "Alegreya Sans SC", sans-serif;
   font-size: 2.5rem;
 }

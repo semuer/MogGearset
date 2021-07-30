@@ -5,17 +5,18 @@
         <v-list-item-title class="align-center">
           <v-row>
             <v-col cols="1">
-                  <v-btn
-                      class="pa-0 ma-0"
-                      color="blue lighten-5"
-                      dark
-                      elevation="1"
-                      fab
-                      width="22px"
-                      height="22px"
-                      x-small
-                      v-on:click="onSelectItem"
-                  ><v-icon color="blue darken-1">mdi-plus</v-icon> </v-btn>
+              <v-btn
+                class="pa-0 ma-0"
+                color="blue lighten-5"
+                dark
+                elevation="1"
+                fab
+                width="22px"
+                height="22px"
+                x-small
+                v-on:click="onSelectItem"
+                ><v-icon color="blue darken-1">mdi-plus</v-icon>
+              </v-btn>
             </v-col>
             <v-col cols="2">
               <v-img
@@ -88,9 +89,7 @@
               </v-row>
             </v-col>
           </v-row>
-
         </v-list-item-title>
-
 
         <v-list-item-subtitle class="text-wrap">
           <v-row
@@ -100,27 +99,50 @@
             >{{ jobsString }}</v-row
           >
           <v-row no-gutters
-            ><text-highlight :queries="highlightArray" :wholeWordMatch="true" class="grey--text text--darken-1"
-                             style="word-break: keep-all;overflow-wrap: break-word;line-height:1.4em">{{ itemDescription }}
+            ><text-highlight
+              :queries="highlightArray"
+              :wholeWordMatch="true"
+              class="grey--text text--darken-1"
+              style="
+                word-break: keep-all;
+                overflow-wrap: break-word;
+                line-height: 1.4em;
+              "
+              >{{ itemDescription }}
             </text-highlight></v-row
           >
-          <v-row v-if="hasAug" no-gutters
-            >
+          <v-row v-if="hasAug" no-gutters>
             <v-divider class="mt-1 mb-1"></v-divider>
             <v-expansion-panels accordion multiple tile class="ma-2">
               <v-expansion-panel
-                  v-for="(item, idx) in AugString"
-                  :key="idx"
-                  class="mb-0 pb-0"
+                v-for="(item, idx) in AugString"
+                :key="idx"
+                class="mb-0 pb-0"
               >
-                <v-expansion-panel-header class="grey--text text--darken-2" color="grey lighten-4" style="min-height: 15px; height:15px">{{ item.label }}</v-expansion-panel-header>
-                <v-expansion-panel-content class="pt-4 pb-0 mb-0 grey--text text--darken-1" style="word-break: keep-all;overflow-wrap: break-word;">
-                  <text-highlight :queries="highlightArray" :wholeWordMatch="true"
-                                  style="word-break: keep-all;overflow-wrap: normal;line-height:1.4em" v-html="item.aug">
-                  </text-highlight> </v-expansion-panel-content>
+                <v-expansion-panel-header
+                  class="grey--text text--darken-2"
+                  color="grey lighten-4"
+                  style="min-height: 15px; height: 15px"
+                  >{{ item.label }}</v-expansion-panel-header
+                >
+                <v-expansion-panel-content
+                  class="pt-4 pb-0 mb-0 grey--text text--darken-1"
+                  style="word-break: keep-all; overflow-wrap: break-word"
+                >
+                  <text-highlight
+                    :queries="highlightArray"
+                    :wholeWordMatch="true"
+                    style="
+                      word-break: keep-all;
+                      overflow-wrap: normal;
+                      line-height: 1.4em;
+                    "
+                    v-html="item.aug"
+                  >
+                  </text-highlight>
+                </v-expansion-panel-content>
               </v-expansion-panel>
             </v-expansion-panels>
-
           </v-row>
         </v-list-item-subtitle>
         <v-list-item-subtitle>
@@ -169,7 +191,6 @@
           </v-chip>
         </v-list-item-subtitle>
       </v-list-item-content>
-
     </v-list-item>
     <v-divider />
   </div>
@@ -235,7 +256,7 @@ export default class EquipmentListItem extends Mixins(scrollerUtils, xiUtils) {
     }
   }
 
-  get highlightArray() {
+  get highlightArray(): (string | RegExp | null)[] {
     let result = [];
     const lang = this.$i18n.locale;
     for (let limiter of this.limiters) {
@@ -275,60 +296,68 @@ export default class EquipmentListItem extends Mixins(scrollerUtils, xiUtils) {
     );
   }
 
-  get AugString(): {label:string,aug:string}[] {
-    let result: {label:string,aug:string}[] = [];
+  get AugString(): { label: string; aug: string }[] {
+    let result: { label: string; aug: string }[] = [];
     if (this.source.AugCape != undefined) {
       for (const augs of this.source.AugCape) {
-        let rsub = "";
+        let rSub = "";
         for (const aug of augs.Augs) {
-          rsub +=
+          rSub +=
             this.getAugString(
               this.$i18n.locale,
               aug,
               this.propDict,
               this.cateDict
-            )?.replace(" ","&nbsp;") + " &#8203;";
+            )?.replace(" ", "&nbsp;") + " &#8203;";
         }
-        result.push({label:this.$t("ui.aug."+augs.Label).toString(),aug:rsub});
+        result.push({
+          label: this.$t("ui.aug." + augs.Label).toString(),
+          aug: rSub,
+        });
       }
     }
 
     if (this.source.AugRoute != undefined) {
       for (const augs of this.source.AugRoute) {
-        let rsub = "";
+        let rSub = "";
         for (const aug of augs.Augs) {
-          rsub +=
-              this.getAugString(
-                  this.$i18n.locale,
-                  aug,
-                  this.propDict,
-                  this.cateDict
-              )?.replace(" ","&nbsp;") + " &#8203;";
+          rSub +=
+            this.getAugString(
+              this.$i18n.locale,
+              aug,
+              this.propDict,
+              this.cateDict
+            )?.replace(" ", "&nbsp;") + " &#8203;";
         }
-        result.push({label:this.$t("ui.aug."+augs.Label).toString(),aug:rsub});
+        result.push({
+          label: this.$t("ui.aug." + augs.Label).toString(),
+          aug: rSub,
+        });
       }
     }
 
     if (this.source.AugFixed != undefined) {
       const augs = this.source.AugFixed;
-        let rsub = "";
-        for (const aug of augs.Augs) {
-          rsub +=
-              this.getAugString(
-                  this.$i18n.locale,
-                  aug,
-                  this.propDict,
-                  this.cateDict
-              )?.replace(" ","&nbsp;") + " &#8203;";
-        }
-      result.push({label:this.$t("ui.aug."+augs.Label).toString(),aug:rsub});
-
+      let rSub = "";
+      for (const aug of augs.Augs) {
+        rSub +=
+          this.getAugString(
+            this.$i18n.locale,
+            aug,
+            this.propDict,
+            this.cateDict
+          )?.replace(" ", "&nbsp;") + " &#8203;";
+      }
+      result.push({
+        label: this.$t("ui.aug." + augs.Label).toString(),
+        aug: rSub,
+      });
     }
 
     return result;
   }
 
-  public onSelectItem() {
+  public onSelectItem(): void {
     this.dispatch("EquipmentList", "select", this.source);
   }
 }

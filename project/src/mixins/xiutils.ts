@@ -170,13 +170,13 @@ export default class xiUtils extends Vue {
     locale: string,
     cateID: number | undefined,
     propID: number,
-    mainhand: boolean,
+    isMainHand: boolean,
     propDict: Map<string, string[]>,
     catDict: Map<string, string[]>
   ): string {
     let result = "";
     const loci = locale == "ja" ? 0 : 1;
-    if (mainhand === true) {
+    if (isMainHand) {
       result += this.$t("ui.item.mainhand") + ":";
     }
     if (cateID != null) {
@@ -295,30 +295,30 @@ export default class xiUtils extends Vue {
     return result;
   }
 
-  public jobList() {
+  public jobList(): Record<string, string>[] {
     return [
-      { abb: "WAR", name: this.$t("ui.job.WAR") },
-      { abb: "MNK", name: this.$t("ui.job.MNK") },
-      { abb: "WHM", name: this.$t("ui.job.WHM") },
-      { abb: "BLM", name: this.$t("ui.job.BLM") },
-      { abb: "RDM", name: this.$t("ui.job.RDM") },
-      { abb: "THF", name: this.$t("ui.job.THF") },
-      { abb: "PLD", name: this.$t("ui.job.PLD") },
-      { abb: "DRK", name: this.$t("ui.job.DRK") },
-      { abb: "BST", name: this.$t("ui.job.BST") },
-      { abb: "BRD", name: this.$t("ui.job.BRD") },
-      { abb: "RNG", name: this.$t("ui.job.RNG") },
-      { abb: "SAM", name: this.$t("ui.job.SAM") },
-      { abb: "NIN", name: this.$t("ui.job.NIN") },
-      { abb: "DRG", name: this.$t("ui.job.DRG") },
-      { abb: "SMN", name: this.$t("ui.job.SMN") },
-      { abb: "BLU", name: this.$t("ui.job.BLU") },
-      { abb: "COR", name: this.$t("ui.job.COR") },
-      { abb: "PUP", name: this.$t("ui.job.PUP") },
-      { abb: "DNC", name: this.$t("ui.job.DNC") },
-      { abb: "SCH", name: this.$t("ui.job.SCH") },
-      { abb: "GEO", name: this.$t("ui.job.GEO") },
-      { abb: "RUN", name: this.$t("ui.job.RUN") },
+      { abb: "WAR", name: this.$t("ui.job.WAR").toString() },
+      { abb: "MNK", name: this.$t("ui.job.MNK").toString() },
+      { abb: "WHM", name: this.$t("ui.job.WHM").toString() },
+      { abb: "BLM", name: this.$t("ui.job.BLM").toString() },
+      { abb: "RDM", name: this.$t("ui.job.RDM").toString() },
+      { abb: "THF", name: this.$t("ui.job.THF").toString() },
+      { abb: "PLD", name: this.$t("ui.job.PLD").toString() },
+      { abb: "DRK", name: this.$t("ui.job.DRK").toString() },
+      { abb: "BST", name: this.$t("ui.job.BST").toString() },
+      { abb: "BRD", name: this.$t("ui.job.BRD").toString() },
+      { abb: "RNG", name: this.$t("ui.job.RNG").toString() },
+      { abb: "SAM", name: this.$t("ui.job.SAM").toString() },
+      { abb: "NIN", name: this.$t("ui.job.NIN").toString() },
+      { abb: "DRG", name: this.$t("ui.job.DRG").toString() },
+      { abb: "SMN", name: this.$t("ui.job.SMN").toString() },
+      { abb: "BLU", name: this.$t("ui.job.BLU").toString() },
+      { abb: "COR", name: this.$t("ui.job.COR").toString() },
+      { abb: "PUP", name: this.$t("ui.job.PUP").toString() },
+      { abb: "DNC", name: this.$t("ui.job.DNC").toString() },
+      { abb: "SCH", name: this.$t("ui.job.SCH").toString() },
+      { abb: "GEO", name: this.$t("ui.job.GEO").toString() },
+      { abb: "RUN", name: this.$t("ui.job.RUN").toString() },
     ];
   }
 
@@ -370,7 +370,7 @@ export default class xiUtils extends Vue {
 
       // e.g. ABC:0~5% / ABC:0~5
       if (
-        valueResult !== undefined &&
+        valueResult != null &&
         (valueResult.includes("~") || valueResult.includes("～"))
       ) {
         const normalizedValue = valueResult.replace("～", "~");

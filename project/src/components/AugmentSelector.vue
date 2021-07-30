@@ -281,10 +281,7 @@
               <v-row no-gutters class="pl-1 mt-1 mb-1"
                 ><span
                   class="grey--text text--darken-1"
-                  style="
-                    word-break: break-word;
-                    line-height: 1.4em;
-                  "
+                  style="word-break: break-word; line-height: 1.4em"
                   >{{ calculatedAugsString }}
                 </span></v-row
               >
@@ -597,10 +594,8 @@ import {
   AugSet,
   CalculatedAugInfo,
   Equipment,
-  EquipmentWithAug,
   EquipSet,
 } from "@/@types/equip-set";
-import EquipIconSlot from "@/components/EquipIconSlot.vue";
 
 @Component
 export default class AugmentSelector extends Mixins(xiUtils) {
@@ -622,7 +617,7 @@ export default class AugmentSelector extends Mixins(xiUtils) {
   @Watch("dirty")
   @Watch("equipSetInfo", { deep: true, immediate: true })
   @Watch("slotName")
-  equipChanged() {
+  equipChanged(): void {
     //this.augValues.splice(0);
     //this.augProps.splice(0);
     //this.augToggles.splice(0);
@@ -668,7 +663,7 @@ export default class AugmentSelector extends Mixins(xiUtils) {
     }
   }
 
-  public augChanged(event: any, index: number) {
+  public augChanged(event: any, index: number): void {
     if (event != null && event.Value != null) {
       Vue.set(this.augValues, index, event.Value);
       Vue.set(this.augProps, index, event);
@@ -678,7 +673,7 @@ export default class AugmentSelector extends Mixins(xiUtils) {
     }
   }
 
-  public routeChanged(event: any) {
+  public routeChanged(event: any): void {
     this.augValues.splice(0);
     this.augProps.splice(0);
     this.augToggles.splice(0);
@@ -701,7 +696,7 @@ export default class AugmentSelector extends Mixins(xiUtils) {
     for (let i = 0; i < this.augProps.length; i++) {
       const augCape = this.augProps[i];
       if (augCape != null) {
-        if (this.augToggles.length > i && this.augToggles[i] == false) {
+        if (this.augToggles.length > i && !this.augToggles[i]) {
           continue;
         }
         this.addToResult(augCape, this.augValues[i]);
@@ -717,7 +712,8 @@ export default class AugmentSelector extends Mixins(xiUtils) {
         if (
           p.CateID == aug.CatID &&
           p.PropID == prop.toString() &&
-          p.Unit == aug.Unit && p.MainHand == aug.MainHand
+          p.Unit == aug.Unit &&
+          p.MainHand == aug.MainHand
         ) {
           if (p.Value != null && value != null) {
             p.Value += value;
@@ -737,13 +733,13 @@ export default class AugmentSelector extends Mixins(xiUtils) {
         PropID: prop.toString(),
         Unit: aug.Unit,
         Value: value,
-        MainHand: aug.MainHand
+        MainHand: aug.MainHand,
       });
     }
   }
 
-  get labelName() {
-    return this.$t("ui.equipSlot." + this.slotName);
+  get labelName(): string {
+    return this.$t("ui.equipSlot." + this.slotName).toString();
   }
 
   get hasAug(): boolean {
@@ -841,7 +837,7 @@ export default class AugmentSelector extends Mixins(xiUtils) {
     return result;
   }
 
-  get itemName() {
+  get itemName(): string {
     if (this.equipSetInfo == null) {
       return "";
     }
@@ -928,7 +924,7 @@ export default class AugmentSelector extends Mixins(xiUtils) {
     return equip.Equip;
   }
 
-  get iconUrl() {
+  get iconUrl(): string {
     if (this.equipSetInfo == null) {
       return "";
     }
